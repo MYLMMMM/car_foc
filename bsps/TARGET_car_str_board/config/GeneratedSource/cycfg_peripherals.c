@@ -31,6 +31,9 @@
 #define CYCFG_TRC_CTI_OUT_CTI_TR_OUT0 DEBUG_TRC_CTI_OUT_CTI_TR_OUT0
 #define CYCFG_TRC_CTI_IN_MAIN_CORE_HALT DEBUG_TRC_CTI_IN_CPU0_HALT
 #define TIMER_TASK_INPUT_DISABLED 0x7U
+#define PWM_C_U_INPUT_DISABLED 0x7U
+#define PWM_C_V_INPUT_DISABLED 0x7U
+#define PWM_START_C_INPUT_DISABLED 0x7U
 #define PWM_A_U_INPUT_DISABLED 0x7U
 #define PWM_A_V_INPUT_DISABLED 0x7U
 #define PWM_A_W_INPUT_DISABLED 0x7U
@@ -39,7 +42,6 @@
 #define PWM_B_W_INPUT_DISABLED 0x7U
 #define PWM_START_A_INPUT_DISABLED 0x7U
 #define PWM_START_B_INPUT_DISABLED 0x7U
-#define PWM_C_U_INPUT_DISABLED 0x7U
 
 const cy_stc_hppass_cfg_t pass_0_config =
 {
@@ -955,6 +957,375 @@ const mtb_hal_timer_configurator_t TIMER_TASK_hal_config =
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_TIMER) */
 
+const cy_stc_tcpwm_pwm_config_t PWM_C_U_config =
+{
+    .pwmMode = CY_TCPWM_PWM_MODE_PWM,
+    .clockPrescaler = CY_TCPWM_PWM_PRESCALER_DIVBY_1,
+    .pwmAlignment = CY_TCPWM_PWM_LEFT_ALIGN,
+    .deadTimeClocks = 0,
+    .runMode = CY_TCPWM_PWM_CONTINUOUS,
+    .period0 = 239999,
+    .period1 = 32768,
+    .enablePeriodSwap = false,
+    .compare0 = 0,
+    .compare1 = 16384,
+    .enableCompareSwap = false,
+    .interruptSources = (CY_TCPWM_INT_ON_TC & 0U) | (CY_TCPWM_INT_ON_CC0 & 0U) | (CY_TCPWM_INT_ON_CC1 & 0U),
+    .invertPWMOut = CY_TCPWM_PWM_INVERT_DISABLE,
+    .invertPWMOutN = CY_TCPWM_PWM_INVERT_DISABLE,
+    .killMode = CY_TCPWM_PWM_STOP_ON_KILL,
+    .swapInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
+    .swapInput = CY_TCPWM_INPUT_0,
+    .reloadInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
+    .reloadInput = CY_TCPWM_INPUT_0,
+    .startInputMode = CY_TCPWM_INPUT_RISINGEDGE,
+    .startInput = TCPWM0_GRP0_CNT1_START_VALUE,
+    .killInputMode = CY_TCPWM_INPUT_FALLINGEDGE,
+    .killInput = TCPWM0_GRP0_CNT1_STOP_VALUE,
+    .countInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
+    .countInput = CY_TCPWM_INPUT_1,
+    .swapOverflowUnderflow = false,
+    .immediateKill = false,
+    .tapsEnabled = 45,
+    .compare2 = 0,
+    .compare3 = 16384,
+    .enableCompare1Swap = false,
+    .compare0MatchUp = true,
+    .compare0MatchDown = false,
+    .compare1MatchUp = true,
+    .compare1MatchDown = false,
+    .kill1InputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
+    .kill1Input = CY_TCPWM_INPUT_0,
+    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_HIGHZ,
+    .trigger0Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
+    .trigger1Event = CY_TCPWM_CNT_TRIGGER_ON_OVERFLOW,
+    .reloadLineSelect = false,
+    .line_out_sel = CY_TCPWM_OUTPUT_PWM_SIGNAL,
+    .linecompl_out_sel = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
+    .line_out_sel_buff = CY_TCPWM_OUTPUT_PWM_SIGNAL,
+    .linecompl_out_sel_buff = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
+    .deadTimeClocks_linecompl_out = 0,
+#if defined (CY_IP_MXS40TCPWM)
+    .hrpwm_enable = false,
+    .hrpwm_input_freq = CY_TCPWM_HRPWM_FREQ_80MHZ_OR_100MHZ,
+    .kill_line_polarity = CY_TCPWM_LINEOUT_AND_LINECMPOUT_IS_LOW,
+    .deadTimeClocksBuff = 0,
+    .deadTimeClocksBuff_linecompl_out = 0,
+    .buffer_swap_enable = false,
+    .glitch_filter_enable = false,
+    .gf_depth = CY_GLITCH_FILTER_DEPTH_SUPPORT_VALUE_0,
+    .dithering_mode = CY_TCPWM_DITHERING_DISABLE,
+    .period_dithering_value = 128,
+    .duty_dithering_value = 128,
+    .limiter = CY_TCPWM_DITHERING_LIMITER_7,
+    .pwm_tc_sync_kill_dt = false,
+    .pwm_sync_kill_dt = false,
+    .debug_freeze_enable = true,
+    .debug_suspend_enable = true,
+#endif /* defined (CY_IP_MXS40TCPWM) */
+};
+
+#if defined (COMPONENT_MTB_HAL)
+const mtb_hal_peri_div_t PWM_C_U_clock_ref =
+{
+    .clk_dst = (en_clk_dst_t)PCLK_TCPWM0_CLOCK_COUNTER_EN1,
+    .div_type = CY_SYSCLK_DIV_8_BIT,
+    .div_num = 0,
+};
+const mtb_hal_clock_t PWM_C_U_hal_clock =
+{
+    .clock_ref = &PWM_C_U_clock_ref,
+    .interface = &mtb_hal_clock_peri_interface,
+};
+#endif /* defined (COMPONENT_MTB_HAL) */
+
+#if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM)
+const mtb_hal_pwm_configurator_t PWM_C_U_hal_config =
+{
+    .base = PWM_C_U_HW,
+    .clock = &PWM_C_U_hal_clock,
+    .group = 0UL,
+    .cntnum = 1UL,
+    .max_count = 239999,
+};
+#endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+const cyhal_resource_inst_t PWM_C_U_obj =
+{
+    .type = CYHAL_RSC_TCPWM,
+    .block_num = 0U,
+    .channel_num = 1U,
+};
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+#if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
+const cyhal_clock_t PWM_C_U_clock =
+{
+    .block = CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT,
+    .channel = 0,
+#if defined (CY_USING_HAL)
+    .reserved = false,
+    .funcs = NULL,
+#endif /* defined (CY_USING_HAL) */
+};
+#endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+const cyhal_pwm_configurator_t PWM_C_U_hal_config =
+{
+    .resource = &PWM_C_U_obj,
+    .config = &PWM_C_U_config,
+    .clock = &PWM_C_U_clock,
+};
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+const cy_stc_tcpwm_pwm_config_t PWM_C_V_config =
+{
+    .pwmMode = CY_TCPWM_PWM_MODE_PWM,
+    .clockPrescaler = CY_TCPWM_PWM_PRESCALER_DIVBY_1,
+    .pwmAlignment = CY_TCPWM_PWM_LEFT_ALIGN,
+    .deadTimeClocks = 0,
+    .runMode = CY_TCPWM_PWM_CONTINUOUS,
+    .period0 = 239999,
+    .period1 = 32768,
+    .enablePeriodSwap = false,
+    .compare0 = 0,
+    .compare1 = 16384,
+    .enableCompareSwap = false,
+    .interruptSources = (CY_TCPWM_INT_ON_TC & 0U) | (CY_TCPWM_INT_ON_CC0 & 0U) | (CY_TCPWM_INT_ON_CC1 & 0U),
+    .invertPWMOut = CY_TCPWM_PWM_INVERT_DISABLE,
+    .invertPWMOutN = CY_TCPWM_PWM_INVERT_DISABLE,
+    .killMode = CY_TCPWM_PWM_STOP_ON_KILL,
+    .swapInputMode = PWM_C_V_INPUT_DISABLED & 0x3U,
+    .swapInput = CY_TCPWM_INPUT_0,
+    .reloadInputMode = PWM_C_V_INPUT_DISABLED & 0x3U,
+    .reloadInput = CY_TCPWM_INPUT_0,
+    .startInputMode = CY_TCPWM_INPUT_RISINGEDGE,
+    .startInput = TCPWM0_GRP0_CNT2_START_VALUE,
+    .killInputMode = CY_TCPWM_INPUT_FALLINGEDGE,
+    .killInput = TCPWM0_GRP0_CNT2_STOP_VALUE,
+    .countInputMode = PWM_C_V_INPUT_DISABLED & 0x3U,
+    .countInput = CY_TCPWM_INPUT_1,
+    .swapOverflowUnderflow = false,
+    .immediateKill = false,
+    .tapsEnabled = 45,
+    .compare2 = 0,
+    .compare3 = 16384,
+    .enableCompare1Swap = false,
+    .compare0MatchUp = true,
+    .compare0MatchDown = false,
+    .compare1MatchUp = true,
+    .compare1MatchDown = false,
+    .kill1InputMode = PWM_C_V_INPUT_DISABLED & 0x3U,
+    .kill1Input = CY_TCPWM_INPUT_0,
+    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_HIGHZ,
+    .trigger0Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
+    .trigger1Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
+    .reloadLineSelect = false,
+    .line_out_sel = CY_TCPWM_OUTPUT_PWM_SIGNAL,
+    .linecompl_out_sel = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
+    .line_out_sel_buff = CY_TCPWM_OUTPUT_PWM_SIGNAL,
+    .linecompl_out_sel_buff = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
+    .deadTimeClocks_linecompl_out = 0,
+#if defined (CY_IP_MXS40TCPWM)
+    .hrpwm_enable = false,
+    .hrpwm_input_freq = CY_TCPWM_HRPWM_FREQ_80MHZ_OR_100MHZ,
+    .kill_line_polarity = CY_TCPWM_LINEOUT_AND_LINECMPOUT_IS_LOW,
+    .deadTimeClocksBuff = 0,
+    .deadTimeClocksBuff_linecompl_out = 0,
+    .buffer_swap_enable = false,
+    .glitch_filter_enable = false,
+    .gf_depth = CY_GLITCH_FILTER_DEPTH_SUPPORT_VALUE_0,
+    .dithering_mode = CY_TCPWM_DITHERING_DISABLE,
+    .period_dithering_value = 128,
+    .duty_dithering_value = 128,
+    .limiter = CY_TCPWM_DITHERING_LIMITER_7,
+    .pwm_tc_sync_kill_dt = false,
+    .pwm_sync_kill_dt = false,
+    .debug_freeze_enable = false,
+    .debug_suspend_enable = false,
+#endif /* defined (CY_IP_MXS40TCPWM) */
+};
+
+#if defined (COMPONENT_MTB_HAL)
+const mtb_hal_peri_div_t PWM_C_V_clock_ref =
+{
+    .clk_dst = (en_clk_dst_t)PCLK_TCPWM0_CLOCK_COUNTER_EN2,
+    .div_type = CY_SYSCLK_DIV_8_BIT,
+    .div_num = 0,
+};
+const mtb_hal_clock_t PWM_C_V_hal_clock =
+{
+    .clock_ref = &PWM_C_V_clock_ref,
+    .interface = &mtb_hal_clock_peri_interface,
+};
+#endif /* defined (COMPONENT_MTB_HAL) */
+
+#if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM)
+const mtb_hal_pwm_configurator_t PWM_C_V_hal_config =
+{
+    .base = PWM_C_V_HW,
+    .clock = &PWM_C_V_hal_clock,
+    .group = 0UL,
+    .cntnum = 2UL,
+    .max_count = 239999,
+};
+#endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+const cyhal_resource_inst_t PWM_C_V_obj =
+{
+    .type = CYHAL_RSC_TCPWM,
+    .block_num = 0U,
+    .channel_num = 2U,
+};
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+#if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
+const cyhal_clock_t PWM_C_V_clock =
+{
+    .block = CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT,
+    .channel = 0,
+#if defined (CY_USING_HAL)
+    .reserved = false,
+    .funcs = NULL,
+#endif /* defined (CY_USING_HAL) */
+};
+#endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+const cyhal_pwm_configurator_t PWM_C_V_hal_config =
+{
+    .resource = &PWM_C_V_obj,
+    .config = &PWM_C_V_config,
+    .clock = &PWM_C_V_clock,
+};
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+const cy_stc_tcpwm_pwm_config_t PWM_START_C_config =
+{
+    .pwmMode = CY_TCPWM_PWM_MODE_PWM,
+    .clockPrescaler = CY_TCPWM_PWM_PRESCALER_DIVBY_1,
+    .pwmAlignment = CY_TCPWM_PWM_LEFT_ALIGN,
+    .deadTimeClocks = 0,
+    .runMode = CY_TCPWM_PWM_CONTINUOUS,
+    .period0 = 20,
+    .period1 = 32768,
+    .enablePeriodSwap = false,
+    .compare0 = 10,
+    .compare1 = 16384,
+    .enableCompareSwap = false,
+    .interruptSources = (CY_TCPWM_INT_ON_TC & 0U) | (CY_TCPWM_INT_ON_CC0 & 0U) | (CY_TCPWM_INT_ON_CC1 & 0U),
+    .invertPWMOut = CY_TCPWM_PWM_INVERT_DISABLE,
+    .invertPWMOutN = CY_TCPWM_PWM_INVERT_DISABLE,
+    .killMode = CY_TCPWM_PWM_STOP_ON_KILL,
+    .swapInputMode = PWM_START_C_INPUT_DISABLED & 0x3U,
+    .swapInput = CY_TCPWM_INPUT_0,
+    .reloadInputMode = PWM_START_C_INPUT_DISABLED & 0x3U,
+    .reloadInput = CY_TCPWM_INPUT_0,
+    .startInputMode = PWM_START_C_INPUT_DISABLED & 0x3U,
+    .startInput = CY_TCPWM_INPUT_0,
+    .killInputMode = PWM_START_C_INPUT_DISABLED & 0x3U,
+    .killInput = CY_TCPWM_INPUT_0,
+    .countInputMode = PWM_START_C_INPUT_DISABLED & 0x3U,
+    .countInput = CY_TCPWM_INPUT_1,
+    .swapOverflowUnderflow = false,
+    .immediateKill = false,
+    .tapsEnabled = 45,
+    .compare2 = 10,
+    .compare3 = 16384,
+    .enableCompare1Swap = false,
+    .compare0MatchUp = true,
+    .compare0MatchDown = false,
+    .compare1MatchUp = true,
+    .compare1MatchDown = false,
+    .kill1InputMode = PWM_START_C_INPUT_DISABLED & 0x3U,
+    .kill1Input = CY_TCPWM_INPUT_0,
+    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_LOW,
+    .trigger0Event = CY_TCPWM_CNT_TRIGGER_ON_CC0_MATCH,
+    .trigger1Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
+    .reloadLineSelect = false,
+    .line_out_sel = CY_TCPWM_OUTPUT_PWM_SIGNAL,
+    .linecompl_out_sel = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
+    .line_out_sel_buff = CY_TCPWM_OUTPUT_PWM_SIGNAL,
+    .linecompl_out_sel_buff = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
+    .deadTimeClocks_linecompl_out = 0,
+#if defined (CY_IP_MXS40TCPWM)
+    .hrpwm_enable = false,
+    .hrpwm_input_freq = CY_TCPWM_HRPWM_FREQ_80MHZ_OR_100MHZ,
+    .kill_line_polarity = CY_TCPWM_LINEOUT_AND_LINECMPOUT_IS_LOW,
+    .deadTimeClocksBuff = 0,
+    .deadTimeClocksBuff_linecompl_out = 0,
+    .buffer_swap_enable = false,
+    .glitch_filter_enable = false,
+    .gf_depth = CY_GLITCH_FILTER_DEPTH_SUPPORT_VALUE_0,
+    .dithering_mode = CY_TCPWM_DITHERING_DISABLE,
+    .period_dithering_value = 128,
+    .duty_dithering_value = 128,
+    .limiter = CY_TCPWM_DITHERING_LIMITER_7,
+    .pwm_tc_sync_kill_dt = false,
+    .pwm_sync_kill_dt = false,
+    .debug_freeze_enable = false,
+    .debug_suspend_enable = false,
+#endif /* defined (CY_IP_MXS40TCPWM) */
+};
+
+#if defined (COMPONENT_MTB_HAL)
+const mtb_hal_peri_div_t PWM_START_C_clock_ref =
+{
+    .clk_dst = (en_clk_dst_t)PCLK_TCPWM0_CLOCK_COUNTER_EN3,
+    .div_type = CY_SYSCLK_DIV_8_BIT,
+    .div_num = 0,
+};
+const mtb_hal_clock_t PWM_START_C_hal_clock =
+{
+    .clock_ref = &PWM_START_C_clock_ref,
+    .interface = &mtb_hal_clock_peri_interface,
+};
+#endif /* defined (COMPONENT_MTB_HAL) */
+
+#if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM)
+const mtb_hal_pwm_configurator_t PWM_START_C_hal_config =
+{
+    .base = PWM_START_C_HW,
+    .clock = &PWM_START_C_hal_clock,
+    .group = 0UL,
+    .cntnum = 3UL,
+    .max_count = 20,
+};
+#endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+const cyhal_resource_inst_t PWM_START_C_obj =
+{
+    .type = CYHAL_RSC_TCPWM,
+    .block_num = 0U,
+    .channel_num = 3U,
+};
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+#if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
+const cyhal_clock_t PWM_START_C_clock =
+{
+    .block = CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT,
+    .channel = 0,
+#if defined (CY_USING_HAL)
+    .reserved = false,
+    .funcs = NULL,
+#endif /* defined (CY_USING_HAL) */
+};
+#endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+const cyhal_pwm_configurator_t PWM_START_C_hal_config =
+{
+    .resource = &PWM_START_C_obj,
+    .config = &PWM_START_C_config,
+    .clock = &PWM_START_C_clock,
+};
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
 const cy_stc_tcpwm_pwm_config_t PWM_A_U_config =
 {
     .pwmMode = CY_TCPWM_PWM_MODE_PWM,
@@ -1700,10 +2071,10 @@ const cy_stc_tcpwm_pwm_config_t PWM_START_A_config =
     .pwmAlignment = CY_TCPWM_PWM_LEFT_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 32768,
+    .period0 = 20,
     .period1 = 32768,
     .enablePeriodSwap = false,
-    .compare0 = 16384,
+    .compare0 = 10,
     .compare1 = 16384,
     .enableCompareSwap = false,
     .interruptSources = (CY_TCPWM_INT_ON_TC & 0U) | (CY_TCPWM_INT_ON_CC0 ) | (CY_TCPWM_INT_ON_CC1 & 0U),
@@ -1723,7 +2094,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_START_A_config =
     .swapOverflowUnderflow = false,
     .immediateKill = false,
     .tapsEnabled = 45,
-    .compare2 = 16384,
+    .compare2 = 10,
     .compare3 = 16384,
     .enableCompare1Swap = false,
     .compare0MatchUp = true,
@@ -1782,7 +2153,7 @@ const mtb_hal_pwm_configurator_t PWM_START_A_hal_config =
     .clock = &PWM_START_A_hal_clock,
     .group = 1UL,
     .cntnum = 262UL,
-    .max_count = 32768,
+    .max_count = 20,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1823,10 +2194,10 @@ const cy_stc_tcpwm_pwm_config_t PWM_START_B_config =
     .pwmAlignment = CY_TCPWM_PWM_LEFT_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 32768,
+    .period0 = 20,
     .period1 = 32768,
     .enablePeriodSwap = false,
-    .compare0 = 16384,
+    .compare0 = 10,
     .compare1 = 16384,
     .enableCompareSwap = false,
     .interruptSources = (CY_TCPWM_INT_ON_TC & 0U) | (CY_TCPWM_INT_ON_CC0 ) | (CY_TCPWM_INT_ON_CC1 & 0U),
@@ -1846,7 +2217,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_START_B_config =
     .swapOverflowUnderflow = false,
     .immediateKill = false,
     .tapsEnabled = 45,
-    .compare2 = 16384,
+    .compare2 = 10,
     .compare3 = 16384,
     .enableCompare1Swap = false,
     .compare0MatchUp = true,
@@ -1905,7 +2276,7 @@ const mtb_hal_pwm_configurator_t PWM_START_B_hal_config =
     .clock = &PWM_START_B_hal_clock,
     .group = 1UL,
     .cntnum = 263UL,
-    .max_count = 32768,
+    .max_count = 20,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1936,129 +2307,6 @@ const cyhal_pwm_configurator_t PWM_START_B_hal_config =
     .resource = &PWM_START_B_obj,
     .config = &PWM_START_B_config,
     .clock = &PWM_START_B_clock,
-};
-#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
-
-const cy_stc_tcpwm_pwm_config_t PWM_C_U_config =
-{
-    .pwmMode = CY_TCPWM_PWM_MODE_PWM,
-    .clockPrescaler = CY_TCPWM_PWM_PRESCALER_DIVBY_1,
-    .pwmAlignment = CY_TCPWM_PWM_LEFT_ALIGN,
-    .deadTimeClocks = 0,
-    .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 11999,
-    .period1 = 32768,
-    .enablePeriodSwap = false,
-    .compare0 = 0,
-    .compare1 = 16384,
-    .enableCompareSwap = false,
-    .interruptSources = (CY_TCPWM_INT_ON_TC & 0U) | (CY_TCPWM_INT_ON_CC0 & 0U) | (CY_TCPWM_INT_ON_CC1 & 0U),
-    .invertPWMOut = CY_TCPWM_PWM_INVERT_DISABLE,
-    .invertPWMOutN = CY_TCPWM_PWM_INVERT_DISABLE,
-    .killMode = CY_TCPWM_PWM_STOP_ON_KILL,
-    .swapInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
-    .swapInput = CY_TCPWM_INPUT_0,
-    .reloadInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
-    .reloadInput = CY_TCPWM_INPUT_0,
-    .startInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
-    .startInput = CY_TCPWM_INPUT_0,
-    .killInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
-    .killInput = CY_TCPWM_INPUT_0,
-    .countInputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
-    .countInput = CY_TCPWM_INPUT_1,
-    .swapOverflowUnderflow = false,
-    .immediateKill = true,
-    .tapsEnabled = 45,
-    .compare2 = 0,
-    .compare3 = 16384,
-    .enableCompare1Swap = false,
-    .compare0MatchUp = true,
-    .compare0MatchDown = false,
-    .compare1MatchUp = true,
-    .compare1MatchDown = false,
-    .kill1InputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
-    .kill1Input = CY_TCPWM_INPUT_0,
-    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_LOW,
-    .trigger0Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
-    .trigger1Event = CY_TCPWM_CNT_TRIGGER_ON_OVERFLOW,
-    .reloadLineSelect = false,
-    .line_out_sel = CY_TCPWM_OUTPUT_PWM_SIGNAL,
-    .linecompl_out_sel = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
-    .line_out_sel_buff = CY_TCPWM_OUTPUT_PWM_SIGNAL,
-    .linecompl_out_sel_buff = CY_TCPWM_OUTPUT_INVERTED_PWM_SIGNAL,
-    .deadTimeClocks_linecompl_out = 0,
-#if defined (CY_IP_MXS40TCPWM)
-    .hrpwm_enable = false,
-    .hrpwm_input_freq = CY_TCPWM_HRPWM_FREQ_80MHZ_OR_100MHZ,
-    .kill_line_polarity = CY_TCPWM_LINEOUT_AND_LINECMPOUT_IS_LOW,
-    .deadTimeClocksBuff = 0,
-    .deadTimeClocksBuff_linecompl_out = 0,
-    .buffer_swap_enable = false,
-    .glitch_filter_enable = false,
-    .gf_depth = CY_GLITCH_FILTER_DEPTH_SUPPORT_VALUE_0,
-    .dithering_mode = CY_TCPWM_DITHERING_DISABLE,
-    .period_dithering_value = 128,
-    .duty_dithering_value = 128,
-    .limiter = CY_TCPWM_DITHERING_LIMITER_7,
-    .pwm_tc_sync_kill_dt = false,
-    .pwm_sync_kill_dt = false,
-    .debug_freeze_enable = true,
-    .debug_suspend_enable = true,
-#endif /* defined (CY_IP_MXS40TCPWM) */
-};
-
-#if defined (COMPONENT_MTB_HAL)
-const mtb_hal_peri_div_t PWM_C_U_clock_ref =
-{
-    .clk_dst = (en_clk_dst_t)PCLK_TCPWM0_CLOCK_COUNTER_EN512,
-    .div_type = CY_SYSCLK_DIV_8_BIT,
-    .div_num = 0,
-};
-const mtb_hal_clock_t PWM_C_U_hal_clock =
-{
-    .clock_ref = &PWM_C_U_clock_ref,
-    .interface = &mtb_hal_clock_peri_interface,
-};
-#endif /* defined (COMPONENT_MTB_HAL) */
-
-#if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM)
-const mtb_hal_pwm_configurator_t PWM_C_U_hal_config =
-{
-    .base = PWM_C_U_HW,
-    .clock = &PWM_C_U_hal_clock,
-    .group = 2UL,
-    .cntnum = 512UL,
-    .max_count = 11999,
-};
-#endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
-
-#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-const cyhal_resource_inst_t PWM_C_U_obj =
-{
-    .type = CYHAL_RSC_TCPWM,
-    .block_num = 2U,
-    .channel_num = 0U,
-};
-#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
-
-#if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
-const cyhal_clock_t PWM_C_U_clock =
-{
-    .block = CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT,
-    .channel = 0,
-#if defined (CY_USING_HAL)
-    .reserved = false,
-    .funcs = NULL,
-#endif /* defined (CY_USING_HAL) */
-};
-#endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
-
-#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-const cyhal_pwm_configurator_t PWM_C_U_hal_config =
-{
-    .resource = &PWM_C_U_obj,
-    .config = &PWM_C_U_config,
-    .clock = &PWM_C_U_clock,
 };
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
@@ -2126,6 +2374,30 @@ void init_cycfg_peripherals(void)
 #if defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE)
     Cy_SysClk_PeriGroupSlaveInit(CY_MMIO_TCPWM0_PERI_NR, CY_MMIO_TCPWM0_GROUP_NR, CY_MMIO_TCPWM0_SLAVE_NR, CY_MMIO_TCPWM0_CLK_HF_NR);
 #endif /* defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE) */
+    Cy_SysClk_PeriphAssignDivider(PCLK_TCPWM0_CLOCK_COUNTER_EN1, CY_SYSCLK_DIV_8_BIT, 0U);
+#if defined (CY_IP_MXS40TCPWM) && defined (CY_DEVICE_PSC3)
+    /* Workaround for TCPWM on PSOC C3 device: Enable HRPWM block if it exists. */
+    (*((volatile uint32_t *)(GET_ALIAS_ADDRESS(CY_SYSTEM_TCPWM_DISABLE_ADDR))) = 0UL);
+#endif /* defined (CY_IP_MXS40TCPWM) && defined (CY_DEVICE_PSC3) */
+#if defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE)
+    Cy_SysClk_PeriGroupSlaveInit(CY_MMIO_TCPWM0_PERI_NR, CY_MMIO_TCPWM0_GROUP_NR, CY_MMIO_TCPWM0_SLAVE_NR, CY_MMIO_TCPWM0_CLK_HF_NR);
+#endif /* defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE) */
+    Cy_SysClk_PeriphAssignDivider(PCLK_TCPWM0_CLOCK_COUNTER_EN2, CY_SYSCLK_DIV_8_BIT, 0U);
+#if defined (CY_IP_MXS40TCPWM) && defined (CY_DEVICE_PSC3)
+    /* Workaround for TCPWM on PSOC C3 device: Enable HRPWM block if it exists. */
+    (*((volatile uint32_t *)(GET_ALIAS_ADDRESS(CY_SYSTEM_TCPWM_DISABLE_ADDR))) = 0UL);
+#endif /* defined (CY_IP_MXS40TCPWM) && defined (CY_DEVICE_PSC3) */
+#if defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE)
+    Cy_SysClk_PeriGroupSlaveInit(CY_MMIO_TCPWM0_PERI_NR, CY_MMIO_TCPWM0_GROUP_NR, CY_MMIO_TCPWM0_SLAVE_NR, CY_MMIO_TCPWM0_CLK_HF_NR);
+#endif /* defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE) */
+    Cy_SysClk_PeriphAssignDivider(PCLK_TCPWM0_CLOCK_COUNTER_EN3, CY_SYSCLK_DIV_8_BIT, 0U);
+#if defined (CY_IP_MXS40TCPWM) && defined (CY_DEVICE_PSC3)
+    /* Workaround for TCPWM on PSOC C3 device: Enable HRPWM block if it exists. */
+    (*((volatile uint32_t *)(GET_ALIAS_ADDRESS(CY_SYSTEM_TCPWM_DISABLE_ADDR))) = 0UL);
+#endif /* defined (CY_IP_MXS40TCPWM) && defined (CY_DEVICE_PSC3) */
+#if defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE)
+    Cy_SysClk_PeriGroupSlaveInit(CY_MMIO_TCPWM0_PERI_NR, CY_MMIO_TCPWM0_GROUP_NR, CY_MMIO_TCPWM0_SLAVE_NR, CY_MMIO_TCPWM0_CLK_HF_NR);
+#endif /* defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE) */
     Cy_SysClk_PeriphAssignDivider(PCLK_TCPWM0_CLOCK_COUNTER_EN256, CY_SYSCLK_DIV_8_BIT, 0U);
 #if defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE)
     Cy_SysClk_PeriGroupSlaveInit(CY_MMIO_TCPWM0_PERI_NR, CY_MMIO_TCPWM0_GROUP_NR, CY_MMIO_TCPWM0_SLAVE_NR, CY_MMIO_TCPWM0_CLK_HF_NR);
@@ -2155,10 +2427,6 @@ void init_cycfg_peripherals(void)
     Cy_SysClk_PeriGroupSlaveInit(CY_MMIO_TCPWM0_PERI_NR, CY_MMIO_TCPWM0_GROUP_NR, CY_MMIO_TCPWM0_SLAVE_NR, CY_MMIO_TCPWM0_CLK_HF_NR);
 #endif /* defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE) */
     Cy_SysClk_PeriphAssignDivider(PCLK_TCPWM0_CLOCK_COUNTER_EN263, CY_SYSCLK_DIV_8_BIT, 0U);
-#if defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE)
-    Cy_SysClk_PeriGroupSlaveInit(CY_MMIO_TCPWM0_PERI_NR, CY_MMIO_TCPWM0_GROUP_NR, CY_MMIO_TCPWM0_SLAVE_NR, CY_MMIO_TCPWM0_CLK_HF_NR);
-#endif /* defined (CY_DEVICE_CONFIGURATOR_IP_ENABLE_FEATURE) */
-    Cy_SysClk_PeriphAssignDivider(PCLK_TCPWM0_CLOCK_COUNTER_EN512, CY_SYSCLK_DIV_8_BIT, 0U);
 }
 void reserve_cycfg_peripherals(void)
 {
@@ -2169,6 +2437,9 @@ void reserve_cycfg_peripherals(void)
     cyhal_hwmgr_reserve(&SPI_EC_A_obj);
     cyhal_hwmgr_reserve(&SPI_CTR_obj);
     cyhal_hwmgr_reserve(&TIMER_TASK_obj);
+    cyhal_hwmgr_reserve(&PWM_C_U_obj);
+    cyhal_hwmgr_reserve(&PWM_C_V_obj);
+    cyhal_hwmgr_reserve(&PWM_START_C_obj);
     cyhal_hwmgr_reserve(&PWM_A_U_obj);
     cyhal_hwmgr_reserve(&PWM_A_V_obj);
     cyhal_hwmgr_reserve(&PWM_A_W_obj);
@@ -2177,6 +2448,5 @@ void reserve_cycfg_peripherals(void)
     cyhal_hwmgr_reserve(&PWM_B_W_obj);
     cyhal_hwmgr_reserve(&PWM_START_A_obj);
     cyhal_hwmgr_reserve(&PWM_START_B_obj);
-    cyhal_hwmgr_reserve(&PWM_C_U_obj);
 #endif /* defined (CY_USING_HAL) */
 }
