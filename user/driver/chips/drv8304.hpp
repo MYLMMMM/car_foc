@@ -22,7 +22,7 @@
  * - 请勿通过字段设置接口修改 Reserved 字段。
  */
 
-class Drv8304
+class drv8304
 {
 public:
     /**
@@ -170,7 +170,7 @@ public:
      * @param enable_gpio EN 引脚配置
      * @param nfault_gpio nFAULT 引脚配置
      */
-    Drv8304(hal_spi& spi,hal_gpio& enable_gpio, hal_gpio& nfault_gpio) noexcept
+    drv8304(hal_spi& spi,hal_gpio& enable_gpio, hal_gpio& nfault_gpio) noexcept
         : spi_(spi)
         , enable_gpio_(enable_gpio)
         , nfault_gpio_(nfault_gpio)
@@ -181,10 +181,10 @@ public:
     {
     }
 
-    Drv8304(const Drv8304&) = delete;
-    Drv8304& operator=(const Drv8304&) = delete;
-    Drv8304(Drv8304&&) = delete;
-    Drv8304& operator=(Drv8304&&) = delete;
+    drv8304(const drv8304&) = delete;
+    drv8304& operator=(const drv8304&) = delete;
+    drv8304(drv8304&&) = delete;
+    drv8304& operator=(drv8304&&) = delete;
 
     /**
      * @brief 按 DRV8304S 手册默认寄存器值初始化驱动内部状态。

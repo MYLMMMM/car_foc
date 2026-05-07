@@ -15,7 +15,7 @@ public:
     using encoder_mean_filter_t = CircularMeanFilter<volatile uint32_t, uint16_t, encoder_filter_deep>;
 
     motor_driver(foc& foc_soft,
-                 Drv8304& drv,
+                 drv8304& drv,
                  kth7823& ec,
                  hal_spi& ec_spi,
                  hal_pwm& pwm_u,
@@ -42,7 +42,7 @@ public:
 
 // private:
     foc& foc_soft_;
-    Drv8304& drv;
+    drv8304& drv;
     kth7823& ec;
     hal_spi& ec_spi_;
     encoder_mean_filter_t encoder_mean_filter_;

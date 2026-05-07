@@ -8,8 +8,8 @@
 void bsp_init();
 
 
-extern Drv8304 drv8304_a;
-extern Drv8304 drv8304_b;
+extern drv8304 drv8304_a;
+extern drv8304 drv8304_b;
 extern kth7823 enc_a;
 extern kth7823 enc_b;
 extern motor_driver motor_a_driver;

@@ -1,7 +1,7 @@
 #include "motor.hpp"
 
 motor_driver::motor_driver(foc& foc_soft,
-                           Drv8304& drv,
+                           drv8304& drv,
                            kth7823& ec,
                            hal_spi& ec_spi,
                            hal_pwm& pwm_u,

@@ -123,11 +123,11 @@ hal_gpio pin_drv8304_a_nfault(GPIO_GD_A_nFAULT_PORT,GPIO_GD_A_nFAULT_PIN);
 hal_gpio pin_drv8304_b_enable(GPIO_GD_B_ENABLE_PORT,GPIO_GD_B_ENABLE_PIN);
 hal_gpio pin_drv8304_b_nfault(GPIO_GD_B_nFAULT_PORT,GPIO_GD_B_nFAULT_PIN);
 
-Drv8304 drv8304_a(spi_gd_cfg_a,pin_drv8304_a_enable,pin_drv8304_a_nfault);
-Drv8304 drv8304_b(spi_gd_cfg_b,pin_drv8304_b_enable,pin_drv8304_b_nfault);
+drv8304 drv8304_a(spi_gd_cfg_a,pin_drv8304_a_enable,pin_drv8304_a_nfault);
+drv8304 drv8304_b(spi_gd_cfg_b,pin_drv8304_b_enable,pin_drv8304_b_nfault);
 
- void drv8304_a_nfault_callback(const Drv8304::StateTable &statetable,void* userptr);
- void drv8304_b_nfault_callback(const Drv8304::StateTable &statetable,void* userptr);
+ void drv8304_a_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
+ void drv8304_b_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
 
 /*-----------------KTH7823_A_config----------------------*/
 kth7823::regist_map enc_a_init_map =

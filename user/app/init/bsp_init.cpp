@@ -354,11 +354,11 @@ void WS2812_init()
     Cy_SCB_SPI_Enable(SPI_LED_HW);
 }
 
-__WEAK void drv8304_a_nfault_callback(const Drv8304::StateTable &statetable,void* userptr)
+__WEAK void drv8304_a_nfault_callback(const drv8304::StateTable &statetable,void* userptr)
 {
 
 }
-__WEAK void drv8304_b_nfault_callback(const Drv8304::StateTable &statetable,void* userptr)
+__WEAK void drv8304_b_nfault_callback(const drv8304::StateTable &statetable,void* userptr)
 {
 
 }
