@@ -1,0 +1,26 @@
+
+
+OpenDocument="main.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/main.cpp", Line=0
+OpenDocument="ppu_v1.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/ppu_v1.c", Line=102
+OpenDocument="cy_syspm_ppu.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/cy_syspm_ppu.c", Line=181
+OpenDocument="cy_syspm_v2.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/cy_syspm_v2.c", Line=430
+OpenDocument="cy_wdt.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/cy_wdt.c", Line=116
+OpenDocument="cy_syslib.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/cy_syslib.c", Line=538
+OpenDocument="cycfg_system.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/config/GeneratedSource/cycfg_system.c", Line=285
+OpenDocument="cycfg.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/config/GeneratedSource/cycfg.c", Line=0
+OpenDocument="cybsp.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/cybsp.c", Line=59
+OpenDocument="startup_cat1b_cm33.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/startup_cat1b_cm33.c", Line=275
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=300, h=913, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=300, h=527, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=1, y=0, w=1726, h=323, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=809, h=450, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=809, h=990, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=1729, h=323, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Class";"Source"], ColWidths=[1266;100;100;100;275;257]
+TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[212;171;329]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Refresh";"Access";"Scope"], ColWidths=[279;157;39;27;307]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[256;190;274;518]

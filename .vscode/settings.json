@@ -1,0 +1,13 @@
+{
+    "modustoolbox.toolsPath": "/opt/Tools/ModusToolbox/tools_3.7",
+    "cortex-debug.armToolchainPath": "/opt/Tools/mtb-gcc-arm-eabi/14.2.1/gcc/bin",
+    "cortex-debug.openocdPath": "/opt/Tools/ModusToolboxProgtools-1.7/openocd/bin/openocd",
+    "cortex-debug.JLinkGDBServerPath.windows": "JLinkGDBServerCLExe",
+    "cortex-debug.JLinkGDBServerPath.osx": "JLinkGDBServerCLExe",
+    "cortex-debug.JLinkGDBServerPath.linux": "JLinkGDBServerCLExe",
+    "cortex-debug.gccPath": "/opt/Tools/mtb-gcc-arm-eabi/14.2.1/gcc/bin",
+    "clangd.arguments": [
+        "--background-index",
+        "--query-driver=/opt/Tools/mtb-gcc-arm-eabi/14.2.1/gcc/bin/arm-none-eabi-*"
+    ]
+}
