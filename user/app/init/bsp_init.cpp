@@ -5,6 +5,7 @@
 
 #define __DEBUG_RTT
 
+bool test_gpio_bool = false;
 void motor_a_init();
 void motor_b_init();
 void motor_c_init();
@@ -19,6 +20,8 @@ void spi_ctr_isr();
 void timer_task_isr();
 void task_ctl();
 //GPIO global interrupt
+void test_gpio_isrf();
+
 void GPIO_6_ISR()
 {
     drv8304_a.handle_nfault_irq();
@@ -315,6 +318,8 @@ void ctl_init()
     NVIC_ClearPendingIRQ(int_spi_ctl.intrSrc);
     NVIC_EnableIRQ(int_spi_ctl.intrSrc);
 
+    spi_ctr.open_rx_interrupt(hal_spi::RX_FIFO_NOT_EMPTY);
+
     spi_ctr_decode.clear_maps();
     bool map_init_ok = valuemap_register(spi_ctr_decode);
 #ifdef __DEBUG_RTT
@@ -384,6 +389,7 @@ __WEAK void motor_b_ec_isr()
 
 __WEAK void spi_ctr_isr()
 {
+    spi_ctr.clear_rx_interrupt(hal_spi::RX_FIFO_NOT_EMPTY);
     spi_ctr_decode.trig();
 }
 
@@ -398,6 +404,3 @@ __WEAK void motor_a_pwm_isr()
     motor_a_driver.pwm_chage_trig();
 }
 
-__WEAK void task_ctl()
-{
-}   

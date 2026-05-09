@@ -16,3 +16,5 @@ extern motor_driver motor_a_driver;
 extern motor_driver motor_b_driver;
 extern spi_decode spi_ctr_decode;
 extern XL202RGBC ws2812;
+
+extern bool test_gpio_bool;

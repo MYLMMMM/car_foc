@@ -3,7 +3,7 @@
 #include "SEGGER_RTT.h"
 
 
-void task()
+void task_ctl()
 {
     //刷新缓冲区
     spi_ctr_decode.stream_update();

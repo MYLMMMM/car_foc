@@ -15,6 +15,7 @@ public:
 
     void set();
     void unset();
+    void toggle();
     bool read();
     bool get_interrupt_state();
     void clear_interrupt_state();
@@ -28,6 +29,11 @@ inline void hal_gpio::set()
 inline void hal_gpio::unset()
 {
     Cy_GPIO_Clr(port_,pin_);
+}
+
+inline void hal_gpio::toggle()
+{
+    Cy_GPIO_Inv(port_,pin_);
 }
 
 inline bool hal_gpio::read()

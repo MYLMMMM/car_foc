@@ -4,9 +4,12 @@
 #include <cstring>
 #include <type_traits>
 
+#include "SEGGER_RTT.h"
+
 #include "flag_fifo_soft.hpp"
 #include "hal.hpp"
 
+extern bool test_gpio_bool;
 class spi_decode
 {
 private:
@@ -78,7 +81,8 @@ private:
         std::is_same<T, float>::value> {};
 
     hal_spi& scb_fifo;
-    hal_gpio& gpio;                                    // 新增：GPIO 引用
+    hal_gpio& gpio_stream_state;
+    hal_gpio& gpio_read_feedback;
     sw_flag_fifo<write_cmd, k_sw_buffer_depth> write_buffer;
     sw_flag_fifo<uint8_t, k_sw_buffer_depth> read_buffer;
 
@@ -92,9 +96,10 @@ private:
     register_meta reg_table[k_max_register_count];
 
 public:
-    explicit spi_decode(hal_spi& scb_fifo_, hal_gpio& gpio_)   // 追加 gpio_ 参数
+    explicit spi_decode(hal_spi& scb_fifo_, hal_gpio& gpio_stream_state_, hal_gpio& gpio_read_feedback_)
         : scb_fifo(scb_fifo_),
-          gpio(gpio_),                                          // 新增初始化
+          gpio_stream_state(gpio_stream_state_),
+          gpio_read_feedback(gpio_read_feedback_),
           write_buffer(),
           read_buffer(),
           pending_addrs{0u, 0u},
@@ -168,13 +173,17 @@ public:
     void stream_update()
     {
         // 条件：流传输已开启 且 GPIO 电平为低
-        if (stream_transfer_on && (gpio.read() == 0u))
+        if (stream_transfer_on)
         {
+            uint32_t buffer[10];
+            
+            buffer[0] = emit_read_value_by_addr(0x01);
+            test_gpio_bool = false;
             scb_fifo.clear_tx();
-            emit_read_value_by_addr(0x01);
-            emit_read_value_by_addr(0x02);
-            emit_read_value_by_addr(0x03);
-            emit_read_value_by_addr(0x04);
+            scb_fifo.send(buffer[0]);
+
+            gpio_stream_state.toggle();
+            // SEGGER_RTT_printf(0,"\n");
             // 在此处发送指定数据，emit_read_value_by_addr(addr) 可复用
         }
     }
@@ -213,10 +222,10 @@ private:
     static decoded_frame decode_raw_frame(uint32_t raw)
     {
         decoded_frame frame{};
-        frame.head = static_cast<uint8_t>(raw & 0xFFu);
-        frame.cmd = static_cast<frame_cmd>((raw >> 8) & 0xFFu);
-        frame.data1 = static_cast<uint8_t>((raw >> 16) & 0xFFu);
-        frame.data2 = static_cast<uint8_t>((raw >> 24) & 0xFFu);
+        frame.head = static_cast<uint8_t>((raw >> 24) & 0xFFu);
+        frame.cmd = static_cast<frame_cmd>((raw >> 16) & 0xFFu);
+        frame.data1 = static_cast<uint8_t>((raw >> 8) & 0xFFu);
+        frame.data2 = static_cast<uint8_t>((raw >> 0) & 0xFFu);
         return frame;
     }
 
@@ -295,6 +304,7 @@ private:
 
     void drain_read_buffer_to_scb()
     {
+        bool processed = false;
         while (read_buffer.isNew() != 0u)
         {
             const uint8_t addr = read_buffer.read();
@@ -304,8 +314,15 @@ private:
             {
                 continue;
             }
+            uint32_t a = read_register_as_u32(*meta);
+            scb_fifo.send(a);
+            SEGGER_RTT_printf(0,"%X \n",a);
+            processed = true;
+        }
 
-            scb_fifo.send(read_register_as_u32(*meta));
+        if (processed)
+        {
+            gpio_read_feedback.toggle();
         }
     }
 
@@ -327,15 +344,15 @@ private:
 
     // 删除原来的 emit_stream_payload()
 
-    void emit_read_value_by_addr(uint8_t addr)   // 保留不变，供 stream_update() 复用
+    uint32_t emit_read_value_by_addr(uint8_t addr)   // 保留不变，供 stream_update() 复用
     {
         const register_meta* meta = find_entry(addr);
         if ((meta == nullptr) || (!meta->readable))
         {
-            return;
+            return 0;
         }
 
-        scb_fifo.send(read_register_as_u32(*meta));
+        return read_register_as_u32(*meta);
     }
 
     bool register_entry(uint8_t addr, void* value_ptr, value_type type, bool readable, bool writable)

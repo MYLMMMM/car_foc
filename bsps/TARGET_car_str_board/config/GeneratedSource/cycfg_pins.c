@@ -4,13 +4,13 @@
  * Description:
  * Pin configuration
  * This file was automatically generated and should not be modified.
- * Configurator Backend 3.70.0
+ * Configurator Backend 3.80.0
  * device-db 4.37.0.10260
  * mtb-pdl-cat1 3.20.1.45548
  *
  *******************************************************************************
- * Copyright 2026 Cypress Semiconductor Corporation (an Infineon company) or
- * an affiliate of Cypress Semiconductor Corporation.
+ * Copyright 2026, Infineon Technologies AG, or an affiliate of Infineon
+ * Technologies AG. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -1084,7 +1084,7 @@ const cyhal_resource_inst_t ioss_0_port_8_pin_3_obj =
 const cy_stc_gpio_pin_config_t GPIO_CTR_INT1_config =
 {
     .outVal = 0,
-    .driveMode = CY_GPIO_DM_HIGHZ,
+    .driveMode = CY_GPIO_DM_STRONG,
     .hsiom = GPIO_CTR_INT1_HSIOM,
     .intEdge = CY_GPIO_INTR_DISABLE,
     .intMask = 0UL,
@@ -1110,8 +1110,8 @@ const cyhal_resource_inst_t GPIO_CTR_INT1_obj =
 
 const cy_stc_gpio_pin_config_t GPIO_CTR_INT2_config =
 {
-    .outVal = 1,
-    .driveMode = CY_GPIO_DM_ANALOG,
+    .outVal = 0,
+    .driveMode = CY_GPIO_DM_STRONG,
     .hsiom = GPIO_CTR_INT2_HSIOM,
     .intEdge = CY_GPIO_INTR_DISABLE,
     .intMask = 0UL,

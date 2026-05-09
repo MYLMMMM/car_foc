@@ -4,13 +4,13 @@
  * Description:
  * Pin configuration
  * This file was automatically generated and should not be modified.
- * Configurator Backend 3.70.0
+ * Configurator Backend 3.80.0
  * device-db 4.37.0.10260
  * mtb-pdl-cat1 3.20.1.45548
  *
  *******************************************************************************
- * Copyright 2026 Cypress Semiconductor Corporation (an Infineon company) or
- * an affiliate of Cypress Semiconductor Corporation.
+ * Copyright 2026, Infineon Technologies AG, or an affiliate of Infineon
+ * Technologies AG. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -835,7 +835,7 @@ extern "C" {
 #define GPIO_CTR_INT1_PORT_NUM 8U
 #define GPIO_CTR_INT1_PIN 4U
 #define GPIO_CTR_INT1_NUM 4U
-#define GPIO_CTR_INT1_DRIVEMODE CY_GPIO_DM_HIGHZ
+#define GPIO_CTR_INT1_DRIVEMODE CY_GPIO_DM_STRONG
 #define GPIO_CTR_INT1_INIT_DRIVESTATE 0
 #ifndef ioss_0_port_8_pin_4_HSIOM
     #define ioss_0_port_8_pin_4_HSIOM HSIOM_SEL_GPIO
@@ -847,8 +847,8 @@ extern "C" {
 #define GPIO_CTR_INT1_HAL_PORT_PIN P8_4
 #define GPIO_CTR_INT1 P8_4
 #define GPIO_CTR_INT1_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define GPIO_CTR_INT1_HAL_DIR CYHAL_GPIO_DIR_INPUT 
-#define GPIO_CTR_INT1_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_NONE
+#define GPIO_CTR_INT1_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
+#define GPIO_CTR_INT1_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 #define GPIO_CTR_INT2_ENABLED 1U
@@ -856,8 +856,8 @@ extern "C" {
 #define GPIO_CTR_INT2_PORT_NUM 8U
 #define GPIO_CTR_INT2_PIN 5U
 #define GPIO_CTR_INT2_NUM 5U
-#define GPIO_CTR_INT2_DRIVEMODE CY_GPIO_DM_ANALOG
-#define GPIO_CTR_INT2_INIT_DRIVESTATE 1
+#define GPIO_CTR_INT2_DRIVEMODE CY_GPIO_DM_STRONG
+#define GPIO_CTR_INT2_INIT_DRIVESTATE 0
 #ifndef ioss_0_port_8_pin_5_HSIOM
     #define ioss_0_port_8_pin_5_HSIOM HSIOM_SEL_GPIO
 #endif
@@ -868,8 +868,8 @@ extern "C" {
 #define GPIO_CTR_INT2_HAL_PORT_PIN P8_5
 #define GPIO_CTR_INT2 P8_5
 #define GPIO_CTR_INT2_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define GPIO_CTR_INT2_HAL_DIR CYHAL_GPIO_DIR_INPUT 
-#define GPIO_CTR_INT2_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_ANALOG
+#define GPIO_CTR_INT2_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
+#define GPIO_CTR_INT2_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 #define ioss_0_port_9_pin_0_ENABLED 1U

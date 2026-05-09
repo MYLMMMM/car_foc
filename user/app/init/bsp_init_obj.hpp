@@ -183,7 +183,8 @@ motor_driver motor_b_driver(foc_B_soft, drv8304_b, enc_b, spi_enc_b, pwm_b_u, pw
 /*-----------------SPI decode config----------------------*/
 hal_spi spi_ctr(SPI_CTR_HW);
 hal_gpio pin_ctr_int1(GPIO_CTR_INT1_PORT,GPIO_CTR_INT1_PIN);
-spi_decode spi_ctr_decode(spi_ctr,pin_ctr_int1);
+hal_gpio pin_ctr_int2(GPIO_CTR_INT2_PORT,GPIO_CTR_INT2_PIN);
+spi_decode spi_ctr_decode(spi_ctr,pin_ctr_int1,pin_ctr_int2);
 cy_stc_sysint_t int_spi_ctl = 
 {
     .intrSrc = SPI_CTR_IRQ,

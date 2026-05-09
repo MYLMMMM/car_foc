@@ -27,7 +27,8 @@
         "clangd.arguments": [
             "--background-index",
             "--query-driver=/opt/Tools/mtb-gcc-arm-eabi/14.2.1/gcc/bin/arm-none-eabi-*"
-        ]
+        ],
+        "cortex-debug.variableUseNaturalFormat": false
     },
     "extensions": {
         "recommendations": [ "marus25.cortex-debug", "ms-vscode.cpptools", "dan-c-underwood.arm" ]
