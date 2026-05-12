@@ -46,6 +46,7 @@ void task_maneger()
     case command::start:
         motor_a_driver.start();
         motor_b_driver.start();
+        motor_c_driver.start();
         mech_command = command::default_command;
         mech_state = state::running;
         light_color = state_color::color_start;
@@ -53,6 +54,7 @@ void task_maneger()
     case command::stop:
         motor_a_driver.stop();
         motor_b_driver.stop();
+        motor_c_driver.stop();
         mech_command = command::default_command;
         mech_state = state::stop;
         light_color = state_color::colar_stop;

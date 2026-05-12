@@ -4,6 +4,7 @@
 #pragma once
 
 #include "drv8304.hpp"
+#include "drv8876.hpp"
 #include "kth7823.hpp"
 #include "cybsp.h"
 #include "foc_soft.hpp"
@@ -112,7 +113,7 @@ dc_motor_datastructure_config motor_c_config =
     .adc_current = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_C_I_CH_CHAN_IDX),
     .adc_vbus = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_VBUS_CH_CHAN_IDX),
 
-    .adc_zero = 2250,
+    .adc_zero = 0,
     .adc_vref = 3.0f,
     .adc_full_scale = 4095,
     .shunt_resistance = 0.010f,
@@ -124,8 +125,8 @@ dc_motor_datastructure_config motor_c_config =
     .pid_kd = 0.0f,
     .pid_integral_limit = 4.0f,
 
-    .control_period_s = 0.0001f,
-    .pwm_period = 11999,
+    .control_period_s = 0.001f,
+    .pwm_period = 239999,
 };
 
 dc_motor_datastructure motor_c_data(motor_c_config);
@@ -155,6 +156,18 @@ drv8304 drv8304_b(spi_gd_cfg_b,pin_drv8304_b_enable,pin_drv8304_b_nfault);
 
  void drv8304_a_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
  void drv8304_b_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
+
+/*--------------------drv8876_C_config------------------*/
+cy_stc_sysint_t gpio_c_iqr_config = {
+    .intrSrc = GPIO_GD_C_nFAULT_IRQ,
+    .intrPriority = 1
+};
+hal_gpio pin_drv8876_c_nsleep(GPIO_GD_C_ENABLE_PORT,GPIO_GD_C_ENABLE_PIN);
+hal_gpio pin_drv8876_c_nfault(GPIO_GD_C_nFAULT_PORT,GPIO_GD_C_nFAULT_PIN);
+
+drv8876 drv8876_c(pin_drv8876_c_nsleep,pin_drv8876_c_nfault);
+
+ void drv8876_c_nfault_callback(const drv8876::FaultState &state,void* userptr);
 
 /*-----------------KTH7823_A_config----------------------*/
 kth7823::regist_map enc_a_init_map =

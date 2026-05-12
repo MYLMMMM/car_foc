@@ -443,7 +443,7 @@ const cy_stc_hppass_sar_grp_t motor_c_group_config =
         0U, 
         0U, 
     },
-    .trig = CY_HPPASS_SAR_TRIG_DISABLED,
+    .trig = CY_HPPASS_SAR_TRIG_2,
     .sampTime = CY_HPPASS_SAR_SAMP_TIME_DISABLED,
     .priority = false,
     .continuous = false,
@@ -870,7 +870,7 @@ const mtb_hal_spi_configurator_t SPI_CTR_hal_config =
 
 const cy_stc_tcpwm_counter_config_t TIMER_TASK_config =
 {
-    .period = 120000,
+    .period = 239999,
     .clockPrescaler = CY_TCPWM_COUNTER_PRESCALER_DIVBY_1,
     .runMode = CY_TCPWM_COUNTER_CONTINUOUS,
     .countDirection = CY_TCPWM_COUNTER_COUNT_UP,
@@ -996,7 +996,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_C_U_config =
     .compare1MatchDown = false,
     .kill1InputMode = PWM_C_U_INPUT_DISABLED & 0x3U,
     .kill1Input = CY_TCPWM_INPUT_0,
-    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_HIGHZ,
+    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_LOW,
     .trigger0Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
     .trigger1Event = CY_TCPWM_CNT_TRIGGER_ON_OVERFLOW,
     .reloadLineSelect = false,
@@ -1119,7 +1119,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_C_V_config =
     .compare1MatchDown = false,
     .kill1InputMode = PWM_C_V_INPUT_DISABLED & 0x3U,
     .kill1Input = CY_TCPWM_INPUT_0,
-    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_HIGHZ,
+    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_LOW,
     .trigger0Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
     .trigger1Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
     .reloadLineSelect = false,
@@ -1143,8 +1143,8 @@ const cy_stc_tcpwm_pwm_config_t PWM_C_V_config =
     .limiter = CY_TCPWM_DITHERING_LIMITER_7,
     .pwm_tc_sync_kill_dt = false,
     .pwm_sync_kill_dt = false,
-    .debug_freeze_enable = false,
-    .debug_suspend_enable = false,
+    .debug_freeze_enable = true,
+    .debug_suspend_enable = true,
 #endif /* defined (CY_IP_MXS40TCPWM) */
 };
 
@@ -1702,7 +1702,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_U_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 11999,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1728,13 +1728,13 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_U_config =
     .compare2 = 0,
     .compare3 = 16384,
     .enableCompare1Swap = false,
-    .compare0MatchUp = true,
+    .compare0MatchUp = false,
     .compare0MatchDown = false,
-    .compare1MatchUp = true,
+    .compare1MatchUp = false,
     .compare1MatchDown = false,
     .kill1InputMode = PWM_B_U_INPUT_DISABLED & 0x3U,
     .kill1Input = CY_TCPWM_INPUT_0,
-    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_HIGHZ,
+    .pwmOnDisable = CY_TCPWM_PWM_OUTPUT_LOW,
     .trigger0Event = CY_TCPWM_CNT_TRIGGER_ON_DISABLED,
     .trigger1Event = CY_TCPWM_CNT_TRIGGER_ON_OVERFLOW,
     .reloadLineSelect = false,
@@ -1784,7 +1784,7 @@ const mtb_hal_pwm_configurator_t PWM_B_U_hal_config =
     .clock = &PWM_B_U_hal_clock,
     .group = 1UL,
     .cntnum = 259UL,
-    .max_count = 5999,
+    .max_count = 11999,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1825,7 +1825,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_V_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 11999,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1851,9 +1851,9 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_V_config =
     .compare2 = 0,
     .compare3 = 16384,
     .enableCompare1Swap = false,
-    .compare0MatchUp = true,
+    .compare0MatchUp = false,
     .compare0MatchDown = false,
-    .compare1MatchUp = true,
+    .compare1MatchUp = false,
     .compare1MatchDown = false,
     .kill1InputMode = PWM_B_V_INPUT_DISABLED & 0x3U,
     .kill1Input = CY_TCPWM_INPUT_0,
@@ -1907,7 +1907,7 @@ const mtb_hal_pwm_configurator_t PWM_B_V_hal_config =
     .clock = &PWM_B_V_hal_clock,
     .group = 1UL,
     .cntnum = 260UL,
-    .max_count = 5999,
+    .max_count = 11999,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1948,7 +1948,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_W_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 11999,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1974,9 +1974,9 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_W_config =
     .compare2 = 0,
     .compare3 = 16384,
     .enableCompare1Swap = false,
-    .compare0MatchUp = true,
+    .compare0MatchUp = false,
     .compare0MatchDown = false,
-    .compare1MatchUp = true,
+    .compare1MatchUp = false,
     .compare1MatchDown = false,
     .kill1InputMode = PWM_B_W_INPUT_DISABLED & 0x3U,
     .kill1Input = CY_TCPWM_INPUT_0,
@@ -2030,7 +2030,7 @@ const mtb_hal_pwm_configurator_t PWM_B_W_hal_config =
     .clock = &PWM_B_W_hal_clock,
     .group = 1UL,
     .cntnum = 261UL,
-    .max_count = 5999,
+    .max_count = 11999,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
