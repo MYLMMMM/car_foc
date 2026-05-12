@@ -376,7 +376,7 @@ void ctl_init()
     NVIC_EnableIRQ(int_timer_task_config.intrSrc);
 
     Cy_TCPWM_Counter_Enable(TIMER_TASK_HW, TIMER_TASK_NUM);
-
+    Cy_TCPWM_TriggerStart_Single(TIMER_TASK_HW,TIMER_TASK_NUM);
 }
 
 void WS2812_init()

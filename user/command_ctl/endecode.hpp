@@ -172,7 +172,6 @@ public:
     // 新增：stream_update() —— 由外部定时/事件触发调用
     void stream_update()
     {
-        // 条件：流传输已开启 且 GPIO 电平为低
         if (stream_transfer_on)
         {
             uint32_t buffer[10];
@@ -182,10 +181,20 @@ public:
             scb_fifo.clear_tx();
             scb_fifo.send(buffer[0]);
 
-            gpio_stream_state.toggle();
-            // SEGGER_RTT_printf(0,"\n");
+            // if (gpio_stream_state.read() == true)
+            // {
+            //     gpio_stream_state.unset();
+            // }
+            // else
+            // {
+            //     gpio_stream_state.set();
+            // }
+
+            SEGGER_RTT_printf(0,"\n");
             // 在此处发送指定数据，emit_read_value_by_addr(addr) 可复用
-        }
+        }            
+        
+        gpio_stream_state.toggle();
     }
 
 private:

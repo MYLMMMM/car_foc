@@ -1084,13 +1084,13 @@ const cyhal_resource_inst_t ioss_0_port_8_pin_3_obj =
 const cy_stc_gpio_pin_config_t GPIO_CTR_INT1_config =
 {
     .outVal = 0,
-    .driveMode = CY_GPIO_DM_STRONG,
+    .driveMode = CY_GPIO_DM_HIGHZ,
     .hsiom = GPIO_CTR_INT1_HSIOM,
     .intEdge = CY_GPIO_INTR_DISABLE,
     .intMask = 0UL,
     .vtrip = CY_GPIO_VTRIP_CMOS,
-    .slewRate = CY_GPIO_SLEW_FAST,
-    .driveSel = CY_GPIO_DRIVE_1_2,
+    .slewRate = CY_GPIO_SLEW_SLOW,
+    .driveSel = CY_GPIO_DRIVE_1_4,
     .vregEn = 0UL,
     .ibufMode = 0UL,
     .vtripSel = 0UL,
