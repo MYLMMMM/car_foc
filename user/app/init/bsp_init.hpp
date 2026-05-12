@@ -4,6 +4,7 @@
 #include "endecode.hpp"
 #include "XL2020RGBC.hpp"
 #include "motor.hpp"
+#include "dc_motor_driver.hpp"
 
 void bsp_init();
 
@@ -14,6 +15,7 @@ extern kth7823 enc_a;
 extern kth7823 enc_b;
 extern motor_driver motor_a_driver;
 extern motor_driver motor_b_driver;
+extern dc_motor_driver motor_c_driver;
 extern spi_decode spi_ctr_decode;
 extern XL202RGBC ws2812;
 

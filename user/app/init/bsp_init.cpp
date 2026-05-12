@@ -13,6 +13,7 @@ void ctl_init();
 void WS2812_init();
 void motor_a_foc_isr();
 void motor_b_foc_isr();
+void motor_c_dc_isr();
 void motor_a_ec_isr();
 void motor_b_ec_isr();
 void motor_a_pwm_isr();
@@ -48,6 +49,9 @@ void bsp_init()
     Cy_SysInt_Init(&int_adc_motor_b_config,motor_b_foc_isr);
     NVIC_ClearPendingIRQ(int_adc_motor_b_config.intrSrc);
     NVIC_EnableIRQ(int_adc_motor_b_config.intrSrc);
+    Cy_SysInt_Init(&int_adc_motor_c_config,motor_c_dc_isr);
+    NVIC_ClearPendingIRQ(int_adc_motor_c_config.intrSrc);
+    NVIC_EnableIRQ(int_adc_motor_c_config.intrSrc);
 
     
     ctl_init();
@@ -114,7 +118,7 @@ void motor_a_init()
     NVIC_ClearPendingIRQ(int_spi_ec_a_config.intrSrc);
     NVIC_EnableIRQ(int_spi_ec_a_config.intrSrc);
     
-    enc_a.set_direction(true);
+    enc_a.set_direction(false);
 
         //init DMA
     cy_en_dma_status_t dma_init_status;
@@ -135,8 +139,8 @@ void motor_a_init()
     }
 #endif
 
-    Cy_DMA_Descriptor_SetSrcAddress(&DMA_EC_A_RX_Descriptor_0, (void *)&SPI_EC_A_HW->RX_FIFO_RD);
-    Cy_DMA_Descriptor_SetDstAddress(&DMA_EC_A_RX_Descriptor_0, (uint16_t *)&foc_motor_datastructure_A.enc_a);
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_EC_A_RX_Descriptor_0, (void *)&(SPI_EC_A_HW->RX_FIFO_RD));
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_EC_A_RX_Descriptor_0, (uint16_t *)&(foc_motor_datastructure_A.enc_a));
 
     Cy_DMA_Channel_SetDescriptor(DMA_EC_A_RX_HW, DMA_EC_A_RX_CHANNEL, &DMA_EC_A_RX_Descriptor_0);
     Cy_DMA_Channel_SetPriority(DMA_EC_A_RX_HW, DMA_EC_A_RX_CHANNEL, 3UL);
@@ -301,6 +305,35 @@ void motor_b_init()
 
 void motor_c_init()
 {
+    cy_en_tcpwm_status_t tcpwm_status;
+
+    tcpwm_status = Cy_TCPWM_PWM_Init(PWM_C_U_HW, PWM_C_U_NUM, &PWM_C_U_config);
+#ifdef __DEBUG_RTT
+    if (tcpwm_status != CY_TCPWM_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "motor_c_pwm_u init fail\r\n");
+    }
+#endif
+
+    tcpwm_status = Cy_TCPWM_PWM_Init(PWM_C_V_HW, PWM_C_V_NUM, &PWM_C_V_config);
+#ifdef __DEBUG_RTT
+    if (tcpwm_status != CY_TCPWM_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "motor_c_pwm_v init fail\r\n");
+    }
+#endif
+
+    tcpwm_status = Cy_TCPWM_PWM_Init(PWM_START_C_HW, PWM_START_C_NUM, &PWM_START_C_config);
+#ifdef __DEBUG_RTT
+    if (tcpwm_status != CY_TCPWM_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "motor_c_pwm_start init fail\r\n");
+    }
+#endif
+
+    Cy_TCPWM_PWM_Enable(PWM_C_U_HW, PWM_C_U_NUM);
+    Cy_TCPWM_PWM_Enable(PWM_C_V_HW, PWM_C_V_NUM);
+    Cy_TCPWM_PWM_Enable(PWM_START_C_HW, PWM_START_C_NUM);
 }
 
 void ctl_init()
@@ -343,7 +376,6 @@ void ctl_init()
     NVIC_EnableIRQ(int_timer_task_config.intrSrc);
 
     Cy_TCPWM_Counter_Enable(TIMER_TASK_HW, TIMER_TASK_NUM);
-    Cy_TCPWM_TriggerStart_Single(TIMER_TASK_HW, TIMER_TASK_NUM);
 
 }
 
@@ -376,6 +408,11 @@ __WEAK void motor_a_foc_isr()
 __WEAK void motor_b_foc_isr()
 {
     motor_b_driver.foc_trig_isr();
+}
+
+__WEAK void motor_c_dc_isr()
+{
+    motor_c_driver.dc_trig_isr();
 }
 
 __WEAK void motor_a_ec_isr()
