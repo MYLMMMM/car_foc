@@ -126,6 +126,5 @@ public:
         spi_.send(65535u);
     }
 
-private:
     hal_spi& spi_;
 };

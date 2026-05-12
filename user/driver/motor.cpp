@@ -72,7 +72,9 @@ void motor_driver::foc_trig_isr() noexcept
         return;
     }
     Cy_HPPASS_SAR_Result_ClearInterrupt(sar_result_group_mask_);
+
     // encoder_mean_filter_.trig();
+
     foc_soft_.trg();
 
     pwm_u_.set_compare(foc_soft_.motor.ccr_a);

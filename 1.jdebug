@@ -22,12 +22,12 @@ void OnProjectLoad (void) {
   //
   // Dialog-generated settings
   //
-  Project.AddPathSubstitute ("/home/zhuizhai/Program/PSC3M5/car_foc", "$(ProjectDir)");
-  Project.AddPathSubstitute ("/home/zhuizhai/program/psc3m5/car_foc", "$(ProjectDir)");
-  Project.SetDevice ("PSC3xxF_tm");
+  Project.SetDevice ("PSC3xxF");
   Project.SetHostIF ("USB", "59140595");
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("50 MHz");
+  Project.AddPathSubstitute ("/home/zhuizhai/Program/PSC3M5/car_foc", "$(ProjectDir)");
+  Project.AddPathSubstitute ("/home/zhuizhai/program/psc3m5/car_foc", "$(ProjectDir)");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M33F.svd");
   //
   // User settings

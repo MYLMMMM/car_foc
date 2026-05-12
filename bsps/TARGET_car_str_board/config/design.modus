@@ -51,6 +51,7 @@
                     </Block>
                     <Parameters>
                         <Param id="BUFFERABLE" value="false"/>
+                        <Param id="CHAIN_TO_0" value="0"/>
                         <Param id="CHANNEL_PRIORITY" value="3"/>
                         <Param id="CHAN_STATE_COMPL_0" value="CY_DMA_CHANNEL_ENABLED"/>
                         <Param id="CRC_0" value="false"/>
@@ -59,21 +60,21 @@
                         <Param id="CRC_POLYNOMIAL" value="79764919"/>
                         <Param id="CRC_REMINDER_REVERSE" value="false"/>
                         <Param id="CRC_REMINDER_XOR" value="0"/>
-                        <Param id="DATA_TRANSFER_WIDTH_0" value="HalfwordToHalfword"/>
+                        <Param id="DATA_TRANSFER_WIDTH_0" value="WordToHalfword"/>
                         <Param id="DESCR_SELECTION" value="0"/>
-                        <Param id="ENABLE_CHAINING_0" value="false"/>
+                        <Param id="ENABLE_CHAINING_0" value="true"/>
                         <Param id="INTR_OUT_0" value="CY_DMA_1ELEMENT"/>
                         <Param id="NUM_OF_DESCRIPTORS" value="1"/>
                         <Param id="PREEMPTABLE" value="false"/>
                         <Param id="TRIG_DEACT_0" value="CY_DMA_RETRIG_IM"/>
                         <Param id="TRIG_IN_TYPE_0" value="CY_DMA_DESCR"/>
                         <Param id="TRIG_OUT_TYPE_0" value="CY_DMA_1ELEMENT"/>
-                        <Param id="X_DST_INCREMENT_0" value="1"/>
+                        <Param id="X_DST_INCREMENT_0" value="0"/>
                         <Param id="X_NUM_OF_ELEMENTS_0" value="1"/>
-                        <Param id="X_SRC_INCREMENT_0" value="1"/>
-                        <Param id="Y_DST_INCREMENT_0" value="1"/>
+                        <Param id="X_SRC_INCREMENT_0" value="0"/>
+                        <Param id="Y_DST_INCREMENT_0" value="0"/>
                         <Param id="Y_NUM_OF_ELEMENTS_0" value="1"/>
-                        <Param id="Y_SRC_INCREMENT_0" value="1"/>
+                        <Param id="Y_SRC_INCREMENT_0" value="0"/>
                         <Param id="inFlash" value="true"/>
                     </Parameters>
                 </Personality>
@@ -93,7 +94,7 @@
                         <Param id="CRC_POLYNOMIAL" value="79764919"/>
                         <Param id="CRC_REMINDER_REVERSE" value="false"/>
                         <Param id="CRC_REMINDER_XOR" value="0"/>
-                        <Param id="DATA_TRANSFER_WIDTH_0" value="HalfwordToHalfword"/>
+                        <Param id="DATA_TRANSFER_WIDTH_0" value="WordToHalfword"/>
                         <Param id="DESCR_SELECTION" value="0"/>
                         <Param id="ENABLE_CHAINING_0" value="false"/>
                         <Param id="INTR_OUT_0" value="CY_DMA_1ELEMENT"/>
@@ -102,12 +103,12 @@
                         <Param id="TRIG_DEACT_0" value="CY_DMA_RETRIG_IM"/>
                         <Param id="TRIG_IN_TYPE_0" value="CY_DMA_DESCR"/>
                         <Param id="TRIG_OUT_TYPE_0" value="CY_DMA_1ELEMENT"/>
-                        <Param id="X_DST_INCREMENT_0" value="1"/>
+                        <Param id="X_DST_INCREMENT_0" value="0"/>
                         <Param id="X_NUM_OF_ELEMENTS_0" value="1"/>
-                        <Param id="X_SRC_INCREMENT_0" value="1"/>
-                        <Param id="Y_DST_INCREMENT_0" value="1"/>
+                        <Param id="X_SRC_INCREMENT_0" value="0"/>
+                        <Param id="Y_DST_INCREMENT_0" value="0"/>
                         <Param id="Y_NUM_OF_ELEMENTS_0" value="1"/>
-                        <Param id="Y_SRC_INCREMENT_0" value="1"/>
+                        <Param id="Y_SRC_INCREMENT_0" value="0"/>
                         <Param id="inFlash" value="true"/>
                     </Parameters>
                 </Personality>
@@ -1480,7 +1481,7 @@
                         <Param id="OvsFactor" value="10"/>
                         <Param id="Parity" value="CY_SCB_SPI_PARITY_NONE"/>
                         <Param id="RxDataWidth" value="16"/>
-                        <Param id="RxTriggerLevel" value="1"/>
+                        <Param id="RxTriggerLevel" value="0"/>
                         <Param id="SclkModeUser" value="CY_SCB_SPI_CPHA1_CPOL1"/>
                         <Param id="SetupDelay" value="false"/>
                         <Param id="Ss0Polarity" value="CY_SCB_SPI_ACTIVE_LOW"/>
@@ -2509,11 +2510,11 @@
             <Netlist>
                 <Net>
                     <Port name="cpuss[0].dw0[0].chan[14].tr_in[0]"/>
-                    <Port name="scb[1].tr_rx_req[0]"/>
+                    <Port name="scb[3].tr_rx_req[0]"/>
                 </Net>
                 <Net>
                     <Port name="cpuss[0].dw0[0].chan[15].tr_in[0]"/>
-                    <Port name="scb[3].tr_rx_req[0]"/>
+                    <Port name="scb[2].tr_rx_req[0]"/>
                 </Net>
                 <Net>
                     <Port name="debug600[0].clk_swj_swclk_tclk[0]"/>
