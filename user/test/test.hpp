@@ -3,8 +3,8 @@
 
 // #define __TEST foc_test
 // #define __TEST offset_get
-// #define __TEST spi_ctl_test
-#define __TEST encoder_test
+#define __TEST spi_ctl_test
+// #define __TEST encoder_test
 
 
 void foc_test();

@@ -8,6 +8,7 @@ void spi_ctl_test()
     spi_ctr_decode.register_map(0x01u,colar_test,true, true);
     while (1)
     {
+        // colar_test ++;
         ws2812.set_color(colar_test & 0xFF, (colar_test >> 8) & 0xFF, (colar_test >> 16) & 0xFF);
         CyDelay(100);
     }

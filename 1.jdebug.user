@@ -19,8 +19,8 @@ OpenDocument="encoder_test.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc
 OpenDocument="cy_syslib_ext.S", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/TOOLCHAIN_GCC_ARM/cy_syslib_ext.S", Line=39
 OpenDocument="cy_gpio.h", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/include/cy_gpio.h", Line=2515
 OpenDocument="command_doer.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/app/tasks/command_doer.cpp", Line=0
-OpenDocument="main.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/main.cpp", Line=51
-OpenDocument="bsp_init.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/app/init/bsp_init.cpp", Line=0
+OpenDocument="main.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/main.cpp", Line=61
+OpenDocument="bsp_init.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/app/init/bsp_init.cpp", Line=387
 OpenDocument="spi_test.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/test/spi_test.cpp", Line=0
 OpenDocument="cy_scb_common.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/cy_scb_common.c", Line=214
 OpenDocument="ppu_v1.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/ppu_v1.c", Line=102
