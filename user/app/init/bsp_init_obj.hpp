@@ -262,4 +262,4 @@ XL202RGBC ws2812(spi_ws2812);
 
 /*----------------CommandDoer----------------------------*/
 CommandDoer::CommandDoerState command_doer_state;
-CommandDoer command_doer(command_doer_state);
+CommandDoer command_doer(command_doer_state, ws2812);

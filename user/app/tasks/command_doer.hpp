@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+class XL202RGBC;
+
 class CommandDoer {
 public:
     enum class State : uint32_t {
@@ -14,6 +16,7 @@ public:
         Default = 0,
         Start = 1,
         Stop = 2,
+        InternalError = 3,
     };
 
     enum class StateColor : uint32_t {
@@ -24,11 +27,12 @@ public:
 
     struct CommandDoerState {
         State      mech_state   = State::Stop;
-        Command    mech_command = Command::Default;
+        Command    mech_command = Command::Stop;
         StateColor light_color  = StateColor::ColorStop;
     };
 
-    explicit CommandDoer(CommandDoerState& state) : state_(state) {}
+    explicit CommandDoer(CommandDoerState& state, XL202RGBC& led)
+        : state_(state), led_(led) {}
 
     void task_ctl();
 
@@ -44,4 +48,5 @@ private:
     void task_manager();
 
     CommandDoerState& state_;
+    XL202RGBC&       led_;
 };
