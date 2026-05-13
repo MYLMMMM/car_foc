@@ -40,7 +40,7 @@ def main():
     # Check if CyDelay(20) already exists within the previous ~10 lines
     search_start = max(0, target_idx - 10)
     for line in lines[search_start:target_idx]:
-        if "CyDelay(5)" in line:
+        if "CyDelay(20)" in line:
             print("[clock_delay] CyDelay(20) already present, nothing to do.")
             sys.exit(0)
 
