@@ -9,7 +9,6 @@
 #include "flag_fifo_soft.hpp"
 #include "hal.hpp"
 
-extern bool test_gpio_bool;
 class spi_decode
 {
 private:
@@ -96,21 +95,7 @@ private:
     register_meta reg_table[k_max_register_count];
 
 public:
-    explicit spi_decode(hal_spi& scb_fifo_, hal_gpio& gpio_stream_state_, hal_gpio& gpio_read_feedback_)
-        : scb_fifo(scb_fifo_),
-          gpio_stream_state(gpio_stream_state_),
-          gpio_read_feedback(gpio_read_feedback_),
-          write_buffer(),
-          read_buffer(),
-          pending_addrs{0u, 0u},
-          state(decode_state::wait_head),
-          pending_addr_count(0u),
-          pending_value_index(0u),
-          stream_transfer_on(false),
-          reg_table{}
-    {
-        clear_register_table();
-    }
+    explicit spi_decode(hal_spi& scb_fifo_, hal_gpio& gpio_stream_state_, hal_gpio& gpio_read_feedback_);
 
     template <typename T>
     bool register_map(uint8_t addr, T& value_ref, bool readable = true, bool writable = true)
@@ -123,70 +108,13 @@ public:
                               writable);
     }
 
-    bool unregister_map(uint8_t addr)
-    {
-        for (uint8_t i = 0u; i < k_max_register_count; ++i)
-        {
-            if (reg_table[i].used && (reg_table[i].addr == addr))
-            {
-                reg_table[i].used = false;
-                reg_table[i].value_ptr = nullptr;
-                reg_table[i].readable = false;
-                reg_table[i].writable = false;
-                return true;
-            }
-        }
+    bool unregister_map(uint8_t addr);
 
-        return false;
-    }
+    void clear_maps();
 
-    void clear_maps()
-    {
-        clear_register_table();
-    }
+    void trig();
 
-    void trig()
-    {
-        while (scb_fifo.isnew() != 0u)
-        {
-            const uint32_t raw = scb_fifo.recive();
-
-            if (state == decode_state::wait_head)
-            {
-                handle_head_frame(raw);
-            }
-            else
-            {
-                handle_mid_frame_value(raw);
-            }
-        }
-
-        // 这里从 read_buffer 取命令，由元数据表直接读变量并塞入 scb_fifo。
-        drain_read_buffer_to_scb();
-        // 这里从 write_buffer 取命令，由元数据表直接写变量并校验可写性。
-        drain_write_buffer_to_registers();
-
-        // 已移除 emit_stream_payload() 调用 —— 改为外部主动调用 stream_update()
-    }
-
-    // 新增：stream_update() —— 由外部定时/事件触发调用
-    void stream_update()
-    {
-        // 条件：流传输已开启 且 GPIO 电平为低
-        if (stream_transfer_on)
-        {
-            uint32_t buffer[10];
-            
-            buffer[0] = emit_read_value_by_addr(0x01);
-            test_gpio_bool = false;
-            scb_fifo.clear_tx();
-            scb_fifo.send(buffer[0]);
-
-            gpio_stream_state.toggle();
-            // SEGGER_RTT_printf(0,"\n");
-            // 在此处发送指定数据，emit_read_value_by_addr(addr) 可复用
-        }
-    }
+    void stream_update();
 
 private:
     template <typename T>
@@ -219,312 +147,27 @@ private:
         return value_type::f32;
     }
 
-    static decoded_frame decode_raw_frame(uint32_t raw)
-    {
-        decoded_frame frame{};
-        frame.head = static_cast<uint8_t>((raw >> 24) & 0xFFu);
-        frame.cmd = static_cast<frame_cmd>((raw >> 16) & 0xFFu);
-        frame.data1 = static_cast<uint8_t>((raw >> 8) & 0xFFu);
-        frame.data2 = static_cast<uint8_t>((raw >> 0) & 0xFFu);
-        return frame;
-    }
+    static decoded_frame decode_raw_frame(uint32_t raw);
 
-    void handle_head_frame(uint32_t raw)
-    {
-        const decoded_frame frame = decode_raw_frame(raw);
-        if (frame.head != k_frame_head)
-        {
-            return;
-        }
+    void handle_head_frame(uint32_t raw);
 
-        switch (frame.cmd)
-        {
-            case frame_cmd::read_one:
-            {
-                read_buffer.write(frame.data1);
-                break;
-            }
-            case frame_cmd::read_two:
-            {
-                read_buffer.write(frame.data1);
-                read_buffer.write(frame.data2);
-                break;
-            }
-            case frame_cmd::write_one:
-            {
-                pending_addrs[0] = frame.data1;
-                pending_addr_count = 1u;
-                pending_value_index = 0u;
-                state = decode_state::wait_mid_frame;
-                break;
-            }
-            case frame_cmd::write_two:
-            {
-                pending_addrs[0] = frame.data1;
-                pending_addrs[1] = frame.data2;
-                pending_addr_count = 2u;
-                pending_value_index = 0u;
-                state = decode_state::wait_mid_frame;
-                break;
-            }
-            case frame_cmd::streamtransfer:
-            {
-                stream_transfer_on = true;
-                break;
-            }
-            case frame_cmd::stop:
-            {
-                stream_transfer_on = false;
-                break;
-            }
-            case frame_cmd::empty:
-            default:
-            {
-                break;
-            }
-        }
-    }
+    void handle_mid_frame_value(uint32_t raw);
 
-    void handle_mid_frame_value(uint32_t raw)
-    {
-        if (pending_value_index < pending_addr_count)
-        {
-            write_cmd cmd{};
-            cmd.addr = pending_addrs[pending_value_index];
-            cmd.value = raw;
-            write_buffer.write(cmd);
-            ++pending_value_index;
-        }
+    void drain_read_buffer_to_scb();
 
-        if (pending_value_index >= pending_addr_count)
-        {
-            clear_pending_write_context();
-        }
-    }
+    void drain_write_buffer_to_registers();
 
-    void drain_read_buffer_to_scb()
-    {
-        bool processed = false;
-        while (read_buffer.isNew() != 0u)
-        {
-            const uint8_t addr = read_buffer.read();
-            const register_meta* meta = find_entry(addr);
+    uint32_t emit_read_value_by_addr(uint8_t addr);
 
-            if ((meta == nullptr) || (!meta->readable))
-            {
-                continue;
-            }
-            uint32_t a = read_register_as_u32(*meta);
-            scb_fifo.send(a);
-            SEGGER_RTT_printf(0,"%X \n",a);
-            processed = true;
-        }
+    bool register_entry(uint8_t addr, void* value_ptr, value_type type, bool readable, bool writable);
 
-        if (processed)
-        {
-            gpio_read_feedback.toggle();
-        }
-    }
+    register_meta* find_entry(uint8_t addr);
+    const register_meta* find_entry(uint8_t addr) const;
 
-    void drain_write_buffer_to_registers()
-    {
-        while (write_buffer.isNew() != 0u)
-        {
-            const write_cmd cmd = write_buffer.read();
-            register_meta* meta = find_entry(cmd.addr);
+    static uint32_t read_register_as_u32(const register_meta& meta);
 
-            if ((meta == nullptr) || (!meta->writable))
-            {
-                continue;
-            }
+    static void write_u32_to_register(register_meta& meta, uint32_t raw);
 
-            write_u32_to_register(*meta, cmd.value);
-        }
-    }
-
-    // 删除原来的 emit_stream_payload()
-
-    uint32_t emit_read_value_by_addr(uint8_t addr)   // 保留不变，供 stream_update() 复用
-    {
-        const register_meta* meta = find_entry(addr);
-        if ((meta == nullptr) || (!meta->readable))
-        {
-            return 0;
-        }
-
-        return read_register_as_u32(*meta);
-    }
-
-    bool register_entry(uint8_t addr, void* value_ptr, value_type type, bool readable, bool writable)
-    {
-        if (value_ptr == nullptr)
-        {
-            return false;
-        }
-
-        register_meta* old = find_entry(addr);
-        if (old != nullptr)
-        {
-            old->value_ptr = value_ptr;
-            old->type = type;
-            old->readable = readable;
-            old->writable = writable;
-            old->used = true;
-            return true;
-        }
-
-        for (uint8_t i = 0u; i < k_max_register_count; ++i)
-        {
-            if (!reg_table[i].used)
-            {
-                reg_table[i].addr = addr;
-                reg_table[i].value_ptr = value_ptr;
-                reg_table[i].type = type;
-                reg_table[i].readable = readable;
-                reg_table[i].writable = writable;
-                reg_table[i].used = true;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    register_meta* find_entry(uint8_t addr)
-    {
-        for (uint8_t i = 0u; i < k_max_register_count; ++i)
-        {
-            if (reg_table[i].used && (reg_table[i].addr == addr))
-            {
-                return &reg_table[i];
-            }
-        }
-
-        return nullptr;
-    }
-
-    const register_meta* find_entry(uint8_t addr) const
-    {
-        for (uint8_t i = 0u; i < k_max_register_count; ++i)
-        {
-            if (reg_table[i].used && (reg_table[i].addr == addr))
-            {
-                return &reg_table[i];
-            }
-        }
-
-        return nullptr;
-    }
-
-    static uint32_t read_register_as_u32(const register_meta& meta)
-    {
-        switch (meta.type)
-        {
-            case value_type::u8:
-            {
-                return static_cast<uint32_t>(*static_cast<const uint8_t*>(meta.value_ptr));
-            }
-            case value_type::i8:
-            {
-                return static_cast<uint32_t>(static_cast<uint8_t>(*static_cast<const int8_t*>(meta.value_ptr)));
-            }
-            case value_type::u16:
-            {
-                return static_cast<uint32_t>(*static_cast<const uint16_t*>(meta.value_ptr));
-            }
-            case value_type::i16:
-            {
-                return static_cast<uint32_t>(static_cast<uint16_t>(*static_cast<const int16_t*>(meta.value_ptr)));
-            }
-            case value_type::u32:
-            {
-                return *static_cast<const uint32_t*>(meta.value_ptr);
-            }
-            case value_type::i32:
-            {
-                return static_cast<uint32_t>(*static_cast<const int32_t*>(meta.value_ptr));
-            }
-            case value_type::f32:
-            {
-                uint32_t raw = 0u;
-                const float value = *static_cast<const float*>(meta.value_ptr);
-                std::memcpy(&raw, &value, sizeof(raw));
-                return raw;
-            }
-            default:
-            {
-                return 0u;
-            }
-        }
-    }
-
-    static void write_u32_to_register(register_meta& meta, uint32_t raw)
-    {
-        switch (meta.type)
-        {
-            case value_type::u8:
-            {
-                *static_cast<uint8_t*>(meta.value_ptr) = static_cast<uint8_t>(raw);
-                break;
-            }
-            case value_type::i8:
-            {
-                *static_cast<int8_t*>(meta.value_ptr) = static_cast<int8_t>(raw);
-                break;
-            }
-            case value_type::u16:
-            {
-                *static_cast<uint16_t*>(meta.value_ptr) = static_cast<uint16_t>(raw);
-                break;
-            }
-            case value_type::i16:
-            {
-                *static_cast<int16_t*>(meta.value_ptr) = static_cast<int16_t>(raw);
-                break;
-            }
-            case value_type::u32:
-            {
-                *static_cast<uint32_t*>(meta.value_ptr) = raw;
-                break;
-            }
-            case value_type::i32:
-            {
-                *static_cast<int32_t*>(meta.value_ptr) = static_cast<int32_t>(raw);
-                break;
-            }
-            case value_type::f32:
-            {
-                float value = 0.0f;
-                std::memcpy(&value, &raw, sizeof(value));
-                *static_cast<float*>(meta.value_ptr) = value;
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
-    }
-
-    void clear_pending_write_context()
-    {
-        pending_addrs[0] = 0u;
-        pending_addrs[1] = 0u;
-        pending_addr_count = 0u;
-        pending_value_index = 0u;
-        state = decode_state::wait_head;
-    }
-
-    void clear_register_table()
-    {
-        for (uint8_t i = 0u; i < k_max_register_count; ++i)
-        {
-            reg_table[i].addr = 0u;
-            reg_table[i].value_ptr = nullptr;
-            reg_table[i].type = value_type::u32;
-            reg_table[i].readable = false;
-            reg_table[i].writable = false;
-            reg_table[i].used = false;
-        }
-    }
+    void clear_pending_write_context();
+    void clear_register_table();
 };

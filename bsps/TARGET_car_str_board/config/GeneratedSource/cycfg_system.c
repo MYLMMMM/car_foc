@@ -605,7 +605,6 @@ void init_cycfg_system(void)
     CyDelay(20);
     CyDelay(20);
     CyDelay(20);
-    CyDelay(20);
         Cy_SysClk_Dpll_Lp0_Init();
     #endif
     #ifdef CY_CFG_SYSCLK_DPLL_LP1_ENABLED

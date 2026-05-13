@@ -3,6 +3,7 @@
 #include <cstdint>
 
 #include "foc_soft.hpp"
+#include "bsp_init.hpp"
 
 extern foc_motor_datastructure foc_motor_datastructure_A;
 extern foc_motor_datastructure foc_motor_datastructure_B;
@@ -11,6 +12,10 @@ namespace
 {
 enum value_addr : uint8_t
 {
+    cmd_command = 0x01u,
+    mech_state = 0x02u,
+    light_color = 0x03u,
+
     A_adc_vref = 0x10u,
     A_vbus_divider_ratio = 0x11u,
     A_shunt_resistance = 0x12u,
@@ -72,6 +77,10 @@ bool register_rw(spi_decode& decoder, uint8_t addr, T& ref)
 bool valuemap_register(spi_decode& decoder)
 {
     bool ok = true;
+
+    ok &= register_rw(decoder, cmd_command, reinterpret_cast<uint32_t&>(command_doer_state.mech_command));
+    ok &= register_rw(decoder, mech_state, reinterpret_cast<uint32_t&>(command_doer_state.mech_state));
+    ok &= register_rw(decoder, light_color, reinterpret_cast<uint32_t&>(command_doer_state.light_color));
 
     ok &= register_rw(decoder, A_adc_vref, foc_motor_datastructure_A.adc_vref);
     ok &= register_rw(decoder, A_vbus_divider_ratio, foc_motor_datastructure_A.vbus_divider_ratio);

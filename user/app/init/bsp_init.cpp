@@ -5,7 +5,6 @@
 
 #define __DEBUG_RTT
 
-bool test_gpio_bool = false;
 void motor_a_init();
 void motor_b_init();
 void motor_c_init();
@@ -19,7 +18,6 @@ void motor_b_ec_isr();
 void motor_a_pwm_isr();
 void spi_ctr_isr();
 void timer_task_isr();
-void task_ctl();
 //GPIO global interrupt
 void test_gpio_isrf();
 
@@ -433,7 +431,7 @@ __WEAK void spi_ctr_isr()
 __WEAK void timer_task_isr()
 {
     Cy_TCPWM_ClearInterrupt(TIMER_TASK_HW, TIMER_TASK_NUM, CY_TCPWM_INT_ON_TC);
-    task_ctl();
+    command_doer.task_ctl();
 }
 
 __WEAK void motor_a_pwm_isr()

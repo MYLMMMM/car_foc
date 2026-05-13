@@ -5,6 +5,7 @@
 #include "XL2020RGBC.hpp"
 #include "motor.hpp"
 #include "dc_motor_driver.hpp"
+#include "command_doer.hpp"
 
 void bsp_init();
 
@@ -18,5 +19,6 @@ extern motor_driver motor_b_driver;
 extern dc_motor_driver motor_c_driver;
 extern spi_decode spi_ctr_decode;
 extern XL202RGBC ws2812;
+extern CommandDoer command_doer;
+extern CommandDoer::CommandDoerState command_doer_state;
 
-extern bool test_gpio_bool;

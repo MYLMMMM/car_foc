@@ -278,7 +278,7 @@ public:
      */
     void trg() {
         encoder2mech.trg();
-        // speed.trg();
+        speed.trg();
 
         // const uint32_t speed_div = (motor.speed_loop_div == 0u) ? 1u : motor.speed_loop_div;
         // motor.speed_loop_count++;
@@ -286,6 +286,7 @@ public:
         //     motor.speed_loop_count = 0u;
         //     pid_speed.trg();
         // }
+
         mech2elec.trg();
 
         adc2current_a.trg();

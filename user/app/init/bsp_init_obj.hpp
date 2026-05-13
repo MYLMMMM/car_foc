@@ -13,6 +13,7 @@
 #include "motor.hpp"
 #include "dc_motor_soft.hpp"
 #include "dc_motor_driver.hpp"
+#include "command_doer.hpp"
 
 // motor A structure
 foc_motor_datastructure_config foc_motor_datastructure_A_config =
@@ -258,3 +259,7 @@ struct RGB
 }RGB_light_color;
 
 XL202RGBC ws2812(spi_ws2812);
+
+/*----------------CommandDoer----------------------------*/
+CommandDoer::CommandDoerState command_doer_state;
+CommandDoer command_doer(command_doer_state);
