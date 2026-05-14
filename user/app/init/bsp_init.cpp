@@ -236,7 +236,7 @@ void motor_b_init()
     NVIC_ClearPendingIRQ(int_spi_ec_b_config.intrSrc);
     NVIC_EnableIRQ(int_spi_ec_b_config.intrSrc);
 
-    enc_b.set_direction(true);
+    enc_b.set_direction(false);
 
     cy_en_dma_status_t dma_init_status;
     dma_init_status = Cy_DMA_Descriptor_Init(&DMA_EC_B_RX_Descriptor_0, &DMA_EC_B_RX_Descriptor_0_config);
