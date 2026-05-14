@@ -599,6 +599,7 @@ void init_cycfg_system(void)
     
     /* Configure and enable PLLs */
     #ifdef CY_CFG_SYSCLK_DPLL_LP0_ENABLED
+    CyDelay(20);
         Cy_SysClk_Dpll_Lp0_Init();
     #endif
     #ifdef CY_CFG_SYSCLK_DPLL_LP1_ENABLED

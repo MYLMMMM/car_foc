@@ -119,7 +119,7 @@ const cy_stc_dma_descriptor_config_t DMA_EC_B_RX_Descriptor_0_config =
     .srcYincrement = 0,
     .dstYincrement = 0,
     .yCount = 1,
-    .nextDescriptor = NULL,
+    .nextDescriptor = &DMA_EC_B_RX_Descriptor_0,
 };
 cy_stc_dma_descriptor_t DMA_EC_B_RX_Descriptor_0 =
 {

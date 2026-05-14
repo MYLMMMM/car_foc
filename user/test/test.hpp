@@ -6,7 +6,7 @@
 // #define __TEST spi_ctl_test
 // #define __TEST encoder_test
 #define __TEST main_entry
-#define __TEST motor_c_test
+// #define __TEST motor_c_test
 
 void foc_test();
 void offset_get();

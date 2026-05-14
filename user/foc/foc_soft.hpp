@@ -277,7 +277,7 @@ public:
      * @brief 按标准顺序触发一次 FOC 计算
      */
     void trg() {
-        encoder2mech.trg();
+        // encoder2mech.trg();
         speed.trg();
 
         // const uint32_t speed_div = (motor.speed_loop_div == 0u) ? 1u : motor.speed_loop_div;
@@ -287,17 +287,17 @@ public:
         //     pid_speed.trg();
         // }
 
-        mech2elec.trg();
+        // mech2elec.trg();
 
         adc2current_a.trg();
         adc2current_b.trg();
         adc2current_c.trg();
 
-        clark.trg();
-        park.trg();
+        // clark.trg();
+        // park.trg();
 
-        pid_d.trg();
-        pid_q.trg();
+        // pid_d.trg();
+        // pid_q.trg();
 
         inverse_park.trg();
         adc2voltage_vbus.trg();

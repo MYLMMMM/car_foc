@@ -27,7 +27,7 @@ public:
 
     struct CommandDoerState {
         State      mech_state   = State::Stop;
-        Command    mech_command = Command::Stop;
+        Command    mech_command = Command::Start;
         StateColor light_color  = StateColor::ColorStop;
     };
 

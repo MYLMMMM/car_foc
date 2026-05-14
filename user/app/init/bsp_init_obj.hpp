@@ -35,7 +35,7 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
 
     .encoder_cpr = 65535,
     .pole_pairs = 7,
-    .theta_elec_offset = -0.3246607f,
+    .theta_elec_offset = -4.7022140870f,
 
     .pid_d_kp = 1.2f,
     .pid_d_ki = 0.25f,
@@ -81,7 +81,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
 
     .encoder_cpr = 65535,
     .pole_pairs = 7,
-    .theta_elec_offset = -0.3246607f,
+    .theta_elec_offset = -1.7876462958f,
 
     .pid_d_kp = 1.2f,
     .pid_d_ki = 0.25f,
