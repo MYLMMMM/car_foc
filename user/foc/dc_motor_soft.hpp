@@ -173,7 +173,7 @@ public:
             pid_current.reset(); // 目标电流为零时重置 PID，防止积分风up
         }
 
-        pid_current.trg();
+        // pid_current.trg();
         v2hb.trg();
         p2c_a.trg();
         p2c_b.trg();

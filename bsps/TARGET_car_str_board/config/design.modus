@@ -536,13 +536,17 @@
                     </Parameters>
                 </Personality>
                 <Personality template="pin" version="3.0" instance="_drUZyAF5XI">
-                    <Block location="ioss[0].port[6].pin[0]" locked="true"/>
+                    <Block location="ioss[0].port[6].pin[0]" locked="true">
+                        <Aliases>
+                            <Alias value="GPIO_TEST"/>
+                        </Aliases>
+                    </Block>
                     <Parameters>
                         <Param id="DriveModes" value="CY_GPIO_DM_STRONG"/>
                         <Param id="driveStrength" value="CY_GPIO_DRIVE_1_2"/>
                         <Param id="driveStrengthTrim" value="CY_GPIO_DRIVE_STRENGTH_DEFAULT"/>
                         <Param id="inFlash" value="true"/>
-                        <Param id="initialState" value="1"/>
+                        <Param id="initialState" value="0"/>
                         <Param id="isrTrigger" value="CY_GPIO_INTR_DISABLE"/>
                         <Param id="nonSec" value="0"/>
                         <Param id="pullUpRes" value="CY_GPIO_PULLUP_RES_DISABLE"/>
@@ -1834,7 +1838,7 @@
                         <Param id="InvertPwm_n" value="false"/>
                         <Param id="Kill0Input" value="CY_TCPWM_INPUT_FALLINGEDGE"/>
                         <Param id="Kill1Input" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="Period0" value="239999"/>
+                        <Param id="Period0" value="2399"/>
                         <Param id="Period1" value="32768"/>
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
@@ -1901,7 +1905,7 @@
                         <Param id="InvertPwm_n" value="false"/>
                         <Param id="Kill0Input" value="CY_TCPWM_INPUT_FALLINGEDGE"/>
                         <Param id="Kill1Input" value="CY_TCPWM_INPUT_DISABLED"/>
-                        <Param id="Period0" value="239999"/>
+                        <Param id="Period0" value="2399"/>
                         <Param id="Period1" value="32768"/>
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_LEFT_ALIGN"/>
@@ -2235,8 +2239,8 @@
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
                         <Param id="InterruptTC" value="false"/>
-                        <Param id="InvertPwm" value="false"/>
-                        <Param id="InvertPwm_n" value="false"/>
+                        <Param id="InvertPwm" value="true"/>
+                        <Param id="InvertPwm_n" value="true"/>
                         <Param id="Kill0Input" value="CY_TCPWM_INPUT_FALLINGEDGE"/>
                         <Param id="Kill1Input" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="Period0" value="11999"/>
@@ -2303,8 +2307,8 @@
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
                         <Param id="InterruptTC" value="false"/>
-                        <Param id="InvertPwm" value="false"/>
-                        <Param id="InvertPwm_n" value="false"/>
+                        <Param id="InvertPwm" value="true"/>
+                        <Param id="InvertPwm_n" value="true"/>
                         <Param id="Kill0Input" value="CY_TCPWM_INPUT_FALLINGEDGE"/>
                         <Param id="Kill1Input" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="Period0" value="11999"/>
@@ -2371,15 +2375,15 @@
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
                         <Param id="InterruptTC" value="false"/>
-                        <Param id="InvertPwm" value="false"/>
-                        <Param id="InvertPwm_n" value="false"/>
+                        <Param id="InvertPwm" value="true"/>
+                        <Param id="InvertPwm_n" value="true"/>
                         <Param id="Kill0Input" value="CY_TCPWM_INPUT_FALLINGEDGE"/>
                         <Param id="Kill1Input" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="Period0" value="11999"/>
                         <Param id="Period1" value="32768"/>
                         <Param id="Period_Dithering" value="128"/>
                         <Param id="PwmAlignment" value="CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN"/>
-                        <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_HIGHZ"/>
+                        <Param id="PwmDisabledOutput" value="CY_TCPWM_PWM_OUTPUT_LOW"/>
                         <Param id="PwmMode" value="CY_TCPWM_PWM_MODE_PWM"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_PWM_CONTINUOUS"/>

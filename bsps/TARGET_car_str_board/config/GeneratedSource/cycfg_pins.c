@@ -703,11 +703,11 @@ const cyhal_resource_inst_t ioss_0_port_5_pin_3_obj =
 };
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-const cy_stc_gpio_pin_config_t ioss_0_port_6_pin_0_config =
+const cy_stc_gpio_pin_config_t GPIO_TEST_config =
 {
-    .outVal = 1,
+    .outVal = 0,
     .driveMode = CY_GPIO_DM_STRONG,
-    .hsiom = ioss_0_port_6_pin_0_HSIOM,
+    .hsiom = GPIO_TEST_HSIOM,
     .intEdge = CY_GPIO_INTR_DISABLE,
     .intMask = 0UL,
     .vtrip = CY_GPIO_VTRIP_CMOS,
@@ -722,11 +722,11 @@ const cy_stc_gpio_pin_config_t ioss_0_port_6_pin_0_config =
 };
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-const cyhal_resource_inst_t ioss_0_port_6_pin_0_obj =
+const cyhal_resource_inst_t GPIO_TEST_obj =
 {
     .type = CYHAL_RSC_GPIO,
-    .block_num = ioss_0_port_6_pin_0_PORT_NUM,
-    .channel_num = ioss_0_port_6_pin_0_PIN,
+    .block_num = GPIO_TEST_PORT_NUM,
+    .channel_num = GPIO_TEST_PIN,
 };
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
@@ -1376,7 +1376,7 @@ void init_cycfg_pins(void)
     Cy_GPIO_Pin_Init(ioss_0_port_5_pin_1_PORT, ioss_0_port_5_pin_1_PIN, &ioss_0_port_5_pin_1_config);
     Cy_GPIO_Pin_Init(ioss_0_port_5_pin_2_PORT, ioss_0_port_5_pin_2_PIN, &ioss_0_port_5_pin_2_config);
     Cy_GPIO_Pin_Init(ioss_0_port_5_pin_3_PORT, ioss_0_port_5_pin_3_PIN, &ioss_0_port_5_pin_3_config);
-    Cy_GPIO_Pin_Init(ioss_0_port_6_pin_0_PORT, ioss_0_port_6_pin_0_PIN, &ioss_0_port_6_pin_0_config);
+    Cy_GPIO_Pin_Init(GPIO_TEST_PORT, GPIO_TEST_PIN, &GPIO_TEST_config);
     Cy_GPIO_Pin_Init(ioss_0_port_6_pin_1_PORT, ioss_0_port_6_pin_1_PIN, &ioss_0_port_6_pin_1_config);
     Cy_GPIO_Pin_Init(ioss_0_port_6_pin_2_PORT, ioss_0_port_6_pin_2_PIN, &ioss_0_port_6_pin_2_config);
     Cy_GPIO_Pin_Init(ioss_0_port_6_pin_3_PORT, ioss_0_port_6_pin_3_PIN, &ioss_0_port_6_pin_3_config);
@@ -1429,7 +1429,7 @@ void reserve_cycfg_pins(void)
     cyhal_hwmgr_reserve(&ioss_0_port_5_pin_1_obj);
     cyhal_hwmgr_reserve(&ioss_0_port_5_pin_2_obj);
     cyhal_hwmgr_reserve(&ioss_0_port_5_pin_3_obj);
-    cyhal_hwmgr_reserve(&ioss_0_port_6_pin_0_obj);
+    cyhal_hwmgr_reserve(&GPIO_TEST_obj);
     cyhal_hwmgr_reserve(&ioss_0_port_6_pin_1_obj);
     cyhal_hwmgr_reserve(&ioss_0_port_6_pin_2_obj);
     cyhal_hwmgr_reserve(&ioss_0_port_6_pin_3_obj);

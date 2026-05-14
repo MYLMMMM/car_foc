@@ -428,7 +428,9 @@ __WEAK void drv8876_c_nfault_callback(const drv8876::FaultState &state,void* use
 
 __WEAK void motor_a_foc_isr()
 {
+    gpio_for_test.set();
     motor_a_driver.foc_trig_isr();
+    gpio_for_test.unset();
 }
 
 __WEAK void motor_b_foc_isr()

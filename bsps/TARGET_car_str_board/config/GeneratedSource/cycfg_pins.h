@@ -549,24 +549,25 @@ extern "C" {
 #define ioss_0_port_5_pin_3_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-#define ioss_0_port_6_pin_0_ENABLED 1U
-#define ioss_0_port_6_pin_0_PORT GPIO_PRT6
-#define ioss_0_port_6_pin_0_PORT_NUM 6U
-#define ioss_0_port_6_pin_0_PIN 0U
-#define ioss_0_port_6_pin_0_NUM 0U
-#define ioss_0_port_6_pin_0_DRIVEMODE CY_GPIO_DM_STRONG
-#define ioss_0_port_6_pin_0_INIT_DRIVESTATE 1
+#define GPIO_TEST_ENABLED 1U
+#define GPIO_TEST_PORT GPIO_PRT6
+#define GPIO_TEST_PORT_NUM 6U
+#define GPIO_TEST_PIN 0U
+#define GPIO_TEST_NUM 0U
+#define GPIO_TEST_DRIVEMODE CY_GPIO_DM_STRONG
+#define GPIO_TEST_INIT_DRIVESTATE 0
 #ifndef ioss_0_port_6_pin_0_HSIOM
     #define ioss_0_port_6_pin_0_HSIOM HSIOM_SEL_GPIO
 #endif
-#define ioss_0_port_6_pin_0_IRQ ioss_interrupts_sec_gpio_6_IRQn
+#define GPIO_TEST_HSIOM ioss_0_port_6_pin_0_HSIOM
+#define GPIO_TEST_IRQ ioss_interrupts_sec_gpio_6_IRQn
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define ioss_0_port_6_pin_0_HAL_PORT_PIN P6_0
-#define ioss_0_port_6_pin_0 P6_0
-#define ioss_0_port_6_pin_0_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define ioss_0_port_6_pin_0_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
-#define ioss_0_port_6_pin_0_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
+#define GPIO_TEST_HAL_PORT_PIN P6_0
+#define GPIO_TEST P6_0
+#define GPIO_TEST_HAL_IRQ CYHAL_GPIO_IRQ_NONE
+#define GPIO_TEST_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
+#define GPIO_TEST_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 #define ioss_0_port_6_pin_1_ENABLED 1U
@@ -1184,10 +1185,10 @@ extern const cy_stc_gpio_pin_config_t ioss_0_port_5_pin_3_config;
 extern const cyhal_resource_inst_t ioss_0_port_5_pin_3_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-extern const cy_stc_gpio_pin_config_t ioss_0_port_6_pin_0_config;
+extern const cy_stc_gpio_pin_config_t GPIO_TEST_config;
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t ioss_0_port_6_pin_0_obj;
+extern const cyhal_resource_inst_t GPIO_TEST_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 extern const cy_stc_gpio_pin_config_t ioss_0_port_6_pin_1_config;

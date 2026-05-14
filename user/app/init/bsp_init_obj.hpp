@@ -127,7 +127,7 @@ dc_motor_datastructure_config motor_c_config =
     .pid_integral_limit = 4.0f,
 
     .control_period_s = 0.001f,
-    .pwm_period = 239999,
+    .pwm_period = 4799,
 };
 
 dc_motor_datastructure motor_c_data(motor_c_config);
@@ -276,3 +276,7 @@ XL202RGBC ws2812(spi_ws2812);
 /*----------------CommandDoer----------------------------*/
 CommandDoer::CommandDoerState command_doer_state;
 CommandDoer command_doer(command_doer_state, ws2812);
+
+//test
+
+hal_gpio gpio_for_test(GPIO_TEST_PORT,GPIO_TEST_PIN);
