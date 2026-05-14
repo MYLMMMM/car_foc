@@ -6,12 +6,14 @@
 // #define __TEST spi_ctl_test
 // #define __TEST encoder_test
 #define __TEST main_entry
+#define __TEST motor_c_test
 
 void foc_test();
 void offset_get();
 void spi_ctl_test();
 void encoder_test();
 void main_entry();
+void motor_c_test();
 
 
 #endif
