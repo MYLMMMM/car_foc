@@ -65,17 +65,15 @@ void spi_decode::stream_update()
     {
         uint32_t buffer[10];
         
-        buffer[0] = motor_a_driver.foc_soft_.motor.i_q;
-        buffer[1] = motor_a_driver.foc_soft_.motor.speed_mech;
-        buffer[2] = motor_b_driver.foc_soft_.motor.i_q;
-        buffer[3] = motor_b_driver.foc_soft_.motor.speed_mech;
-        buffer[4] = (uint32_t)command_doer_state.mech_state;
+        buffer[0] = motor_a_driver.foc_soft_.motor.speed_mech;
+        buffer[1] = motor_b_driver.foc_soft_.motor.speed_mech;
+        buffer[2] = (uint32_t)command_doer_state.mech_state;
         scb_fifo.clear_tx();
         scb_fifo.send(buffer[0]);
         scb_fifo.send(buffer[1]);
         scb_fifo.send(buffer[2]);
-        scb_fifo.send(buffer[3]);
-        scb_fifo.send(buffer[4]);
+        // scb_fifo.send(buffer[3]);
+        // scb_fifo.send(buffer[4]);
 
         gpio_stream_state.toggle();
     }

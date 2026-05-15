@@ -114,6 +114,10 @@ public:
         p10_ = p10_pred - k1 * p00_pred;
         p11_ = p11_pred - k1 * p01_pred;
 
+        // 强制 P 矩阵对称化, 防止浮点累积误差导致失去对称性 (P3-1)
+        p01_ = (p01_ + p10_) * static_cast<data_type>(0.5);
+        p10_ = p01_;
+
         speed_mech = x_speed_;
     }
 

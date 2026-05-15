@@ -55,28 +55,40 @@ public:
     }
 
     /**
-     * @brief 触发 PID 计算
+     * @brief 触发 PID 计算 (带反计算 Anti-Windup)
      * @details output = Kp*e + Ki*sum(e) + Kd*(e-e_last)
+     *          当输出超出 integral_limit 时，反算积分值使输出恰好等于限幅值
      */
     void trg() {
         // 当前误差
         data_type error = target - input;
+        // 比例项和微分项
+        data_type p_term = p * error;
+        data_type d_term = d * (error - last_error);
         // 积分累加
         integral += error;
-        // 可选积分限幅(按绝对值处理，<=0 视为不限幅)
-        if (integral_limit != static_cast<data_type>(0)) {
-            data_type limit = integral_limit;
-            if (integral > limit) {
-                integral = limit;
-            } else {
-                const data_type neg_limit = -limit;
-                if (integral < neg_limit) {
-                    integral = neg_limit;
+        data_type i_term = i * integral;
+        // 原始输出
+        data_type output_raw = p_term + i_term + d_term;
+        // 反计算 Anti-Windup: 输出超限时反推积分值
+        if (integral_limit > static_cast<data_type>(0)) {
+            if (output_raw > integral_limit) {
+                output = integral_limit;
+                // 反算积分: integral_limit = p_term + i*integral + d_term
+                if (i != static_cast<data_type>(0)) {
+                    integral = (integral_limit - p_term - d_term) / i;
                 }
+            } else if (output_raw < -integral_limit) {
+                output = -integral_limit;
+                if (i != static_cast<data_type>(0)) {
+                    integral = (-integral_limit - p_term - d_term) / i;
+                }
+            } else {
+                output = output_raw;
             }
+        } else {
+            output = output_raw;
         }
-        // 位置式 PID 输出
-        output = (p * error) + (i * integral) + (d * (error - last_error));
         // 更新历史误差
         last_error = error;
     }

@@ -45,16 +45,18 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.00045f,
-    .pid_speed_ki = 0.0f,
+    .pid_speed_kp = 0.05f,
+    .pid_speed_ki = 0.004f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 4.0f,
-    .kf_q_theta = 1e-5f,
-    .kf_q_speed = 3e-3f,
-    .kf_r_theta = 8e-3f,
+    .pid_speed_integral_limit = 6.0f,
+    .speed_lpf_fc = 50.0f,     // 速度低通滤波器截止频率(Hz)
 
     .control_period_s = 0.0001f,
     .speed_loop_div = 20u,
+
+    .Ld = 0.0f,              // TODO: 填入实际 d 轴电感 (H)
+    .Lq = 0.0f,              // TODO: 填入实际 q 轴电感 (H)
+    .flux_linkage = 0.0f,    // TODO: 填入永磁磁链 (Wb)
 
     .pwm_period = 11999,
 };
@@ -91,16 +93,18 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.00045f,
-    .pid_speed_ki = 0.0f,
+    .pid_speed_kp = 0.05f,
+    .pid_speed_ki = 0.004f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 4.0f,
-    .kf_q_theta = 1e-5f,
-    .kf_q_speed = 3e-3f,
-    .kf_r_theta = 8e-3f,
+    .pid_speed_integral_limit = 6.0f,
+    .speed_lpf_fc = 50.0f,     // 速度低通滤波器截止频率(Hz)
 
     .control_period_s = 0.0001f,
     .speed_loop_div = 20u,
+
+    .Ld = 0.0f,              // TODO: 填入实际 d 轴电感 (H)
+    .Lq = 0.0f,              // TODO: 填入实际 q 轴电感 (H)
+    .flux_linkage = 0.0f,    // TODO: 填入永磁磁链 (Wb)
 
     .pwm_period = 11999,
 };

@@ -71,10 +71,45 @@ public:
         data_type v_offset = -HALF * (v_max + v_min);
         data_type inv_vbus = ONE / v_bus; 
         
-        // 注入零序偏置后映射到 [0,1]
-        t_a = (va + v_offset) * inv_vbus + HALF;
-        t_b = (vb + v_offset) * inv_vbus + HALF;
-        t_c = (vc + v_offset) * inv_vbus + HALF;
+        // 注入零序偏置后映射到占空比 (raw, 可能超出 [0,1])
+        data_type ta_raw = (va + v_offset) * inv_vbus + HALF;
+        data_type tb_raw = (vb + v_offset) * inv_vbus + HALF;
+        data_type tc_raw = (vc + v_offset) * inv_vbus + HALF;
+
+        // === 过调制处理: 等比缩放使占空比回到 [0,1] (P1-1) ===
+        data_type t_max = ta_raw;
+        if (tb_raw > t_max) t_max = tb_raw;
+        if (tc_raw > t_max) t_max = tc_raw;
+
+        data_type t_min = ta_raw;
+        if (tb_raw < t_min) t_min = tb_raw;
+        if (tc_raw < t_min) t_min = tc_raw;
+
+        data_type range = t_max - t_min;
+        if (range > ONE) {
+            // 范围超出 1.0: 等比缩放到 [0,1]
+            data_type scale = ONE / range;
+            data_type mid = (t_max + t_min) * HALF;
+            t_a = (ta_raw - mid) * scale + HALF;
+            t_b = (tb_raw - mid) * scale + HALF;
+            t_c = (tc_raw - mid) * scale + HALF;
+        } else if (t_max > ONE) {
+            // 仅超出上限: 整体下移
+            data_type excess = t_max - ONE;
+            t_a = ta_raw - excess;
+            t_b = tb_raw - excess;
+            t_c = tc_raw - excess;
+        } else if (t_min < static_cast<data_type>(0)) {
+            // 仅超出下限: 整体上移
+            data_type excess = -t_min;
+            t_a = ta_raw + excess;
+            t_b = tb_raw + excess;
+            t_c = tc_raw + excess;
+        } else {
+            t_a = ta_raw;
+            t_b = tb_raw;
+            t_c = tc_raw;
+        }
     }
 
 private:

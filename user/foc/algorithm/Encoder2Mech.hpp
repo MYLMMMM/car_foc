@@ -31,6 +31,7 @@ public:
     /**
      * @brief 触发编码器到机械角计算
      * @details theta_mech = (encoder_raw mod encoder_cpr) * 2pi / encoder_cpr
+     *          使用位运算优化取模 (CPR 为 2 的幂时) (P3-2)
      */
     void trg() {
         if (encoder_cpr <= static_cast<data_typei>(0)) {
@@ -38,7 +39,15 @@ public:
             return;
         }
 
-        data_typei enc_norm = encoder_raw % encoder_cpr;
+        // 编译期无法判断, 运行时检测 CPR 是否为 2 的幂并用位运算替代取模
+        const bool is_pow2 = (encoder_cpr > 0u) && ((encoder_cpr & (encoder_cpr - 1u)) == 0u);
+        data_typei enc_norm;
+        if (is_pow2) {
+            enc_norm = encoder_raw & (encoder_cpr - static_cast<data_typei>(1));
+        } else {
+            enc_norm = encoder_raw % encoder_cpr;
+        }
+
         if (enc_norm < static_cast<data_typei>(0)) {
             enc_norm += encoder_cpr;
         }
