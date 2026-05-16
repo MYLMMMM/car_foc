@@ -279,35 +279,20 @@ uint32_t spi_decode::read_register_as_u32(const register_meta& meta)
     switch (meta.type)
     {
         case value_type::u8:
+        case value_type::i8:
         {
             return static_cast<uint32_t>(*static_cast<const uint8_t*>(meta.value_ptr));
         }
-        case value_type::i8:
-        {
-            return static_cast<uint32_t>(static_cast<uint8_t>(*static_cast<const int8_t*>(meta.value_ptr)));
-        }
         case value_type::u16:
+        case value_type::i16:
         {
             return static_cast<uint32_t>(*static_cast<const uint16_t*>(meta.value_ptr));
         }
-        case value_type::i16:
-        {
-            return static_cast<uint32_t>(static_cast<uint16_t>(*static_cast<const int16_t*>(meta.value_ptr)));
-        }
         case value_type::u32:
-        {
-            return *static_cast<const uint32_t*>(meta.value_ptr);
-        }
         case value_type::i32:
-        {
-            return static_cast<uint32_t>(*static_cast<const int32_t*>(meta.value_ptr));
-        }
         case value_type::f32:
         {
-            uint32_t raw = 0u;
-            const float value = *static_cast<const float*>(meta.value_ptr);
-            std::memcpy(&raw, &value, sizeof(raw));
-            return raw;
+            return *static_cast<const uint32_t*>(meta.value_ptr);
         }
         default:
         {
