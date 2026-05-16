@@ -332,6 +332,14 @@ public:
     }
 
     /**
+     * @brief 清零所有 running value 与 PID 积分状态，复位到初始状态
+     */
+    void clear_running_values() {
+        motor.clear_running_values();
+        reset_pid();
+    }
+
+    /**
      * @brief 按标准顺序触发一次 FOC 计算
      */
     void trg() {
