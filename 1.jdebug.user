@@ -1,22 +1,27 @@
 
 
-Breakpoint=/home/zhuizhai/Program/PSC3M5/car_foc/user/main.cpp:99, State=BP_STATE_ON
-GraphedExpression="(foc_motor_datastructure_B).speed_mech", Color=#e56a6f
-GraphedExpression="(foc_motor_datastructure_B).i_q", Color=#35792b
-GraphedExpression="(foc_motor_datastructure_B).i_q_target", Color=#769dda
-GraphedExpression="(foc_motor_datastructure_B).speed_target", Color=#b14f0d
-GraphedExpression="(foc_motor_datastructure_B).enc_a", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#b3c38e
-OpenDocument="LPF.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/LPF.hpp", Line=37
+GraphedExpression="(foc_motor_datastructure_B).v_bus", Color=#e56a6f, Show=0
+GraphedExpression="(foc_motor_datastructure_A).enc_a", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#35792b, Show=0
+GraphedExpression="(foc_motor_datastructure_A).i_a", Color=#769dda, Show=0
+GraphedExpression="(foc_motor_datastructure_A).i_b", Color=#b14f0d, Show=0
+GraphedExpression="(foc_motor_datastructure_A).i_c", Color=#b3c38e, Show=0
+GraphedExpression="(foc_motor_datastructure_A).i_q", Color=#ab7b05, Show=0
+GraphedExpression="(foc_motor_datastructure_A).i_q_target", Color=#7fd3b7, Show=0
+GraphedExpression="(foc_motor_datastructure_A).speed_target_limited", Color=#50328f, Show=0
+OpenDocument="dc_motor_soft.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/dc_motor_soft.hpp", Line=147
+OpenDocument="main.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/main.cpp", Line=73
+OpenDocument="ADC2Current.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/ADC2Current.hpp", Line=40
+OpenDocument="LPF.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/LPF.hpp", Line=19
 OpenDocument="main_main.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/test/main_main.cpp", Line=0
 OpenDocument="SEGGER_RTT.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/rtt/SEGGER_RTT.c", Line=2037
 OpenDocument="bsp_init.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/app/init/bsp_init.cpp", Line=387
-OpenDocument="bsp_init_obj.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/app/init/bsp_init_obj.hpp", Line=96
+OpenDocument="bsp_init_obj.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/app/init/bsp_init_obj.hpp", Line=45
 OpenDocument="encoder_test.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/test/encoder_test.cpp", Line=0
 OpenDocument="cy_syslib_ext.S", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/TOOLCHAIN_GCC_ARM/cy_syslib_ext.S", Line=39
 OpenDocument="cy_gpio.h", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/include/cy_gpio.h", Line=2515
 OpenDocument="command_doer.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/app/tasks/command_doer.cpp", Line=0
 OpenDocument="P2C.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/P2C.hpp", Line=0
-OpenDocument="main.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/main.cpp", Line=73
+OpenDocument="XL2020RGBC.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/driver/chips/XL2020RGBC.hpp", Line=20
 OpenDocument="spi_test.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/test/spi_test.cpp", Line=0
 OpenDocument="cy_scb_common.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/cy_scb_common.c", Line=214
 OpenDocument="ppu_v1.c", FilePath="/home/zhuizhai/Program/PSC3M5/mtb_shared/mtb-pdl-cat1/release-v3.20.1/drivers/source/ppu_v1.c", Line=102
@@ -29,17 +34,17 @@ OpenDocument="cycfg.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TAR
 OpenDocument="cybsp.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/cybsp.c", Line=40
 OpenDocument="startup_cat1b_cm33.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/startup_cat1b_cm33.c", Line=275
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=898, h=541, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=898, h=360, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=852, h=500, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=852, h=401, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=898, h=537, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=898, h=364, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=852, h=497, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=852, h=404, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=1711, h=862, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=BOTTOM, x=0, y=0, w=1744, h=862, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="50;16", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1514;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1542;0"
+OpenWindow="Timeline", DockArea=BOTTOM, x=0, y=0, w=1744, h=862, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="5 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="50;16", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1514;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1542;0"
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Vector Catches", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;500]
 TableHeader="Break & Tracepoints", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;166;159;427]
-TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (foc_motor_datastructure_B).speed_mech";" (foc_motor_datastructure_B).i_q";" (foc_motor_datastructure_B).i_q_target";" (foc_motor_datastructure_B).speed_target";" (foc_motor_datastructure_B).enc_a"], ColWidths=[100;100;100;100;100;100;100]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[295;190;100;126;134;100;100;102;564]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (foc_motor_datastructure_B).v_bus";" (foc_motor_datastructure_A).enc_a";" (foc_motor_datastructure_A).i_a";" (foc_motor_datastructure_A).i_b";" (foc_motor_datastructure_A).i_c";" (foc_motor_datastructure_A).i_q";" (foc_motor_datastructure_A).i_q_target";" (foc_motor_datastructure_A).speed_target_limited"], ColWidths=[100;100;100;100;100;100;100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[295;190;118;102;100;118;100;118;570]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[212;171;499]
 TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Refresh";"Access";"Scope"], ColWidths=[279;157;39;27;334]
@@ -47,3 +52,4 @@ TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", Vi
 TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[256;190;274;518]
 WatchedExpression="motor_c_data", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="foc_motor_datastructure_B", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="foc_motor_datastructure_A", RefreshRate=5, Window=Watched Data 1

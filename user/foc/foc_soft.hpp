@@ -10,10 +10,14 @@
 #include "algorithm/InversePark.hpp"
 #include "algorithm/SVPWM.hpp"
 #include "algorithm/P2C.hpp"
+#include "algorithm/SlopeLimit.hpp"
 #include "algorithm/Encoder2Mech.hpp"
 #include "algorithm/LPF.hpp"
+#include "algorithm/LowerLimit.hpp"
 #include "algorithm/Mech2Elec.hpp"
+#include "algorithm/CrossFeedforward.hpp"
 #include "algorithm/CircularMeanFilter.hpp"
+#include "algorithm/UpperLimit.hpp"
 
 using adc_reg = volatile int32_t;
 using pwm_reg = volatile uint32_t;
@@ -54,6 +58,8 @@ struct foc_motor_datastructure_config
     float pid_speed_kd;
     float pid_speed_integral_limit;
     float speed_lpf_fc;        // 速度低通滤波器截止频率(Hz)
+    float speed_target_max;    // 速度目标上限(rad/s, <=0 不限幅)
+    float speed_target_slope;  // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
     float control_period_s;
     uint32_t speed_loop_div;
@@ -106,6 +112,8 @@ struct foc_motor_datastructure
     float pid_speed_kd = 0.0f;       // 速度环 PID 微分系数
     float pid_speed_integral_limit = 0.0f;  // 速度环 PID 积分限幅(绝对值, <=0 不限幅)
     float speed_lpf_fc = 50.0f;     // 速度低通滤波器截止频率(Hz)
+    float speed_target_max = 0.0f;   // 速度目标上限(rad/s, <=0 不限幅)
+    float speed_target_slope = 0.0f; // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
     float control_period_s = 0.0f;   // 控制周期(s)
     uint32_t speed_loop_div = 1u;    // 速度环降采样分频(每 N 次中断执行 1 次速度环)
@@ -145,6 +153,7 @@ struct foc_motor_datastructure
     float i_d_target = 0.0f;         // d 轴目标电流(A)
     float i_q_target = 0.0f;         // q 轴目标电流(A)
     float speed_target = 0.0f;       // 目标机械角速度(rad/s)
+    float speed_target_limited = 0.0f; // 限幅后的目标速度(rad/s)
     uint32_t speed_loop_count = 0u;  // 速度环计数器(中断计数)
     float inv_vbus = 0.0f;           // 1/v_bus 缓存 (由 SVPWM 更新)
 
@@ -177,6 +186,8 @@ struct foc_motor_datastructure
         , pid_speed_kd(cfg.pid_speed_kd)
         , pid_speed_integral_limit(cfg.pid_speed_integral_limit)
         , speed_lpf_fc(cfg.speed_lpf_fc)
+        , speed_target_max(cfg.speed_target_max)
+        , speed_target_slope(cfg.speed_target_slope)
         , control_period_s(cfg.control_period_s)
         , speed_loop_div(cfg.speed_loop_div)
         , Ld(cfg.Ld)
@@ -184,6 +195,40 @@ struct foc_motor_datastructure
         , flux_linkage(cfg.flux_linkage)
         , pwm_period(cfg.pwm_period)
     {
+    }
+
+    /**
+     * @brief 清零所有 running value，复位到初始状态
+     */
+    void clear_running_values()
+    {
+        theta_mech = 0.0f;
+        last_mech = 0.0f;
+        speed_mech = 0.0f;
+        theta_elec = 0.0f;
+        sin_theta_elec = 0.0f;
+        cos_theta_elec = 1.0f;
+        v_bus = 0.0f;
+        i_a = 0.0f;
+        i_b = 0.0f;
+        i_c = 0.0f;
+        i_alpha = 0.0f;
+        i_beta = 0.0f;
+        i_d = 0.0f;
+        i_q = 0.0f;
+        v_d = 0.0f;
+        v_q = 0.0f;
+        v_alpha = 0.0f;
+        v_beta = 0.0f;
+        t_a = 0.0f;
+        t_b = 0.0f;
+        t_c = 0.0f;
+        i_d_target = 0.0f;
+        i_q_target = 0.0f;
+        speed_target = 0.0f;
+        speed_target_limited = 0.0f;
+        speed_loop_count = 0u;
+        inv_vbus = 0.0f;
     }
 };
 
@@ -205,9 +250,12 @@ private:
     PID<float> pid_q;
     InversePark<float> inverse_park;
     SVPWM<float> svpwm;
+    CrossFeedforward<float, uint32_t> cross_feedforward;
     P2C<float, pwm_reg> p2c_a;
     P2C<float, pwm_reg> p2c_b;
     P2C<float, pwm_reg> p2c_c;
+    UpperLimit<float> upper_limit_speed;
+    SlopeLimit<float> slope_limit_speed;
     float test_mech;
 
 public:
@@ -235,16 +283,20 @@ public:
           clark(motor.i_a, motor.i_b, motor.i_c, motor.i_alpha, motor.i_beta),
           park(motor.i_alpha, motor.i_beta, motor.sin_theta_elec, motor.cos_theta_elec, motor.i_d, motor.i_q),
           pid_speed(motor.pid_speed_kp, motor.pid_speed_ki, motor.pid_speed_kd,
-                    motor.pid_speed_integral_limit, motor.speed_target, motor.speed_mech, motor.i_q_target),
+                    motor.pid_speed_integral_limit, motor.speed_target_limited, motor.speed_mech, motor.i_q_target),
           pid_d(motor.pid_d_kp, motor.pid_d_ki, motor.pid_d_kd, motor.pid_d_integral_limit,
                 motor.i_d_target, motor.i_d, motor.v_d),
           pid_q(motor.pid_q_kp, motor.pid_q_ki, motor.pid_q_kd, motor.pid_q_integral_limit,
                 motor.i_q_target, motor.i_q, motor.v_q),
           inverse_park(motor.v_q, motor.v_d, motor.sin_theta_elec, motor.cos_theta_elec, motor.v_alpha, motor.v_beta),
           svpwm(motor.v_alpha, motor.v_beta, motor.v_bus, motor.t_a, motor.t_b, motor.t_c),
+          cross_feedforward(motor.i_d, motor.i_q, motor.speed_mech, motor.pole_pairs,
+                            motor.Ld, motor.Lq, motor.flux_linkage, motor.v_d, motor.v_q),
           p2c_a(motor.t_a, motor.pwm_period, motor.ccr_a),
           p2c_b(motor.t_b, motor.pwm_period, motor.ccr_b),
           p2c_c(motor.t_c, motor.pwm_period, motor.ccr_c),
+          upper_limit_speed(motor.speed_target, motor.speed_target_max),
+          slope_limit_speed(motor.speed_target, motor.speed_target_slope, motor.speed_target_limited),
           test_mech(0) {}
 
     foc(const foc&) = delete;
@@ -286,12 +338,24 @@ public:
         encoder2mech.trg();
         speed.trg();
 
-        // 速度环 (级联外环, P0-1)
+        // 速度环 
         const uint32_t speed_div = (motor.speed_loop_div == 0u) ? 1u : motor.speed_loop_div;
         motor.speed_loop_count++;
         if (motor.speed_loop_count >= speed_div) {
             motor.speed_loop_count = 0u;
-            pid_speed.trg();
+            upper_limit_speed.trg();
+            slope_limit_speed.trg();
+            if(motor.speed_target == 0.0f)
+            {
+                pid_speed.reset();
+                motor.speed_target_limited = 0;
+                motor.i_d_target = 0;
+                motor.i_q_target = 0;
+            }
+            else 
+            {
+                pid_speed.trg();
+            }
         }
 
         mech2elec.trg();
@@ -303,24 +367,16 @@ public:
         clark.trg();
         park.trg();
 
-        // === dq 交叉解耦前馈 (P2-1) ===
-        // v_d_ff = -Lq * i_q * w_elec
-        // v_q_ff = (Ld * i_d + flux_linkage) * w_elec
-        const float w_elec = motor.speed_mech * static_cast<float>(motor.pole_pairs);
-        const float v_d_ff = -motor.Lq * motor.i_q * w_elec;
-        const float v_q_ff = (motor.Ld * motor.i_d + motor.flux_linkage) * w_elec;
-
-        // 电流环 PID (建议 pid_d_kd = pid_q_kd = 0, 纯 PI 控制, 避免微分项放大噪声)
+        // 电流环 PID 
         pid_d.trg();
         pid_q.trg();
 
-        // 叠加解耦前馈电压
-        motor.v_d += v_d_ff;
-        motor.v_q += v_q_ff;
+        // dq 交叉解耦前馈: 叠加到 PID 输出上 
+        cross_feedforward.trg();
 
         inverse_park.trg();
         adc2voltage_vbus.trg();
-        motor.inv_vbus = (motor.v_bus > 0.0f) ? 1.0f / motor.v_bus : 0.0f;  // 缓存倒数 (P3-3)
+        motor.inv_vbus = (motor.v_bus > 0.0f) ? 1.0f / motor.v_bus : 0.0f;  
         svpwm.trg();
 
         p2c_a.trg();

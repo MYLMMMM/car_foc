@@ -31,12 +31,14 @@ void motor_driver::set_cc(uint32_t cc_u, uint32_t cc_v, uint32_t cc_w) noexcept
 
 void motor_driver::start() noexcept
 {
-    pwm_start_.start();
+    foc_soft_.motor.clear_running_values();
     ec.start_yaw_data_transfer();
     for(size_t i = 0;i < encoder_filter_deep;i++)
     {
         ec_spi_.send(0);
     }
+    pwm_start_.start();
+
     // ec_spi_.open_rx_interrupt(hal_spi::RX_FIFO_NOT_EMPTY);
     const uint32_t int_mask = Cy_HPPASS_SAR_Result_GetInterruptMask();
     Cy_HPPASS_SAR_Result_SetInterruptMask(int_mask | sar_result_group_mask_);
@@ -50,6 +52,7 @@ void motor_driver::stop() noexcept
     pwm_w_.stop();
     ec.stop_transfer();
     ec_spi_.close_rx_interrupt(hal_spi::RX_FIFO_NOT_EMPTY);
+    foc_soft_.motor.clear_running_values();
 }
 
 void motor_driver::pwm_chage_trig()
