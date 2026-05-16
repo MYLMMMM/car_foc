@@ -870,7 +870,7 @@ const mtb_hal_spi_configurator_t SPI_CTR_hal_config =
 
 const cy_stc_tcpwm_counter_config_t TIMER_TASK_config =
 {
-    .period = 239999,
+    .period = 479999,
     .clockPrescaler = CY_TCPWM_COUNTER_PRESCALER_DIVBY_1,
     .runMode = CY_TCPWM_COUNTER_CONTINUOUS,
     .countDirection = CY_TCPWM_COUNTER_COUNT_UP,

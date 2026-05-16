@@ -1792,7 +1792,7 @@
                         <Param id="InterruptCC0" value="false"/>
                         <Param id="InterruptCC1" value="false"/>
                         <Param id="InterruptTC" value="true"/>
-                        <Param id="Period" value="239999"/>
+                        <Param id="Period" value="479999"/>
                         <Param id="ReloadInput" value="CY_TCPWM_INPUT_DISABLED"/>
                         <Param id="RunMode" value="CY_TCPWM_COUNTER_CONTINUOUS"/>
                         <Param id="StartInput" value="CY_TCPWM_INPUT_DISABLED"/>

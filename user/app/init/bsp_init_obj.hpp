@@ -80,7 +80,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .adc_vref = 3.3f,
     .adc_full_scale = 4095*1,
     .vbus_divider_ratio = 7.0f,
-    .shunt_resistance = 0.005f,
+    .shunt_resistance = 0.010f,
     .current_sense_gain = 40.0f,
 
     .encoder_cpr = 65535,
