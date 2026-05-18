@@ -60,7 +60,7 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .Lq = 0.0f,             
     .flux_linkage = 0.0f,   
 
-    .pwm_period = 11999,
+    .pwm_period = 5999,
 };
 
 foc_motor_datastructure foc_motor_datastructure_A(foc_motor_datastructure_A_config);
@@ -110,7 +110,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .Lq = 0.0f,              
     .flux_linkage = 0.0f,    
 
-    .pwm_period = 11999,
+    .pwm_period = 5999,
 };
 
 foc_motor_datastructure foc_motor_datastructure_B(foc_motor_datastructure_B_config);
@@ -259,7 +259,7 @@ cy_stc_sysint_t int_adc_motor_b_config =
 cy_stc_sysint_t int_adc_motor_c_config = 
 {
     .intrSrc = pass_interrupt_sar_entry_done_2_IRQn,
-    .intrPriority = 0x01
+    .intrPriority = 0x02
 };
 
 /*----------------TIMER_TASK config----------------------*/

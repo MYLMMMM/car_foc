@@ -65,9 +65,12 @@ void spi_decode::stream_update()
     {
         uint32_t buffer[10];
         
-        buffer[0] = motor_a_driver.foc_soft_.motor.speed_mech;
-        buffer[1] = motor_b_driver.foc_soft_.motor.speed_mech;
-        buffer[2] = (uint32_t)command_doer_state.mech_state;
+        // buffer[0] = motor_a_driver.foc_soft_.motor.speed_mech;
+        // buffer[1] = motor_b_driver.foc_soft_.motor.speed_mech;
+        // buffer[2] = (uint32_t)command_doer_state.mech_state;
+        memcpy(buffer,&motor_a_driver.foc_soft_.motor.speed_mech,4);
+        memcpy(buffer + 1,&motor_b_driver.foc_soft_.motor.speed_mech,4);
+        memcpy(buffer + 2,&command_doer_state.mech_state,4);
         scb_fifo.clear_tx();
         scb_fifo.send(buffer[0]);
         scb_fifo.send(buffer[1]);
