@@ -48,7 +48,7 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_speed_kp = 0.05f,
     .pid_speed_ki = 0.004f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 4.0f,
+    .pid_speed_integral_limit = 1.5f,
     .speed_lpf_fc = 50.0f,    
     .speed_target_max = 200.0f,
     .speed_target_slope = 2.0f,
@@ -60,7 +60,7 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .Lq = 0.0f,             
     .flux_linkage = 0.0f,   
 
-    .pwm_period = 5999,
+    .pwm_period = 7000,
 };
 
 foc_motor_datastructure foc_motor_datastructure_A(foc_motor_datastructure_A_config);
@@ -98,7 +98,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_speed_kp = 0.05f,
     .pid_speed_ki = 0.004f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 4.0f,
+    .pid_speed_integral_limit = 1.5f,
     .speed_lpf_fc = 50.0f,     
     .speed_target_max = 200.0f,
     .speed_target_slope = 2.0f,
@@ -110,7 +110,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .Lq = 0.0f,              
     .flux_linkage = 0.0f,    
 
-    .pwm_period = 5999,
+    .pwm_period = 7000,
 };
 
 foc_motor_datastructure foc_motor_datastructure_B(foc_motor_datastructure_B_config);

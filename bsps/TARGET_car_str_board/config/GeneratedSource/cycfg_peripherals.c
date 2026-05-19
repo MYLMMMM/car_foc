@@ -1333,7 +1333,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_A_U_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 10,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 7000,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1415,7 +1415,7 @@ const mtb_hal_pwm_configurator_t PWM_A_U_hal_config =
     .clock = &PWM_A_U_hal_clock,
     .group = 1UL,
     .cntnum = 256UL,
-    .max_count = 5999,
+    .max_count = 7000,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1456,7 +1456,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_A_V_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 10,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 7000,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1538,7 +1538,7 @@ const mtb_hal_pwm_configurator_t PWM_A_V_hal_config =
     .clock = &PWM_A_V_hal_clock,
     .group = 1UL,
     .cntnum = 257UL,
-    .max_count = 5999,
+    .max_count = 7000,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1579,7 +1579,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_A_W_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 100,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 7000,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1661,7 +1661,7 @@ const mtb_hal_pwm_configurator_t PWM_A_W_hal_config =
     .clock = &PWM_A_W_hal_clock,
     .group = 1UL,
     .cntnum = 258UL,
-    .max_count = 5999,
+    .max_count = 7000,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1702,7 +1702,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_U_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 7000,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1784,7 +1784,7 @@ const mtb_hal_pwm_configurator_t PWM_B_U_hal_config =
     .clock = &PWM_B_U_hal_clock,
     .group = 1UL,
     .cntnum = 259UL,
-    .max_count = 5999,
+    .max_count = 7000,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1825,7 +1825,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_V_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 7000,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -1907,7 +1907,7 @@ const mtb_hal_pwm_configurator_t PWM_B_V_hal_config =
     .clock = &PWM_B_V_hal_clock,
     .group = 1UL,
     .cntnum = 260UL,
-    .max_count = 5999,
+    .max_count = 7000,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
@@ -1948,7 +1948,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_B_W_config =
     .pwmAlignment = CY_TCPWM_PWM_CENTER_ASYMMETRIC_CC0_CC1_ALIGN,
     .deadTimeClocks = 0,
     .runMode = CY_TCPWM_PWM_CONTINUOUS,
-    .period0 = 5999,
+    .period0 = 7000,
     .period1 = 32768,
     .enablePeriodSwap = false,
     .compare0 = 0,
@@ -2030,7 +2030,7 @@ const mtb_hal_pwm_configurator_t PWM_B_W_hal_config =
     .clock = &PWM_B_W_hal_clock,
     .group = 1UL,
     .cntnum = 261UL,
-    .max_count = 5999,
+    .max_count = 7000,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_PWM) */
 
