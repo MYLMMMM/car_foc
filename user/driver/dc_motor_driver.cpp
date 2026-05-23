@@ -1,13 +1,13 @@
 #include "dc_motor_driver.hpp"
 
 dc_motor_driver::dc_motor_driver(dc_motor& dc_motor_soft,
-                                 hal_pwm& pwm_u,
-                                 hal_pwm& pwm_v,
+                                 hal_pwm& pwm_in1,
+                                 hal_pwm& pwm_in2,
                                  hal_pwm& pwm_start,
                                  uint32_t sar_result_group_mask) noexcept
     : dc_motor_soft_(dc_motor_soft)
-    , pwm_u_(pwm_u)
-    , pwm_v_(pwm_v)
+    , pwm_in1_(pwm_in1)
+    , pwm_in2_(pwm_in2)
     , pwm_start_(pwm_start)
     , sar_result_group_mask_(sar_result_group_mask)
 {
@@ -22,8 +22,8 @@ void dc_motor_driver::start() noexcept
 
 void dc_motor_driver::stop() noexcept
 {
-    pwm_u_.stop();
-    pwm_v_.stop();
+    pwm_in1_.stop();
+    pwm_in2_.stop();
 }
 
 void dc_motor_driver::dc_trig_isr() noexcept
@@ -37,6 +37,7 @@ void dc_motor_driver::dc_trig_isr() noexcept
 
     dc_motor_soft_.trg();
 
-    pwm_u_.set_compare(dc_motor_soft_.motor.ccr_a);
-    pwm_v_.set_compare(dc_motor_soft_.motor.ccr_b);
+    // 8701p 双 PWM 模式：直接写入两路比较寄存器
+    pwm_in1_.set_compare(dc_motor_soft_.motor.ccr_p);
+    pwm_in2_.set_compare(dc_motor_soft_.motor.ccr_n);
 }

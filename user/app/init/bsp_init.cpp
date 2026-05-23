@@ -31,7 +31,7 @@ void GPIO_4_ISR()
 }
 void GPIO_3_ISR()
 {
-    drv8876_c.handle_nfault_irq();
+    drv8701_c.handle_nfault_irq();
 }
 
 
@@ -307,22 +307,22 @@ void motor_b_init()
 
 void motor_c_init()
 {
-    /*----------------- init drv8876 -----------------------*/
+    /*----------------- init drv8701 -----------------------*/
     // 注册 GPIO 端口中断 ISR
     Cy_SysInt_Init(&gpio_c_iqr_config, GPIO_3_ISR);
     NVIC_EnableIRQ(GPIO_GD_C_nFAULT_IRQ);
 
     // 初始化并注册回调
-    bool drv8876_init_states = drv8876_c.init();
+    bool drv8701_init_states = drv8701_c.init();
 #ifdef __DEBUG_RTT
-    if (drv8876_init_states == false)
+    if (drv8701_init_states == false)
     {
-        SEGGER_RTT_printf(0, "drv8876_c init fail");
+        SEGGER_RTT_printf(0, "drv8701_c init fail");
     }
 #endif
 
-    drv8876_c.register_nfault_callback(drv8876_c_nfault_callback, nullptr);
-    drv8876_c.set_enable(true);
+    drv8701_c.register_nfault_callback(drv8701_c_nfault_callback, nullptr);
+    drv8701_c.set_enable(true);
     CyDelay(2); // tWAKE ≈ 1ms，留 2ms 余量
 
     /*----------------- init PWM -----------------------*/
@@ -421,7 +421,7 @@ __WEAK void drv8304_b_nfault_callback(const drv8304::StateTable &statetable,void
 
 }
 
-__WEAK void drv8876_c_nfault_callback(const drv8876::FaultState &state,void* userptr)
+__WEAK void drv8701_c_nfault_callback(const drv8701::FaultState &state,void* userptr)
 {
 
 }

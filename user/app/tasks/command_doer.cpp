@@ -36,6 +36,7 @@ void CommandDoer::task_manager()
     case Command::InternalError:
         motor_a_driver.stop();
         motor_b_driver.stop();
+        motor_c_driver.stop();
         state_.mech_command = Command::Default;
         state_.mech_state   = State::FaultHalt;
         state_.light_color  = StateColor::ColorFault;

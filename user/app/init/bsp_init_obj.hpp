@@ -4,7 +4,7 @@
 #pragma once
 
 #include "drv8304.hpp"
-#include "drv8876.hpp"
+#include "drv8701.hpp"
 #include "kth7823.hpp"
 #include "cybsp.h"
 #include "foc_soft.hpp"
@@ -45,8 +45,8 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.05f,
-    .pid_speed_ki = 0.004f,
+    .pid_speed_kp = 0.04f,
+    .pid_speed_ki = 0.002f,
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
     .speed_lpf_fc = 50.0f,    
@@ -54,7 +54,7 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
-    .speed_loop_div = 20u,
+    .speed_loop_div = 7u,
 
     .Ld = 0.0f,              
     .Lq = 0.0f,             
@@ -95,8 +95,8 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.05f,
-    .pid_speed_ki = 0.004f,
+    .pid_speed_kp = 0.01f,
+    .pid_speed_ki = 0.0005f,
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
     .speed_lpf_fc = 50.0f,     
@@ -104,7 +104,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
-    .speed_loop_div = 20u,
+    .speed_loop_div = 7u,
 
     .Ld = 0.0f,              
     .Lq = 0.0f,              
@@ -116,23 +116,16 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
 foc_motor_datastructure foc_motor_datastructure_B(foc_motor_datastructure_B_config);
 foc foc_B_soft(foc_motor_datastructure_B);
 
-// motor C structure (DC motor)
+// motor C structure (DC motor, voltage mode with DRV8701 PH/EN)
 dc_motor_datastructure_config motor_c_config =
 {
-    .adc_current = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_C_I_CH_CHAN_IDX),
     .adc_vbus = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_VBUS_CH_CHAN_IDX),
 
-    .adc_zero = 0,
-    .adc_vref = 3.0f,
+    .adc_vref = 3.3f,
     .adc_full_scale = 4095,
-    .shunt_resistance = 0.010f,
-    .current_sense_gain = 40.0f,
-    .vbus_divider_ratio = 10.0f,
-
-    .pid_kp = 1.2f,
-    .pid_ki = 0.25f,
-    .pid_kd = 0.0f,
-    .pid_integral_limit = 4.0f,
+    .vbus_divider_ratio = 7.0f,
+    .voltage_limit = 6.0f,
+    .voltage_slope = 0.0001f,
 
     .control_period_s = 0.001f,
     .pwm_period = 4799,
@@ -166,17 +159,18 @@ drv8304 drv8304_b(spi_gd_cfg_b,pin_drv8304_b_enable,pin_drv8304_b_nfault);
  void drv8304_a_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
  void drv8304_b_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
 
-/*--------------------drv8876_C_config------------------*/
+/*--------------------drv8701_C_config------------------*/
 cy_stc_sysint_t gpio_c_iqr_config = {
     .intrSrc = GPIO_GD_C_nFAULT_IRQ,
     .intrPriority = 1
 };
-hal_gpio pin_drv8876_c_nsleep(GPIO_GD_C_ENABLE_PORT,GPIO_GD_C_ENABLE_PIN);
-hal_gpio pin_drv8876_c_nfault(GPIO_GD_C_nFAULT_PORT,GPIO_GD_C_nFAULT_PIN);
+hal_gpio pin_drv8701_c_nsleep(GPIO_GD_C_ENABLE_PORT,GPIO_GD_C_ENABLE_PIN);
+hal_gpio pin_drv8701_c_nfault(GPIO_GD_C_nFAULT_PORT,GPIO_GD_C_nFAULT_PIN);
+hal_gpio pin_drv8701_c_ph(GPIO_GD_C_PH_PORT,GPIO_GD_C_PH_PIN);
 
-drv8876 drv8876_c(pin_drv8876_c_nsleep,pin_drv8876_c_nfault);
+drv8701 drv8701_c(pin_drv8701_c_nsleep,pin_drv8701_c_nfault);
 
- void drv8876_c_nfault_callback(const drv8876::FaultState &state,void* userptr);
+ void drv8701_c_nfault_callback(const drv8701::FaultState &state,void* userptr);
 
 /*-----------------KTH7823_A_config----------------------*/
 kth7823::regist_map enc_a_init_map =
