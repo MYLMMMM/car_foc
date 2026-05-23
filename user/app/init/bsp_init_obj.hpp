@@ -46,11 +46,11 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.01f,
-    .pid_speed_ki = 0.0005f,
+    .pid_speed_kp = 0.02f,
+    .pid_speed_ki = 0.001f,
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
-    .speed_lpf_fc = 100.0f,    
+    .speed_lpf_fc = 50.0f,    
     .speed_target_max = 60.0f,
     .speed_target_slope = 2.0f,
 
@@ -99,7 +99,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_speed_ki = 0.0005f,
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
-    .speed_lpf_fc = 100.0f,     
+    .speed_lpf_fc = 50.0f,     
     .speed_target_max = 60.0f,
     .speed_target_slope = 2.0f,
 
@@ -221,7 +221,7 @@ hal_pwm pwm_b_v(PWM_B_V_HW, PWM_B_V_NUM);
 hal_pwm pwm_b_w(PWM_B_W_HW, PWM_B_W_NUM);
 hal_pwm pwm_start_b(PWM_START_B_HW, PWM_START_B_NUM);
 hal_counter speed_loop_b(PWM_SPEED_LOOP_B_HW, PWM_SPEED_LOOP_B_NUM);
-motor_driver motor_b_driver(foc_B_soft, drv8304_b, enc_b, spi_enc_b, pwm_b_u, pwm_b_v, pwm_b_w, pwm_start_b, speed_loop_b, true, CY_HPPASS_INTR_SAR_RESULT_GROUP_1);
+motor_driver motor_b_driver(foc_B_soft, drv8304_b, enc_b, spi_enc_b, pwm_b_u, pwm_b_v, pwm_b_w, pwm_start_b, speed_loop_b, false, CY_HPPASS_INTR_SAR_RESULT_GROUP_1);
 hal_pwm pwm_c_u(PWM_C_U_HW, PWM_C_U_NUM);
 hal_pwm pwm_c_v(PWM_C_V_HW, PWM_C_V_NUM);
 hal_pwm pwm_start_c(PWM_START_C_HW, PWM_START_C_NUM);

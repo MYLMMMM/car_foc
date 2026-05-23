@@ -19,6 +19,11 @@ void CommandDoer::task_manager()
     case Command::Default:
         break;
     case Command::Start:
+        if (state_.mech_state == State::Running)
+        {
+            state_.mech_command = Command::Default;  // 已在运行，忽略
+            break;
+        }
         motor_b_driver.start();  // B 先初始化（不触发 PWM start）
         motor_a_driver.start();  // A 触发 PWM start，硬件链自动启动 B
         motor_c_driver.start();
