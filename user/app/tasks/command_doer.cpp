@@ -7,6 +7,8 @@ void CommandDoer::task_ctl()
 {
     // 刷新缓冲区
     spi_ctr_decode.stream_update();
+    // 低压检测
+    low_voltage_check();
     // 任务状态更新
     task_manager();
 
@@ -56,4 +58,27 @@ void CommandDoer::task_manager()
         static_cast<uint8_t>((color_val >> 16) & 0xFF),
         static_cast<uint8_t>((color_val >> 8) & 0xFF),
         static_cast<uint8_t>((color_val >> 0) & 0xFF));
+}
+
+void CommandDoer::low_voltage_check()
+{
+    // 仅 Running 状态下检测，避免停机后误报
+    if (state_.mech_state != State::Running)
+    {
+        low_voltage_count_ = 0;
+        return;
+    }
+
+    if (foc_motor_datastructure_A.v_bus < kLowVoltageThreshold)
+    {
+        if (++low_voltage_count_ >= kLowVoltageDebounce)
+        {
+            set_command(Command::InternalError);
+            low_voltage_count_ = 0;
+        }
+    }
+    else
+    {
+        low_voltage_count_ = 0;
+    }
 }

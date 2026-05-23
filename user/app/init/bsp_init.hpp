@@ -17,6 +17,8 @@ extern kth7823 enc_b;
 extern motor_driver motor_a_driver;
 extern motor_driver motor_b_driver;
 extern dc_motor_driver motor_c_driver;
+extern foc_motor_datastructure foc_motor_datastructure_A;
+extern foc_motor_datastructure foc_motor_datastructure_B;
 extern spi_decode spi_ctr_decode;
 extern XL202RGBC ws2812;
 extern CommandDoer command_doer;

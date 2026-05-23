@@ -35,6 +35,7 @@ public:
         : state_(state), led_(led) {}
 
     void task_ctl();
+    void low_voltage_check();
 
     // Getters
     State state() const { return state_.mech_state; }
@@ -49,4 +50,8 @@ private:
 
     CommandDoerState& state_;
     XL202RGBC&       led_;
+
+    static constexpr float kLowVoltageThreshold = 3.0f * 3.4f;  // 3S LiPo 最低 10.2V
+    static constexpr uint32_t kLowVoltageDebounce = 5;           // 连续 5 次确认
+    uint32_t low_voltage_count_ = 0;
 };
