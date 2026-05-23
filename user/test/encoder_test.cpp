@@ -1,6 +1,6 @@
 #include "cybsp.h"
 #include "bsp_init.hpp"
-static int msg = 0 ;
+// static int msg = 0;
 
 void encoder_test()
 {

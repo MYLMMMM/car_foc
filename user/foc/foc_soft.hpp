@@ -62,8 +62,6 @@ struct foc_motor_datastructure_config
     float speed_target_slope;  // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
     float control_period_s;
-    uint32_t speed_loop_div;
-
     float Ld;              // d 轴电感 (H), 用于交叉解耦前馈
     float Lq;              // q 轴电感 (H), 用于交叉解耦前馈
     float flux_linkage;    // 永磁磁链 (Wb), 用于交叉解耦前馈
@@ -116,8 +114,6 @@ struct foc_motor_datastructure
     float speed_target_slope = 0.0f; // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
     float control_period_s = 0.0f;   // 控制周期(s)
-    uint32_t speed_loop_div = 1u;    // 速度环降采样分频(每 N 次中断执行 1 次速度环)
-
     float Ld = 0.0f;             // d 轴电感 (H)
     float Lq = 0.0f;             // q 轴电感 (H)
     float flux_linkage = 0.0f;   // 永磁磁链 (Wb)
@@ -154,7 +150,6 @@ struct foc_motor_datastructure
     float i_q_target = 0.0f;         // q 轴目标电流(A)
     float speed_target = 0.0f;       // 目标机械角速度(rad/s)
     float speed_target_limited = 0.0f; // 限幅后的目标速度(rad/s)
-    uint32_t speed_loop_count = 0u;  // 速度环计数器(中断计数)
     float inv_vbus = 0.0f;           // 1/v_bus 缓存 (由 SVPWM 更新)
 
     explicit foc_motor_datastructure(const foc_motor_datastructure_config& cfg)
@@ -189,7 +184,6 @@ struct foc_motor_datastructure
         , speed_target_max(cfg.speed_target_max)
         , speed_target_slope(cfg.speed_target_slope)
         , control_period_s(cfg.control_period_s)
-        , speed_loop_div(cfg.speed_loop_div)
         , Ld(cfg.Ld)
         , Lq(cfg.Lq)
         , flux_linkage(cfg.flux_linkage)
@@ -227,7 +221,6 @@ struct foc_motor_datastructure
         i_q_target = 0.0f;
         speed_target = 0.0f;
         speed_target_limited = 0.0f;
-        speed_loop_count = 0u;
         inv_vbus = 0.0f;
     }
 };
@@ -328,7 +321,6 @@ public:
         pid_speed.reset();
         pid_d.reset();
         pid_q.reset();
-        motor.speed_loop_count = 0u;
     }
 
     /**
@@ -340,31 +332,34 @@ public:
     }
 
     /**
-     * @brief 按标准顺序触发一次 FOC 计算
+     * @brief 触发一次速度环计算 (独立中断调用)
+     * @details 速度目标限幅 → 斜率限制 → 速度 PID → i_q_target
+     *          速度反馈 speed_mech 由电流环 trg() 每快周期更新
+     */
+    void trg_speed() {
+        upper_limit_speed.trg();
+        slope_limit_speed.trg();
+        if (motor.speed_target == 0.0f)
+        {
+            pid_speed.reset();
+            motor.speed_target_limited = 0;
+            motor.i_d_target = 0;
+            motor.i_q_target = 0;
+        }
+        else
+        {
+            pid_speed.trg();
+        }
+    }
+
+    /**
+     * @brief 按标准顺序触发一次 FOC 电流环计算
+     * @details 编码器 → 速度估算 → 电角变换 → ADC → Clark/Park →
+     *          电流环 PID → 交叉解耦 → 逆Park → SVPWM → CCR
      */
     void trg() {
         encoder2mech.trg();
         speed.trg();
-
-        // 速度环 
-        const uint32_t speed_div = (motor.speed_loop_div == 0u) ? 1u : motor.speed_loop_div;
-        motor.speed_loop_count++;
-        if (motor.speed_loop_count >= speed_div) {
-            motor.speed_loop_count = 0u;
-            upper_limit_speed.trg();
-            slope_limit_speed.trg();
-            if(motor.speed_target == 0.0f)
-            {
-                pid_speed.reset();
-                motor.speed_target_limited = 0;
-                motor.i_d_target = 0;
-                motor.i_q_target = 0;
-            }
-            else 
-            {
-                pid_speed.trg();
-            }
-        }
 
         mech2elec.trg();
 

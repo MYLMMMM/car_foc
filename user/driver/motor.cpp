@@ -8,6 +8,8 @@ motor_driver::motor_driver(foc& foc_soft,
                            hal_pwm& pwm_v,
                            hal_pwm& pwm_w,
                            hal_pwm& pwm_start,
+                           hal_counter& speed_loop_timer,
+                           bool auto_start,
                            uint32_t sar_result_group_mask) noexcept
     : foc_soft_(foc_soft)
     , drv(drv)
@@ -18,6 +20,8 @@ motor_driver::motor_driver(foc& foc_soft,
     , pwm_v_(pwm_v)
     , pwm_w_(pwm_w)
     , pwm_start_(pwm_start)
+    , speed_loop_timer_(speed_loop_timer)
+    , auto_start_(auto_start)
     , sar_result_group_mask_(sar_result_group_mask)
 {
 }
@@ -37,7 +41,10 @@ void motor_driver::start() noexcept
     {
         ec_spi_.send(0);
     }
-    pwm_start_.start();
+    if (!auto_start_)
+    {
+        pwm_start_.start();
+    }
 
     // ec_spi_.open_rx_interrupt(hal_spi::RX_FIFO_NOT_EMPTY);
     const uint32_t int_mask = Cy_HPPASS_SAR_Result_GetInterruptMask();
@@ -50,6 +57,8 @@ void motor_driver::stop() noexcept
     pwm_u_.stop();
     pwm_v_.stop();
     pwm_w_.stop();
+    pwm_start_.stop();
+    speed_loop_timer_.stop();
     ec.stop_transfer();
     ec_spi_.close_rx_interrupt(hal_spi::RX_FIFO_NOT_EMPTY);
     foc_soft_.clear_running_values();
@@ -89,6 +98,13 @@ void motor_driver::foc_trig_isr() noexcept
     ec_spi_.send(0);
     ec_spi_.send(0);
     
+}
+
+void motor_driver::speed_isr() noexcept
+{
+    hal_counter::interrupt_type int_type = speed_loop_timer_.get_interrupt_type();
+    speed_loop_timer_.clear_interrupt(int_type);
+    foc_soft_.trg_speed();
 }
 
 //之后将它更新为DMA直接传输

@@ -2,7 +2,11 @@
 
 GraphedExpression="(foc_motor_datastructure_A).enc_a", Color=#e56a6f, Show=0
 GraphedExpression="(foc_motor_datastructure_A).speed_target_limited", Color=#35792b, Show=0
-OpenDocument="UpperLimit.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/UpperLimit.hpp", Line=5
+GraphedExpression="(foc_motor_datastructure_A).speed_target", Color=#769dda
+GraphedExpression="(foc_motor_datastructure_A).speed_mech", Color=#b14f0d
+OpenDocument="foc_soft.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/foc_soft.hpp", Line=337
+OpenDocument="motor.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/driver/motor.cpp", Line=83
+OpenDocument="UpperLimit.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/UpperLimit.hpp", Line=0
 OpenDocument="InversePark.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/InversePark.hpp", Line=15
 OpenDocument="Mech2Elec.hpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/foc/algorithm/Mech2Elec.hpp", Line=37
 OpenDocument="endecode.cpp", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/user/command_ctl/endecode.cpp", Line=87
@@ -35,17 +39,17 @@ OpenDocument="cycfg.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TAR
 OpenDocument="cybsp.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/cybsp.c", Line=40
 OpenDocument="startup_cat1b_cm33.c", FilePath="/home/zhuizhai/Program/PSC3M5/car_foc/bsps/TARGET_car_str_board/startup_cat1b_cm33.c", Line=275
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=898, h=518, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=898, h=383, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=852, h=487, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
-OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=852, h=414, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=898, h=515, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=898, h=386, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=852, h=485, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=852, h=416, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=1711, h=862, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=BOTTOM, x=0, y=0, w=1744, h=862, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="100 ms / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="50;16", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1514;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1542;0"
+OpenWindow="Timeline", DockArea=BOTTOM, x=0, y=0, w=1744, h=862, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="100 ms / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="50;16", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1512;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1540;0"
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Vector Catches", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;500]
 TableHeader="Break & Tracepoints", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;166;159;427]
-TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (foc_motor_datastructure_A).enc_a";" (foc_motor_datastructure_A).speed_target_limited"], ColWidths=[100;100;100;100]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[295;190;100;100;100;100;100;118;608]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" (foc_motor_datastructure_A).enc_a";" (foc_motor_datastructure_A).speed_target_limited";" (foc_motor_datastructure_A).speed_target";" (foc_motor_datastructure_A).speed_mech"], ColWidths=[100;100;100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[423;190;100;126;134;100;100;102;436]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[212;171;499]
 TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Refresh";"Access";"Scope"], ColWidths=[279;157;39;27;334]

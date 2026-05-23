@@ -175,6 +175,14 @@ extern "C" {
 #define PWM_START_B_HW TCPWM0
 #define PWM_START_B_NUM 263UL
 #define PWM_START_B_IRQ tcpwm_0_interrupts_263_IRQn
+#define PWM_SPEED_LOOP_A_ENABLED 1U
+#define PWM_SPEED_LOOP_A_HW TCPWM0
+#define PWM_SPEED_LOOP_A_NUM 512UL
+#define PWM_SPEED_LOOP_A_IRQ tcpwm_0_interrupts_512_IRQn
+#define PWM_SPEED_LOOP_B_ENABLED 1U
+#define PWM_SPEED_LOOP_B_HW TCPWM0
+#define PWM_SPEED_LOOP_B_NUM 513UL
+#define PWM_SPEED_LOOP_B_IRQ tcpwm_0_interrupts_513_IRQn
 
 extern const cy_stc_hppass_cfg_t pass_0_config;
 
@@ -590,6 +598,52 @@ extern const cyhal_clock_t PWM_START_B_clock;
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
 extern const cyhal_pwm_configurator_t PWM_START_B_hal_config;
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+extern const cy_stc_tcpwm_counter_config_t PWM_SPEED_LOOP_A_config;
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+extern const cyhal_resource_inst_t PWM_SPEED_LOOP_A_obj;
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+#if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
+extern const cyhal_clock_t PWM_SPEED_LOOP_A_clock;
+#endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+extern const cyhal_timer_configurator_t PWM_SPEED_LOOP_A_hal_config;
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+#if defined (COMPONENT_MTB_HAL)
+extern const mtb_hal_peri_div_t PWM_SPEED_LOOP_A_clock_ref;
+extern const mtb_hal_clock_t PWM_SPEED_LOOP_A_hal_clock;
+#endif /* defined (COMPONENT_MTB_HAL) */
+
+#if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_TIMER)
+extern const mtb_hal_timer_configurator_t PWM_SPEED_LOOP_A_hal_config;
+#endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_TIMER) */
+
+extern const cy_stc_tcpwm_counter_config_t PWM_SPEED_LOOP_B_config;
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+extern const cyhal_resource_inst_t PWM_SPEED_LOOP_B_obj;
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+#if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
+extern const cyhal_clock_t PWM_SPEED_LOOP_B_clock;
+#endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
+
+#if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
+extern const cyhal_timer_configurator_t PWM_SPEED_LOOP_B_hal_config;
+#endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
+
+#if defined (COMPONENT_MTB_HAL)
+extern const mtb_hal_peri_div_t PWM_SPEED_LOOP_B_clock_ref;
+extern const mtb_hal_clock_t PWM_SPEED_LOOP_B_hal_clock;
+#endif /* defined (COMPONENT_MTB_HAL) */
+
+#if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_TIMER)
+extern const mtb_hal_timer_configurator_t PWM_SPEED_LOOP_B_hal_config;
+#endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_TIMER) */
 
 void pass_0_start(void);
 void init_cycfg_peripherals(void);

@@ -14,6 +14,7 @@
 #include "motor.hpp"
 #include "dc_motor_soft.hpp"
 #include "dc_motor_driver.hpp"
+#include "hal_counter_cy.hpp"
 #include "command_doer.hpp"
 
 // motor A structure
@@ -45,16 +46,15 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.04f,
-    .pid_speed_ki = 0.002f,
+    .pid_speed_kp = 0.01f,
+    .pid_speed_ki = 0.0005f,
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
-    .speed_lpf_fc = 50.0f,    
-    .speed_target_max = 200.0f,
+    .speed_lpf_fc = 100.0f,    
+    .speed_target_max = 60.0f,
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
-    .speed_loop_div = 7u,
 
     .Ld = 0.0f,              
     .Lq = 0.0f,             
@@ -99,12 +99,11 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_speed_ki = 0.0005f,
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
-    .speed_lpf_fc = 50.0f,     
-    .speed_target_max = 200.0f,
+    .speed_lpf_fc = 100.0f,     
+    .speed_target_max = 60.0f,
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
-    .speed_loop_div = 7u,
 
     .Ld = 0.0f,              
     .Lq = 0.0f,              
@@ -128,7 +127,7 @@ dc_motor_datastructure_config motor_c_config =
     .voltage_slope = 0.0001f,
 
     .control_period_s = 0.001f,
-    .pwm_period = 4799,
+    .pwm_period = 9599,
 };
 
 dc_motor_datastructure motor_c_data(motor_c_config);
@@ -140,11 +139,11 @@ dc_motor motor_c_soft(motor_c_data);
 
 cy_stc_sysint_t gpio_iqr_config = {
     .intrSrc = GPIO_GD_A_nFAULT_IRQ,
-    .intrPriority = 1
+    .intrPriority = 0x04
 };
 cy_stc_sysint_t gpio_b_iqr_config = {
     .intrSrc = GPIO_GD_B_nFAULT_IRQ,
-    .intrPriority = 1
+    .intrPriority = 0x04
 };
 hal_spi spi_gd_cfg_a(SPI_GD_CFG_HW,CY_SCB_SPI_SLAVE_SELECT2);
 hal_spi spi_gd_cfg_b(SPI_GD_CFG_HW,CY_SCB_SPI_SLAVE_SELECT0);
@@ -162,11 +161,10 @@ drv8304 drv8304_b(spi_gd_cfg_b,pin_drv8304_b_enable,pin_drv8304_b_nfault);
 /*--------------------drv8701_C_config------------------*/
 cy_stc_sysint_t gpio_c_iqr_config = {
     .intrSrc = GPIO_GD_C_nFAULT_IRQ,
-    .intrPriority = 1
+    .intrPriority = 0x04
 };
 hal_gpio pin_drv8701_c_nsleep(GPIO_GD_C_ENABLE_PORT,GPIO_GD_C_ENABLE_PIN);
 hal_gpio pin_drv8701_c_nfault(GPIO_GD_C_nFAULT_PORT,GPIO_GD_C_nFAULT_PIN);
-hal_gpio pin_drv8701_c_ph(GPIO_GD_C_PH_PORT,GPIO_GD_C_PH_PIN);
 
 drv8701 drv8701_c(pin_drv8701_c_nsleep,pin_drv8701_c_nfault);
 
@@ -216,12 +214,14 @@ hal_pwm pwm_a_u(PWM_A_U_HW, PWM_A_U_NUM);
 hal_pwm pwm_a_v(PWM_A_V_HW, PWM_A_V_NUM);
 hal_pwm pwm_a_w(PWM_A_W_HW, PWM_A_W_NUM);
 hal_pwm pwm_start_a(PWM_START_A_HW, PWM_START_A_NUM);
-motor_driver motor_a_driver(foc_A_soft, drv8304_a, enc_a, spi_enc_a, pwm_a_u, pwm_a_v, pwm_a_w, pwm_start_a, CY_HPPASS_INTR_SAR_RESULT_GROUP_0);
+hal_counter speed_loop_a(PWM_SPEED_LOOP_A_HW, PWM_SPEED_LOOP_A_NUM);
+motor_driver motor_a_driver(foc_A_soft, drv8304_a, enc_a, spi_enc_a, pwm_a_u, pwm_a_v, pwm_a_w, pwm_start_a, speed_loop_a, false, CY_HPPASS_INTR_SAR_RESULT_GROUP_0);
 hal_pwm pwm_b_u(PWM_B_U_HW, PWM_B_U_NUM);
 hal_pwm pwm_b_v(PWM_B_V_HW, PWM_B_V_NUM);
 hal_pwm pwm_b_w(PWM_B_W_HW, PWM_B_W_NUM);
 hal_pwm pwm_start_b(PWM_START_B_HW, PWM_START_B_NUM);
-motor_driver motor_b_driver(foc_B_soft, drv8304_b, enc_b, spi_enc_b, pwm_b_u, pwm_b_v, pwm_b_w, pwm_start_b, CY_HPPASS_INTR_SAR_RESULT_GROUP_1);
+hal_counter speed_loop_b(PWM_SPEED_LOOP_B_HW, PWM_SPEED_LOOP_B_NUM);
+motor_driver motor_b_driver(foc_B_soft, drv8304_b, enc_b, spi_enc_b, pwm_b_u, pwm_b_v, pwm_b_w, pwm_start_b, speed_loop_b, true, CY_HPPASS_INTR_SAR_RESULT_GROUP_1);
 hal_pwm pwm_c_u(PWM_C_U_HW, PWM_C_U_NUM);
 hal_pwm pwm_c_v(PWM_C_V_HW, PWM_C_V_NUM);
 hal_pwm pwm_start_c(PWM_START_C_HW, PWM_START_C_NUM);
@@ -235,25 +235,38 @@ spi_decode spi_ctr_decode(spi_ctr,pin_ctr_int2,pin_ctr_int2);
 cy_stc_sysint_t int_spi_ctl = 
 {
     .intrSrc = SPI_CTR_IRQ,
-    .intrPriority = 0x04 
+    .intrPriority = 0x02 
 };
 
 cy_stc_sysint_t int_adc_motor_a_config = 
 {
     .intrSrc = pass_interrupt_sar_entry_done_0_IRQn,
-    .intrPriority = 0x01
+    .intrPriority = 0x00
 };
 
 cy_stc_sysint_t int_adc_motor_b_config = 
 {
     .intrSrc = pass_interrupt_sar_entry_done_1_IRQn,
-    .intrPriority = 0x01
+    .intrPriority = 0x00
 };
 
 cy_stc_sysint_t int_adc_motor_c_config = 
 {
     .intrSrc = pass_interrupt_sar_entry_done_2_IRQn,
-    .intrPriority = 0x02
+    .intrPriority = 0x01
+};
+
+/*----------------SPEED_LOOP config----------------------*/
+cy_stc_sysint_t int_speed_loop_a_config = 
+{
+    .intrSrc = PWM_SPEED_LOOP_A_IRQ,
+    .intrPriority = 0x01
+};
+
+cy_stc_sysint_t int_speed_loop_b_config = 
+{
+    .intrSrc = PWM_SPEED_LOOP_B_IRQ,
+    .intrPriority = 0x01
 };
 
 /*----------------TIMER_TASK config----------------------*/

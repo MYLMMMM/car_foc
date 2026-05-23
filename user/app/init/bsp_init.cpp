@@ -16,6 +16,8 @@ void motor_c_dc_isr();
 void motor_a_ec_isr();
 void motor_b_ec_isr();
 void motor_a_pwm_isr();
+void motor_a_speed_isr();
+void motor_b_speed_isr();
 void spi_ctr_isr();
 void timer_task_isr();
 //GPIO global interrupt
@@ -189,6 +191,19 @@ void motor_a_init()
     Cy_TCPWM_PWM_Enable(PWM_A_W_HW, PWM_A_W_NUM);
     Cy_TCPWM_PWM_Enable(PWM_START_A_HW, PWM_START_A_NUM);
 
+    /*----------------- init speed loop timer -----------------------*/
+    tcpwm_status = Cy_TCPWM_Counter_Init(PWM_SPEED_LOOP_A_HW, PWM_SPEED_LOOP_A_NUM, &PWM_SPEED_LOOP_A_config);
+#ifdef __DEBUG_RTT
+    if (tcpwm_status != CY_TCPWM_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "motor_a_speed_loop init fail\r\n");
+    }
+#endif
+    speed_loop_a.enable();
+    Cy_SysInt_Init(&int_speed_loop_a_config, motor_a_speed_isr);
+    NVIC_ClearPendingIRQ(int_speed_loop_a_config.intrSrc);
+    NVIC_EnableIRQ(int_speed_loop_a_config.intrSrc);
+
     //如果将pwm更新单独放在pwmisr中时，取消注释掉这一段
     //并且将adc中断里面的pwmcc更新注释掉
     // Cy_SysInt_Init(&motor_a_pwm_iqr_config,motor_a_pwm_isr);
@@ -302,6 +317,18 @@ void motor_b_init()
     Cy_TCPWM_PWM_Enable(PWM_B_W_HW, PWM_B_W_NUM);
     Cy_TCPWM_PWM_Enable(PWM_START_B_HW, PWM_START_B_NUM);
 
+    /*----------------- init speed loop timer -----------------------*/
+    tcpwm_status = Cy_TCPWM_Counter_Init(PWM_SPEED_LOOP_B_HW, PWM_SPEED_LOOP_B_NUM, &PWM_SPEED_LOOP_B_config);
+#ifdef __DEBUG_RTT
+    if (tcpwm_status != CY_TCPWM_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "motor_b_speed_loop init fail\r\n");
+    }
+#endif
+    speed_loop_b.enable();
+    Cy_SysInt_Init(&int_speed_loop_b_config, motor_b_speed_isr);
+    NVIC_ClearPendingIRQ(int_speed_loop_b_config.intrSrc);
+    NVIC_EnableIRQ(int_speed_loop_b_config.intrSrc);
 
 }
 
@@ -441,6 +468,16 @@ __WEAK void motor_b_foc_isr()
 __WEAK void motor_c_dc_isr()
 {
     motor_c_driver.dc_trig_isr();
+}
+
+__WEAK void motor_a_speed_isr()
+{
+    motor_a_driver.speed_isr();
+}
+
+__WEAK void motor_b_speed_isr()
+{
+    motor_b_driver.speed_isr();
 }
 
 __WEAK void motor_a_ec_isr()

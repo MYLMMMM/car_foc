@@ -91,39 +91,39 @@ extern "C" {
 #define CLK_SPI_EC_GRP_NUM CLK_SPI_EC_GRP_NUM
 #endif /* !defined (CLK_SPI_EC_GRP_NUM) */
 
-#define peri_0_group_5_div_8_0_ENABLED 1U
+#define CLK_PWM_ENABLED 1U
 
 #if defined (CY_USING_HAL) || defined (CY_USING_HAL_LITE)
-#define peri_0_group_5_div_8_0_HW CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT
+#define CLK_PWM_HW CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT
 #endif /* defined (CY_USING_HAL) || defined (CY_USING_HAL_LITE) */
 
 #if !defined (CY_USING_HAL) && !defined (CY_USING_HAL_LITE)
-#define peri_0_group_5_div_8_0_HW CY_SYSCLK_DIV_8_BIT
+#define CLK_PWM_HW CY_SYSCLK_DIV_8_BIT
 #endif /* !defined (CY_USING_HAL) && !defined (CY_USING_HAL_LITE) */
 
-#define peri_0_group_5_div_8_0_NUM 0U
-#define PERI_0_GROUP_5_DIV_8_0_GRP_NUM ((5U << PERI_PCLK_GR_NUM_Pos) | (0U << PERI_PCLK_INST_NUM_Pos))
+#define CLK_PWM_NUM 0U
+#define CLK_PWM_GRP_NUM ((5U << PERI_PCLK_GR_NUM_Pos) | (0U << PERI_PCLK_INST_NUM_Pos))
 
-#if !defined (peri_0_group_5_div_8_0_GRP_NUM)
-#define peri_0_group_5_div_8_0_GRP_NUM PERI_0_GROUP_5_DIV_8_0_GRP_NUM
-#endif /* !defined (peri_0_group_5_div_8_0_GRP_NUM) */
+#if !defined (CLK_PWM_GRP_NUM)
+#define CLK_PWM_GRP_NUM CLK_PWM_GRP_NUM
+#endif /* !defined (CLK_PWM_GRP_NUM) */
 
-#define peri_0_group_5_div_8_1_ENABLED 1U
+#define CLK_SPEED_LOOP_ENABLED 1U
 
 #if defined (CY_USING_HAL) || defined (CY_USING_HAL_LITE)
-#define peri_0_group_5_div_8_1_HW CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT
+#define CLK_SPEED_LOOP_HW CYHAL_CLOCK_BLOCK_PERIPHERAL5_8BIT
 #endif /* defined (CY_USING_HAL) || defined (CY_USING_HAL_LITE) */
 
 #if !defined (CY_USING_HAL) && !defined (CY_USING_HAL_LITE)
-#define peri_0_group_5_div_8_1_HW CY_SYSCLK_DIV_8_BIT
+#define CLK_SPEED_LOOP_HW CY_SYSCLK_DIV_8_BIT
 #endif /* !defined (CY_USING_HAL) && !defined (CY_USING_HAL_LITE) */
 
-#define peri_0_group_5_div_8_1_NUM 1U
-#define PERI_0_GROUP_5_DIV_8_1_GRP_NUM ((5U << PERI_PCLK_GR_NUM_Pos) | (0U << PERI_PCLK_INST_NUM_Pos))
+#define CLK_SPEED_LOOP_NUM 1U
+#define CLK_SPEED_LOOP_GRP_NUM ((5U << PERI_PCLK_GR_NUM_Pos) | (0U << PERI_PCLK_INST_NUM_Pos))
 
-#if !defined (peri_0_group_5_div_8_1_GRP_NUM)
-#define peri_0_group_5_div_8_1_GRP_NUM PERI_0_GROUP_5_DIV_8_1_GRP_NUM
-#endif /* !defined (peri_0_group_5_div_8_1_GRP_NUM) */
+#if !defined (CLK_SPEED_LOOP_GRP_NUM)
+#define CLK_SPEED_LOOP_GRP_NUM CLK_SPEED_LOOP_GRP_NUM
+#endif /* !defined (CLK_SPEED_LOOP_GRP_NUM) */
 
 #define peri_0_group_6_div_16_5_0_ENABLED 1U
 
@@ -146,8 +146,8 @@ extern "C" {
 extern const cyhal_resource_inst_t CLK_SPI_GD_CFG_obj;
 extern const cyhal_resource_inst_t CLK_SPI_LED_obj;
 extern const cyhal_resource_inst_t CLK_SPI_EC_obj;
-extern const cyhal_resource_inst_t peri_0_group_5_div_8_0_obj;
-extern const cyhal_resource_inst_t peri_0_group_5_div_8_1_obj;
+extern const cyhal_resource_inst_t CLK_PWM_obj;
+extern const cyhal_resource_inst_t CLK_SPEED_LOOP_obj;
 extern const cyhal_resource_inst_t peri_0_group_6_div_16_5_0_obj;
 #endif /* defined (CY_USING_HAL) */
 

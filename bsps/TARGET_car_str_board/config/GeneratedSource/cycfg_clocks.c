@@ -47,17 +47,17 @@ const cyhal_resource_inst_t CLK_SPI_EC_obj =
     .block_num = CLK_SPI_EC_HW,
     .channel_num = CLK_SPI_EC_NUM,
 };
-const cyhal_resource_inst_t peri_0_group_5_div_8_0_obj =
+const cyhal_resource_inst_t CLK_PWM_obj =
 {
     .type = CYHAL_RSC_CLOCK,
-    .block_num = peri_0_group_5_div_8_0_HW,
-    .channel_num = peri_0_group_5_div_8_0_NUM,
+    .block_num = CLK_PWM_HW,
+    .channel_num = CLK_PWM_NUM,
 };
-const cyhal_resource_inst_t peri_0_group_5_div_8_1_obj =
+const cyhal_resource_inst_t CLK_SPEED_LOOP_obj =
 {
     .type = CYHAL_RSC_CLOCK,
-    .block_num = peri_0_group_5_div_8_1_HW,
-    .channel_num = peri_0_group_5_div_8_1_NUM,
+    .block_num = CLK_SPEED_LOOP_HW,
+    .channel_num = CLK_SPEED_LOOP_NUM,
 };
 const cyhal_resource_inst_t peri_0_group_6_div_16_5_0_obj =
 {
@@ -78,12 +78,12 @@ void init_cycfg_clocks(void)
     Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)CLK_SPI_EC_GRP_NUM, CY_SYSCLK_DIV_16_5_BIT, 2U);
     Cy_SysClk_PeriPclkSetFracDivider((en_clk_dst_t)CLK_SPI_EC_GRP_NUM, CY_SYSCLK_DIV_16_5_BIT, 2U, 0U, 0U);
     Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)CLK_SPI_EC_GRP_NUM, CY_SYSCLK_DIV_16_5_BIT, 2U);
-    Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)PERI_0_GROUP_5_DIV_8_0_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 0U);
-    Cy_SysClk_PeriPclkSetDivider((en_clk_dst_t)PERI_0_GROUP_5_DIV_8_0_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 0U, 0U);
-    Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)PERI_0_GROUP_5_DIV_8_0_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 0U);
-    Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)PERI_0_GROUP_5_DIV_8_1_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 1U);
-    Cy_SysClk_PeriPclkSetDivider((en_clk_dst_t)PERI_0_GROUP_5_DIV_8_1_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 1U, 0U);
-    Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)PERI_0_GROUP_5_DIV_8_1_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 1U);
+    Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)CLK_PWM_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 0U);
+    Cy_SysClk_PeriPclkSetDivider((en_clk_dst_t)CLK_PWM_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 0U, 0U);
+    Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)CLK_PWM_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 0U);
+    Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)CLK_SPEED_LOOP_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 1U);
+    Cy_SysClk_PeriPclkSetDivider((en_clk_dst_t)CLK_SPEED_LOOP_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 1U, 6U);
+    Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)CLK_SPEED_LOOP_GRP_NUM, CY_SYSCLK_DIV_8_BIT, 1U);
     Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)PERI_0_GROUP_6_DIV_16_5_0_GRP_NUM, CY_SYSCLK_DIV_16_5_BIT, 0U);
     Cy_SysClk_PeriPclkSetFracDivider((en_clk_dst_t)PERI_0_GROUP_6_DIV_16_5_0_GRP_NUM, CY_SYSCLK_DIV_16_5_BIT, 0U, 0U, 0U);
     Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)PERI_0_GROUP_6_DIV_16_5_0_GRP_NUM, CY_SYSCLK_DIV_16_5_BIT, 0U);
@@ -94,8 +94,8 @@ void reserve_cycfg_clocks(void)
     cyhal_hwmgr_reserve(&CLK_SPI_GD_CFG_obj);
     cyhal_hwmgr_reserve(&CLK_SPI_LED_obj);
     cyhal_hwmgr_reserve(&CLK_SPI_EC_obj);
-    cyhal_hwmgr_reserve(&peri_0_group_5_div_8_0_obj);
-    cyhal_hwmgr_reserve(&peri_0_group_5_div_8_1_obj);
+    cyhal_hwmgr_reserve(&CLK_PWM_obj);
+    cyhal_hwmgr_reserve(&CLK_SPEED_LOOP_obj);
     cyhal_hwmgr_reserve(&peri_0_group_6_div_16_5_0_obj);
 #endif /* defined (CY_USING_HAL) */
 }

@@ -9,6 +9,7 @@ void CommandDoer::task_ctl()
     spi_ctr_decode.stream_update();
     // 任务状态更新
     task_manager();
+
 }
 
 void CommandDoer::task_manager()
@@ -18,8 +19,8 @@ void CommandDoer::task_manager()
     case Command::Default:
         break;
     case Command::Start:
-        motor_a_driver.start();
-        motor_b_driver.start();
+        motor_b_driver.start();  // B 先初始化（不触发 PWM start）
+        motor_a_driver.start();  // A 触发 PWM start，硬件链自动启动 B
         motor_c_driver.start();
         state_.mech_command = Command::Default;
         state_.mech_state   = State::Running;
