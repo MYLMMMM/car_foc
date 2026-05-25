@@ -151,6 +151,135 @@ void motor_a_init()
     Cy_DMA_Channel_Enable(DMA_EC_A_RX_HW, DMA_EC_A_RX_CHANNEL);
     Cy_DMA_Enable(DMA_EC_A_RX_HW); 
 
+    /*----------------- init PWM CC DMA (Motor A) -----------------------*/
+    /* DMA_PWM_CC_A_U_1: ccr_a → CC0 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_A_U_1_Descriptor_0, &DMA_PWM_CC_A_U_1_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_a_u_1 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_A_U_1_HW, DMA_PWM_CC_A_U_1_CHANNEL, &DMA_PWM_CC_A_U_1_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_a_u_1 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_A_U_1_Descriptor_0, (void *)&foc_motor_datastructure_A.ccr_a);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_A_U_1_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC0(PWM_A_U_HW, TCPWM_GRP_CNT_GET_GRP(PWM_A_U_NUM), PWM_A_U_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_A_U_1_HW, DMA_PWM_CC_A_U_1_CHANNEL, &DMA_PWM_CC_A_U_1_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_A_U_1_HW, DMA_PWM_CC_A_U_1_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_A_U_1_HW, DMA_PWM_CC_A_U_1_CHANNEL);
+
+    /* DMA_PWM_CC_A_U_2: ccr_a → CC1 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_A_U_2_Descriptor_0, &DMA_PWM_CC_A_U_2_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_a_u_2 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_A_U_2_HW, DMA_PWM_CC_A_U_2_CHANNEL, &DMA_PWM_CC_A_U_2_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_a_u_2 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_A_U_2_Descriptor_0, (void *)&foc_motor_datastructure_A.ccr_a);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_A_U_2_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC1(PWM_A_U_HW, TCPWM_GRP_CNT_GET_GRP(PWM_A_U_NUM), PWM_A_U_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_A_U_2_HW, DMA_PWM_CC_A_U_2_CHANNEL, &DMA_PWM_CC_A_U_2_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_A_U_2_HW, DMA_PWM_CC_A_U_2_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_A_U_2_HW, DMA_PWM_CC_A_U_2_CHANNEL);
+
+    /* DMA_PWM_CC_A_V_1: ccr_b → CC0 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_A_V_1_Descriptor_0, &DMA_PWM_CC_A_V_1_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_a_v_1 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_A_V_1_HW, DMA_PWM_CC_A_V_1_CHANNEL, &DMA_PWM_CC_A_V_1_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_a_v_1 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_A_V_1_Descriptor_0, (void *)&foc_motor_datastructure_A.ccr_b);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_A_V_1_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC0(PWM_A_V_HW, TCPWM_GRP_CNT_GET_GRP(PWM_A_V_NUM), PWM_A_V_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_A_V_1_HW, DMA_PWM_CC_A_V_1_CHANNEL, &DMA_PWM_CC_A_V_1_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_A_V_1_HW, DMA_PWM_CC_A_V_1_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_A_V_1_HW, DMA_PWM_CC_A_V_1_CHANNEL);
+
+    /* DMA_PWM_CC_A_V_2: ccr_b → CC1 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_A_V_2_Descriptor_0, &DMA_PWM_CC_A_V_2_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_a_v_2 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_A_V_2_HW, DMA_PWM_CC_A_V_2_CHANNEL, &DMA_PWM_CC_A_V_2_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_a_v_2 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_A_V_2_Descriptor_0, (void *)&foc_motor_datastructure_A.ccr_b);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_A_V_2_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC1(PWM_A_V_HW, TCPWM_GRP_CNT_GET_GRP(PWM_A_V_NUM), PWM_A_V_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_A_V_2_HW, DMA_PWM_CC_A_V_2_CHANNEL, &DMA_PWM_CC_A_V_2_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_A_V_2_HW, DMA_PWM_CC_A_V_2_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_A_V_2_HW, DMA_PWM_CC_A_V_2_CHANNEL);
+
+    /* DMA_PWM_CC_A_W_1: ccr_c → CC0 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_A_W_1_Descriptor_0, &DMA_PWM_CC_A_W_1_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_a_w_1 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_A_W_1_HW, DMA_PWM_CC_A_W_1_CHANNEL, &DMA_PWM_CC_A_W_1_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_a_w_1 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_A_W_1_Descriptor_0, (void *)&foc_motor_datastructure_A.ccr_c);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_A_W_1_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC0(PWM_A_W_HW, TCPWM_GRP_CNT_GET_GRP(PWM_A_W_NUM), PWM_A_W_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_A_W_1_HW, DMA_PWM_CC_A_W_1_CHANNEL, &DMA_PWM_CC_A_W_1_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_A_W_1_HW, DMA_PWM_CC_A_W_1_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_A_W_1_HW, DMA_PWM_CC_A_W_1_CHANNEL);
+
+    /* DMA_PWM_CC_A_W_2: ccr_c → CC1 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_A_W_2_Descriptor_0, &DMA_PWM_CC_A_W_2_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_a_w_2 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_A_W_2_HW, DMA_PWM_CC_A_W_2_CHANNEL, &DMA_PWM_CC_A_W_2_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_a_w_2 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_A_W_2_Descriptor_0, (void *)&foc_motor_datastructure_A.ccr_c);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_A_W_2_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC1(PWM_A_W_HW, TCPWM_GRP_CNT_GET_GRP(PWM_A_W_NUM), PWM_A_W_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_A_W_2_HW, DMA_PWM_CC_A_W_2_CHANNEL, &DMA_PWM_CC_A_W_2_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_A_W_2_HW, DMA_PWM_CC_A_W_2_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_A_W_2_HW, DMA_PWM_CC_A_W_2_CHANNEL);
+
+    Cy_DMA_Enable(DMA_PWM_CC_A_U_1_HW); /* Enable DW1 */
+
     //init tcpwm
     cy_en_tcpwm_status_t tcpwm_status;
 
@@ -277,6 +406,135 @@ void motor_b_init()
     Cy_DMA_Channel_SetPriority(DMA_EC_B_RX_HW, DMA_EC_B_RX_CHANNEL, 3UL);
     Cy_DMA_Channel_Enable(DMA_EC_B_RX_HW, DMA_EC_B_RX_CHANNEL);
     Cy_DMA_Enable(DMA_EC_B_RX_HW);
+
+    /*----------------- init PWM CC DMA (Motor B) -----------------------*/
+    /* DMA_PWM_CC_B_U_1: ccr_a → CC0 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_B_U_1_Descriptor_0, &DMA_PWM_CC_B_U_1_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_b_u_1 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_B_U_1_HW, DMA_PWM_CC_B_U_1_CHANNEL, &DMA_PWM_CC_B_U_1_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_b_u_1 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_B_U_1_Descriptor_0, (void *)&foc_motor_datastructure_B.ccr_a);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_B_U_1_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC0(PWM_B_U_HW, TCPWM_GRP_CNT_GET_GRP(PWM_B_U_NUM), PWM_B_U_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_B_U_1_HW, DMA_PWM_CC_B_U_1_CHANNEL, &DMA_PWM_CC_B_U_1_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_B_U_1_HW, DMA_PWM_CC_B_U_1_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_B_U_1_HW, DMA_PWM_CC_B_U_1_CHANNEL);
+
+    /* DMA_PWM_CC_B_U_2: ccr_a → CC1 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_B_U_2_Descriptor_0, &DMA_PWM_CC_B_U_2_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_b_u_2 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_B_U_2_HW, DMA_PWM_CC_B_U_2_CHANNEL, &DMA_PWM_CC_B_U_2_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_b_u_2 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_B_U_2_Descriptor_0, (void *)&foc_motor_datastructure_B.ccr_a);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_B_U_2_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC1(PWM_B_U_HW, TCPWM_GRP_CNT_GET_GRP(PWM_B_U_NUM), PWM_B_U_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_B_U_2_HW, DMA_PWM_CC_B_U_2_CHANNEL, &DMA_PWM_CC_B_U_2_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_B_U_2_HW, DMA_PWM_CC_B_U_2_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_B_U_2_HW, DMA_PWM_CC_B_U_2_CHANNEL);
+
+    /* DMA_PWM_CC_B_V_1: ccr_b → CC0 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_B_V_1_Descriptor_0, &DMA_PWM_CC_B_V_1_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_b_v_1 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_B_V_1_HW, DMA_PWM_CC_B_V_1_CHANNEL, &DMA_PWM_CC_B_V_1_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_b_v_1 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_B_V_1_Descriptor_0, (void *)&foc_motor_datastructure_B.ccr_b);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_B_V_1_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC0(PWM_B_V_HW, TCPWM_GRP_CNT_GET_GRP(PWM_B_V_NUM), PWM_B_V_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_B_V_1_HW, DMA_PWM_CC_B_V_1_CHANNEL, &DMA_PWM_CC_B_V_1_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_B_V_1_HW, DMA_PWM_CC_B_V_1_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_B_V_1_HW, DMA_PWM_CC_B_V_1_CHANNEL);
+
+    /* DMA_PWM_CC_B_V_2: ccr_b → CC1 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_B_V_2_Descriptor_0, &DMA_PWM_CC_B_V_2_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_b_v_2 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_B_V_2_HW, DMA_PWM_CC_B_V_2_CHANNEL, &DMA_PWM_CC_B_V_2_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_b_v_2 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_B_V_2_Descriptor_0, (void *)&foc_motor_datastructure_B.ccr_b);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_B_V_2_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC1(PWM_B_V_HW, TCPWM_GRP_CNT_GET_GRP(PWM_B_V_NUM), PWM_B_V_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_B_V_2_HW, DMA_PWM_CC_B_V_2_CHANNEL, &DMA_PWM_CC_B_V_2_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_B_V_2_HW, DMA_PWM_CC_B_V_2_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_B_V_2_HW, DMA_PWM_CC_B_V_2_CHANNEL);
+
+    /* DMA_PWM_CC_B_W_1: ccr_c → CC0 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_B_W_1_Descriptor_0, &DMA_PWM_CC_B_W_1_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_b_w_1 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_B_W_1_HW, DMA_PWM_CC_B_W_1_CHANNEL, &DMA_PWM_CC_B_W_1_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_b_w_1 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_B_W_1_Descriptor_0, (void *)&foc_motor_datastructure_B.ccr_c);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_B_W_1_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC0(PWM_B_W_HW, TCPWM_GRP_CNT_GET_GRP(PWM_B_W_NUM), PWM_B_W_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_B_W_1_HW, DMA_PWM_CC_B_W_1_CHANNEL, &DMA_PWM_CC_B_W_1_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_B_W_1_HW, DMA_PWM_CC_B_W_1_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_B_W_1_HW, DMA_PWM_CC_B_W_1_CHANNEL);
+
+    /* DMA_PWM_CC_B_W_2: ccr_c → CC1 */
+    dma_init_status = Cy_DMA_Descriptor_Init(&DMA_PWM_CC_B_W_2_Descriptor_0, &DMA_PWM_CC_B_W_2_Descriptor_0_config);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_descriptor_cc_b_w_2 init fail\r\n");
+    }
+#endif
+    dma_init_status = Cy_DMA_Channel_Init(DMA_PWM_CC_B_W_2_HW, DMA_PWM_CC_B_W_2_CHANNEL, &DMA_PWM_CC_B_W_2_channelConfig);
+#ifdef __DEBUG_RTT
+    if (dma_init_status != CY_DMA_SUCCESS)
+    {
+        SEGGER_RTT_printf(0, "dma_channel_cc_b_w_2 init fail\r\n");
+    }
+#endif
+    Cy_DMA_Descriptor_SetSrcAddress(&DMA_PWM_CC_B_W_2_Descriptor_0, (void *)&foc_motor_datastructure_B.ccr_c);
+    Cy_DMA_Descriptor_SetDstAddress(&DMA_PWM_CC_B_W_2_Descriptor_0, (void *)&TCPWM_GRP_CNT_CC1(PWM_B_W_HW, TCPWM_GRP_CNT_GET_GRP(PWM_B_W_NUM), PWM_B_W_NUM));
+    Cy_DMA_Channel_SetDescriptor(DMA_PWM_CC_B_W_2_HW, DMA_PWM_CC_B_W_2_CHANNEL, &DMA_PWM_CC_B_W_2_Descriptor_0);
+    Cy_DMA_Channel_SetPriority(DMA_PWM_CC_B_W_2_HW, DMA_PWM_CC_B_W_2_CHANNEL, 0UL);
+    Cy_DMA_Channel_Enable(DMA_PWM_CC_B_W_2_HW, DMA_PWM_CC_B_W_2_CHANNEL);
+
+    Cy_DMA_Enable(DMA_PWM_CC_B_U_1_HW); /* Enable DW1 */
 
     cy_en_tcpwm_status_t tcpwm_status;
 
