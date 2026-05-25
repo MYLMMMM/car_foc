@@ -51,7 +51,7 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
     .speed_lpf_fc = 50.0f,    
-    .speed_target_max = 60.0f,
+    .speed_target_max = 150.0f,
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
@@ -100,7 +100,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_speed_kd = 0.0f,
     .pid_speed_integral_limit = 1.5f,
     .speed_lpf_fc = 50.0f,     
-    .speed_target_max = 60.0f,
+    .speed_target_max = 150.0f,
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
