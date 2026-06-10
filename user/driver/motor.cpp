@@ -89,9 +89,9 @@ void motor_driver::foc_trig_isr() noexcept
 
     foc_soft_.trg();
 
-    pwm_u_.set_compare(foc_soft_.motor.ccr_a);
-    pwm_v_.set_compare(foc_soft_.motor.ccr_b);
-    pwm_w_.set_compare(foc_soft_.motor.ccr_c);
+    // pwm_u_.set_compare(foc_soft_.motor.ccr_a);
+    // pwm_v_.set_compare(foc_soft_.motor.ccr_b);
+    // pwm_w_.set_compare(foc_soft_.motor.ccr_c);
 
     ec_spi_.send(0);
     ec_spi_.send(0);

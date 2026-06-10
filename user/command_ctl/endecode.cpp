@@ -138,6 +138,7 @@ void spi_decode::handle_head_frame(uint32_t raw)
         case frame_cmd::stop:
         {
             stream_transfer_on = false;
+            scb_fifo.clear_tx();
             break;
         }
         case frame_cmd::empty:

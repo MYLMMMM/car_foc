@@ -49,9 +49,9 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_speed_kp = 0.02f,
     .pid_speed_ki = 0.001f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 1.5f,
+    .pid_speed_integral_limit = 3.5f,
     .speed_lpf_fc = 50.0f,    
-    .speed_target_max = 150.0f,
+    .speed_target_max = 300.0f,
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
@@ -74,7 +74,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .adc_c = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_B_IW_CH_CHAN_IDX),
     .adc_vbus = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_VBUS_CH_CHAN_IDX),
 
-    .adc_zero_a = 2260*1,
+    .adc_zero_a = 2250*1,
     .adc_zero_b = 2250*1,
     .adc_zero_c = 2250*1,
     .adc_vref = 3.3f,
@@ -98,9 +98,9 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_speed_kp = 0.01f,
     .pid_speed_ki = 0.0005f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 1.5f,
+    .pid_speed_integral_limit = 3.5f,
     .speed_lpf_fc = 50.0f,     
-    .speed_target_max = 150.0f,
+    .speed_target_max = 300.0f,
     .speed_target_slope = 2.0f,
 
     .control_period_s = 0.0001f,
