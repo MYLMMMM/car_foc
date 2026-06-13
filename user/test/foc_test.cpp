@@ -31,7 +31,7 @@ void foc_test()
         // CyDelay(200);
         // step_test_foc();
 
-        // drv8304_a.refresh_fault_status();
+        drv8304_a.refresh_fault_status();
         // drv8304_a.clear_faults();
         // drv8304_a.trigger_spi_update();
         // Cy_SCB_SPI_Write(SPI_GD_CFG_HW,0b011001011000011);

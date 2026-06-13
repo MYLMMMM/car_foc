@@ -36,7 +36,7 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
 
     .encoder_cpr = 65535,
     .pole_pairs = 7,
-    .theta_elec_offset = -4.7022140870f,
+    .theta_elec_offset = -4.154882837787f,
 
     .pid_d_kp = 1.2f,
     .pid_d_ki = 0.25f,
@@ -46,11 +46,12 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.02f,
+    .pid_speed_kp = 0.07f,
     .pid_speed_ki = 0.001f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 3.5f,
-    .speed_lpf_fc = 50.0f,    
+    .pid_speed_integral_limit = 0.5f,
+    .speed_lpf_fc = 50.0f,
+    .speed_reverse = true,
     .speed_target_max = 300.0f,
     .speed_target_slope = 2.0f,
 
@@ -85,7 +86,7 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
 
     .encoder_cpr = 65535,
     .pole_pairs = 7,
-    .theta_elec_offset = -4.588511482413977f,
+    .theta_elec_offset = -1.55229268354f,
 
     .pid_d_kp = 1.2f,
     .pid_d_ki = 0.25f,
@@ -95,11 +96,12 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
     .pid_q_ki = 0.25f,
     .pid_q_kd = 0.0f,
     .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.01f,
-    .pid_speed_ki = 0.0005f,
+    .pid_speed_kp = 0.07f,
+    .pid_speed_ki = 0.001f,
     .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 3.5f,
-    .speed_lpf_fc = 50.0f,     
+    .pid_speed_integral_limit = 0.5f,
+    .speed_lpf_fc = 50.0f,
+    .speed_reverse = true,
     .speed_target_max = 300.0f,
     .speed_target_slope = 2.0f,
 

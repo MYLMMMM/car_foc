@@ -5,6 +5,7 @@
 /**
  * @brief 机械角到机械速度估算
  * @details 通过相邻周期机械角差分计算速度，自动处理 0~2pi 周期跳变。
+ *          支持通过 speed_reverse 开关将输出速度取反。
  */
 template<typename data_type>
 class Mech2Speed {
@@ -13,6 +14,7 @@ public:
     data_type &last_mech;        // 输入/状态: 上次机械角(rad)
     data_type &control_period_s; // 输入: 控制周期(s)
     data_type &speed_mech;       // 输出: 机械角速度(rad/s)
+    bool      &speed_reverse;    // 输入: 速度反向开关(true=反转)
 
     const data_type PI = static_cast<data_type>(3.14159265358979323846);
     const data_type TWO_PI = static_cast<data_type>(6.2831853071795864769);
@@ -20,11 +22,13 @@ public:
     explicit Mech2Speed(data_type &theta_mech,
                         data_type &last_mech,
                         data_type &control_period_s,
-                        data_type &speed_mech)
+                        data_type &speed_mech,
+                        bool      &speed_reverse)
         : theta_mech(theta_mech),
           last_mech(last_mech),
           control_period_s(control_period_s),
-          speed_mech(speed_mech) {}
+          speed_mech(speed_mech),
+          speed_reverse(speed_reverse) {}
 
     Mech2Speed(const Mech2Speed&) = delete;
     Mech2Speed& operator=(const Mech2Speed&) = delete;
@@ -50,6 +54,10 @@ public:
             speed_mech = dtheta / control_period_s;
         } else {
             speed_mech = static_cast<data_type>(0);
+        }
+
+        if (speed_reverse) {
+            speed_mech = -speed_mech;
         }
 
         last_mech = theta_mech;

@@ -12,6 +12,7 @@
 #include "algorithm/P2C.hpp"
 #include "algorithm/SlopeLimit.hpp"
 #include "algorithm/Encoder2Mech.hpp"
+#include "algorithm/Mech2Speed.hpp"
 #include "algorithm/LPF.hpp"
 #include "algorithm/LowerLimit.hpp"
 #include "algorithm/Mech2Elec.hpp"
@@ -58,6 +59,7 @@ struct foc_motor_datastructure_config
     float pid_speed_kd;
     float pid_speed_integral_limit;
     float speed_lpf_fc;        // 速度低通滤波器截止频率(Hz)
+    bool  speed_reverse;       // 速度反向开关(true=反转)
     float speed_target_max;    // 速度目标上限(rad/s, <=0 不限幅)
     float speed_target_slope;  // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
@@ -110,6 +112,7 @@ struct foc_motor_datastructure
     float pid_speed_kd = 0.0f;       // 速度环 PID 微分系数
     float pid_speed_integral_limit = 0.0f;  // 速度环 PID 积分限幅(绝对值, <=0 不限幅)
     float speed_lpf_fc = 50.0f;     // 速度低通滤波器截止频率(Hz)
+    bool  speed_reverse = false;    // 速度反向开关(true=反转)
     float speed_target_max = 0.0f;   // 速度目标上限(rad/s, <=0 不限幅)
     float speed_target_slope = 0.0f; // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
@@ -123,7 +126,8 @@ struct foc_motor_datastructure
     /* running value */
     float theta_mech = 0.0f;         // 机械角(rad)
     float last_mech = 0.0f;          // 上次机械角(rad)
-    float speed_mech = 0.0f;         // 机械角速度(rad/s)
+    float speed_mech_raw = 0.0f;     // 原始机械角速度(rad/s), 滤波前
+    float speed_mech = 0.0f;         // 机械角速度(rad/s), 滤波后
     float theta_elec = 0.0f;         // 电角(rad)
     float sin_theta_elec = 0.0f;     // sin(theta_elec)
     float cos_theta_elec = 1.0f;     // cos(theta_elec)
@@ -181,6 +185,7 @@ struct foc_motor_datastructure
         , pid_speed_kd(cfg.pid_speed_kd)
         , pid_speed_integral_limit(cfg.pid_speed_integral_limit)
         , speed_lpf_fc(cfg.speed_lpf_fc)
+        , speed_reverse(cfg.speed_reverse)
         , speed_target_max(cfg.speed_target_max)
         , speed_target_slope(cfg.speed_target_slope)
         , control_period_s(cfg.control_period_s)
@@ -198,6 +203,7 @@ struct foc_motor_datastructure
     {
         theta_mech = 0.0f;
         last_mech = 0.0f;
+        speed_mech_raw = 0.0f;
         speed_mech = 0.0f;
         theta_elec = 0.0f;
         sin_theta_elec = 0.0f;
@@ -230,6 +236,7 @@ public:
     foc_motor_datastructure& motor;  // 外部注入的电机对象引用
 private:
     Encoder2Mech<float, volatile uint32_t> encoder2mech;
+    Mech2Speed<float> mech2speed;
     LPF<float> speed;
     Mech2Elec<float, uint32_t> mech2elec;
     ADC2Current<float, adc_reg> adc2current_a;
@@ -261,7 +268,9 @@ public:
     explicit foc(foc_motor_datastructure& motor)
         : motor(motor),
           encoder2mech(motor.enc_a, motor.encoder_cpr, motor.theta_mech),
-          speed(motor.theta_mech, motor.last_mech, motor.control_period_s,
+          mech2speed(motor.theta_mech, motor.last_mech, motor.control_period_s,
+                     motor.speed_mech_raw, motor.speed_reverse),
+          speed(motor.speed_mech_raw, motor.control_period_s,
                 motor.speed_lpf_fc, motor.speed_mech),
           mech2elec(motor.theta_mech, motor.pole_pairs, motor.theta_elec_offset,
                     motor.theta_elec, motor.sin_theta_elec, motor.cos_theta_elec),
@@ -317,6 +326,7 @@ public:
      * @brief 清零速度环与 d/q 电流环 PID 内部积分状态
      */
     void reset_pid() {
+        mech2speed.reset();
         speed.reset();
         pid_speed.reset();
         pid_d.reset();
@@ -359,8 +369,9 @@ public:
      */
     void trg() {
         encoder2mech.trg();
+        mech2speed.trg();
         speed.trg();
-
+        
         mech2elec.trg();
 
         adc2current_a.trg();

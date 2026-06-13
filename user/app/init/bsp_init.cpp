@@ -122,7 +122,7 @@ void motor_a_init()
     NVIC_ClearPendingIRQ(int_spi_ec_a_config.intrSrc);
     NVIC_EnableIRQ(int_spi_ec_a_config.intrSrc);
     
-    enc_a.set_direction(false);
+    enc_a.set_direction(true);
 
         //init DMA
     cy_en_dma_status_t dma_init_status;
@@ -380,7 +380,7 @@ void motor_b_init()
     NVIC_ClearPendingIRQ(int_spi_ec_b_config.intrSrc);
     NVIC_EnableIRQ(int_spi_ec_b_config.intrSrc);
 
-    enc_b.set_direction(false);
+    enc_b.set_direction(true);
 
     cy_en_dma_status_t dma_init_status;
     dma_init_status = Cy_DMA_Descriptor_Init(&DMA_EC_B_RX_Descriptor_0, &DMA_EC_B_RX_Descriptor_0_config);
