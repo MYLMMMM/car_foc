@@ -91,7 +91,7 @@ extern "C" {
 #define ioss_0_port_1_pin_1_PIN 1U
 #define ioss_0_port_1_pin_1_NUM 1U
 #define ioss_0_port_1_pin_1_DRIVEMODE CY_GPIO_DM_ANALOG
-#define ioss_0_port_1_pin_1_INIT_DRIVESTATE 0
+#define ioss_0_port_1_pin_1_INIT_DRIVESTATE 1
 #ifndef ioss_0_port_1_pin_1_HSIOM
     #define ioss_0_port_1_pin_1_HSIOM HSIOM_SEL_GPIO
 #endif
@@ -349,86 +349,6 @@ extern "C" {
 #define GPIO_GD_B_ENABLE_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_NONE
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-#define ioss_0_port_4_pin_2_ENABLED 1U
-#define ioss_0_port_4_pin_2_PORT GPIO_PRT4
-#define ioss_0_port_4_pin_2_PORT_NUM 4U
-#define ioss_0_port_4_pin_2_PIN 2U
-#define ioss_0_port_4_pin_2_NUM 2U
-#define ioss_0_port_4_pin_2_DRIVEMODE CY_GPIO_DM_STRONG_IN_OFF
-#define ioss_0_port_4_pin_2_INIT_DRIVESTATE 1
-#ifndef ioss_0_port_4_pin_2_HSIOM
-    #define ioss_0_port_4_pin_2_HSIOM HSIOM_SEL_GPIO
-#endif
-#define ioss_0_port_4_pin_2_IRQ ioss_interrupts_sec_gpio_4_IRQn
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define ioss_0_port_4_pin_2_HAL_PORT_PIN P4_2
-#define ioss_0_port_4_pin_2 P4_2
-#define ioss_0_port_4_pin_2_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define ioss_0_port_4_pin_2_HAL_DIR CYHAL_GPIO_DIR_OUTPUT 
-#define ioss_0_port_4_pin_2_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
-#define ioss_0_port_4_pin_3_ENABLED 1U
-#define ioss_0_port_4_pin_3_PORT GPIO_PRT4
-#define ioss_0_port_4_pin_3_PORT_NUM 4U
-#define ioss_0_port_4_pin_3_PIN 3U
-#define ioss_0_port_4_pin_3_NUM 3U
-#define ioss_0_port_4_pin_3_DRIVEMODE CY_GPIO_DM_STRONG_IN_OFF
-#define ioss_0_port_4_pin_3_INIT_DRIVESTATE 1
-#ifndef ioss_0_port_4_pin_3_HSIOM
-    #define ioss_0_port_4_pin_3_HSIOM HSIOM_SEL_GPIO
-#endif
-#define ioss_0_port_4_pin_3_IRQ ioss_interrupts_sec_gpio_4_IRQn
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define ioss_0_port_4_pin_3_HAL_PORT_PIN P4_3
-#define ioss_0_port_4_pin_3 P4_3
-#define ioss_0_port_4_pin_3_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define ioss_0_port_4_pin_3_HAL_DIR CYHAL_GPIO_DIR_OUTPUT 
-#define ioss_0_port_4_pin_3_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
-#define ioss_0_port_4_pin_4_ENABLED 1U
-#define ioss_0_port_4_pin_4_PORT GPIO_PRT4
-#define ioss_0_port_4_pin_4_PORT_NUM 4U
-#define ioss_0_port_4_pin_4_PIN 4U
-#define ioss_0_port_4_pin_4_NUM 4U
-#define ioss_0_port_4_pin_4_DRIVEMODE CY_GPIO_DM_STRONG_IN_OFF
-#define ioss_0_port_4_pin_4_INIT_DRIVESTATE 1
-#ifndef ioss_0_port_4_pin_4_HSIOM
-    #define ioss_0_port_4_pin_4_HSIOM HSIOM_SEL_GPIO
-#endif
-#define ioss_0_port_4_pin_4_IRQ ioss_interrupts_sec_gpio_4_IRQn
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define ioss_0_port_4_pin_4_HAL_PORT_PIN P4_4
-#define ioss_0_port_4_pin_4 P4_4
-#define ioss_0_port_4_pin_4_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define ioss_0_port_4_pin_4_HAL_DIR CYHAL_GPIO_DIR_OUTPUT 
-#define ioss_0_port_4_pin_4_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
-#define ioss_0_port_4_pin_5_ENABLED 1U
-#define ioss_0_port_4_pin_5_PORT GPIO_PRT4
-#define ioss_0_port_4_pin_5_PORT_NUM 4U
-#define ioss_0_port_4_pin_5_PIN 5U
-#define ioss_0_port_4_pin_5_NUM 5U
-#define ioss_0_port_4_pin_5_DRIVEMODE CY_GPIO_DM_STRONG_IN_OFF
-#define ioss_0_port_4_pin_5_INIT_DRIVESTATE 1
-#ifndef ioss_0_port_4_pin_5_HSIOM
-    #define ioss_0_port_4_pin_5_HSIOM HSIOM_SEL_GPIO
-#endif
-#define ioss_0_port_4_pin_5_IRQ ioss_interrupts_sec_gpio_4_IRQn
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define ioss_0_port_4_pin_5_HAL_PORT_PIN P4_5
-#define ioss_0_port_4_pin_5 P4_5
-#define ioss_0_port_4_pin_5_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define ioss_0_port_4_pin_5_HAL_DIR CYHAL_GPIO_DIR_OUTPUT 
-#define ioss_0_port_4_pin_5_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
 #define ioss_0_port_4_pin_6_ENABLED 1U
 #define ioss_0_port_4_pin_6_PORT GPIO_PRT4
 #define ioss_0_port_4_pin_6_PORT_NUM 4U
@@ -549,45 +469,46 @@ extern "C" {
 #define ioss_0_port_5_pin_3_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-#define GPIO_TEST_ENABLED 1U
-#define GPIO_TEST_PORT GPIO_PRT6
-#define GPIO_TEST_PORT_NUM 6U
-#define GPIO_TEST_PIN 0U
-#define GPIO_TEST_NUM 0U
-#define GPIO_TEST_DRIVEMODE CY_GPIO_DM_STRONG
-#define GPIO_TEST_INIT_DRIVESTATE 0
+#define GPIO_GD_A_ENABLE_ENABLED 1U
+#define GPIO_GD_A_ENABLE_PORT GPIO_PRT6
+#define GPIO_GD_A_ENABLE_PORT_NUM 6U
+#define GPIO_GD_A_ENABLE_PIN 0U
+#define GPIO_GD_A_ENABLE_NUM 0U
+#define GPIO_GD_A_ENABLE_DRIVEMODE CY_GPIO_DM_STRONG
+#define GPIO_GD_A_ENABLE_INIT_DRIVESTATE 0
 #ifndef ioss_0_port_6_pin_0_HSIOM
     #define ioss_0_port_6_pin_0_HSIOM HSIOM_SEL_GPIO
 #endif
-#define GPIO_TEST_HSIOM ioss_0_port_6_pin_0_HSIOM
-#define GPIO_TEST_IRQ ioss_interrupts_sec_gpio_6_IRQn
+#define GPIO_GD_A_ENABLE_HSIOM ioss_0_port_6_pin_0_HSIOM
+#define GPIO_GD_A_ENABLE_IRQ ioss_interrupts_sec_gpio_6_IRQn
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define GPIO_TEST_HAL_PORT_PIN P6_0
-#define GPIO_TEST P6_0
-#define GPIO_TEST_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define GPIO_TEST_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
-#define GPIO_TEST_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
+#define GPIO_GD_A_ENABLE_HAL_PORT_PIN P6_0
+#define GPIO_GD_A_ENABLE P6_0
+#define GPIO_GD_A_ENABLE_HAL_IRQ CYHAL_GPIO_IRQ_NONE
+#define GPIO_GD_A_ENABLE_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
+#define GPIO_GD_A_ENABLE_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-#define ioss_0_port_6_pin_1_ENABLED 1U
-#define ioss_0_port_6_pin_1_PORT GPIO_PRT6
-#define ioss_0_port_6_pin_1_PORT_NUM 6U
-#define ioss_0_port_6_pin_1_PIN 1U
-#define ioss_0_port_6_pin_1_NUM 1U
-#define ioss_0_port_6_pin_1_DRIVEMODE CY_GPIO_DM_HIGHZ
-#define ioss_0_port_6_pin_1_INIT_DRIVESTATE 0
+#define GPIO_GD_A_nFAULT_ENABLED 1U
+#define GPIO_GD_A_nFAULT_PORT GPIO_PRT6
+#define GPIO_GD_A_nFAULT_PORT_NUM 6U
+#define GPIO_GD_A_nFAULT_PIN 1U
+#define GPIO_GD_A_nFAULT_NUM 1U
+#define GPIO_GD_A_nFAULT_DRIVEMODE CY_GPIO_DM_HIGHZ
+#define GPIO_GD_A_nFAULT_INIT_DRIVESTATE 0
 #ifndef ioss_0_port_6_pin_1_HSIOM
     #define ioss_0_port_6_pin_1_HSIOM HSIOM_SEL_GPIO
 #endif
-#define ioss_0_port_6_pin_1_IRQ ioss_interrupts_sec_gpio_6_IRQn
+#define GPIO_GD_A_nFAULT_HSIOM ioss_0_port_6_pin_1_HSIOM
+#define GPIO_GD_A_nFAULT_IRQ ioss_interrupts_sec_gpio_6_IRQn
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define ioss_0_port_6_pin_1_HAL_PORT_PIN P6_1
-#define ioss_0_port_6_pin_1 P6_1
-#define ioss_0_port_6_pin_1_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define ioss_0_port_6_pin_1_HAL_DIR CYHAL_GPIO_DIR_INPUT 
-#define ioss_0_port_6_pin_1_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_NONE
+#define GPIO_GD_A_nFAULT_HAL_PORT_PIN P6_1
+#define GPIO_GD_A_nFAULT P6_1
+#define GPIO_GD_A_nFAULT_HAL_IRQ CYHAL_GPIO_IRQ_NONE
+#define GPIO_GD_A_nFAULT_HAL_DIR CYHAL_GPIO_DIR_INPUT 
+#define GPIO_GD_A_nFAULT_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_NONE
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 #define ioss_0_port_6_pin_2_ENABLED 1U
@@ -730,46 +651,44 @@ extern "C" {
 #define ioss_0_port_7_pin_4_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-#define GPIO_GD_A_ENABLE_ENABLED 1U
-#define GPIO_GD_A_ENABLE_PORT GPIO_PRT7
-#define GPIO_GD_A_ENABLE_PORT_NUM 7U
-#define GPIO_GD_A_ENABLE_PIN 5U
-#define GPIO_GD_A_ENABLE_NUM 5U
-#define GPIO_GD_A_ENABLE_DRIVEMODE CY_GPIO_DM_STRONG
-#define GPIO_GD_A_ENABLE_INIT_DRIVESTATE 1
+#define ioss_0_port_7_pin_5_ENABLED 1U
+#define ioss_0_port_7_pin_5_PORT GPIO_PRT7
+#define ioss_0_port_7_pin_5_PORT_NUM 7U
+#define ioss_0_port_7_pin_5_PIN 5U
+#define ioss_0_port_7_pin_5_NUM 5U
+#define ioss_0_port_7_pin_5_DRIVEMODE CY_GPIO_DM_STRONG
+#define ioss_0_port_7_pin_5_INIT_DRIVESTATE 1
 #ifndef ioss_0_port_7_pin_5_HSIOM
     #define ioss_0_port_7_pin_5_HSIOM HSIOM_SEL_GPIO
 #endif
-#define GPIO_GD_A_ENABLE_HSIOM ioss_0_port_7_pin_5_HSIOM
-#define GPIO_GD_A_ENABLE_IRQ ioss_interrupts_sec_gpio_7_IRQn
+#define ioss_0_port_7_pin_5_IRQ ioss_interrupts_sec_gpio_7_IRQn
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define GPIO_GD_A_ENABLE_HAL_PORT_PIN P7_5
-#define GPIO_GD_A_ENABLE P7_5
-#define GPIO_GD_A_ENABLE_HAL_IRQ CYHAL_GPIO_IRQ_NONE
-#define GPIO_GD_A_ENABLE_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
-#define GPIO_GD_A_ENABLE_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
+#define ioss_0_port_7_pin_5_HAL_PORT_PIN P7_5
+#define ioss_0_port_7_pin_5 P7_5
+#define ioss_0_port_7_pin_5_HAL_IRQ CYHAL_GPIO_IRQ_NONE
+#define ioss_0_port_7_pin_5_HAL_DIR CYHAL_GPIO_DIR_BIDIRECTIONAL 
+#define ioss_0_port_7_pin_5_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_STRONG
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-#define GPIO_GD_A_nFAULT_ENABLED 1U
-#define GPIO_GD_A_nFAULT_PORT GPIO_PRT7
-#define GPIO_GD_A_nFAULT_PORT_NUM 7U
-#define GPIO_GD_A_nFAULT_PIN 6U
-#define GPIO_GD_A_nFAULT_NUM 6U
-#define GPIO_GD_A_nFAULT_DRIVEMODE CY_GPIO_DM_HIGHZ
-#define GPIO_GD_A_nFAULT_INIT_DRIVESTATE 1
+#define ioss_0_port_7_pin_6_ENABLED 1U
+#define ioss_0_port_7_pin_6_PORT GPIO_PRT7
+#define ioss_0_port_7_pin_6_PORT_NUM 7U
+#define ioss_0_port_7_pin_6_PIN 6U
+#define ioss_0_port_7_pin_6_NUM 6U
+#define ioss_0_port_7_pin_6_DRIVEMODE CY_GPIO_DM_HIGHZ
+#define ioss_0_port_7_pin_6_INIT_DRIVESTATE 1
 #ifndef ioss_0_port_7_pin_6_HSIOM
     #define ioss_0_port_7_pin_6_HSIOM HSIOM_SEL_GPIO
 #endif
-#define GPIO_GD_A_nFAULT_HSIOM ioss_0_port_7_pin_6_HSIOM
-#define GPIO_GD_A_nFAULT_IRQ ioss_interrupts_sec_gpio_7_IRQn
+#define ioss_0_port_7_pin_6_IRQ ioss_interrupts_sec_gpio_7_IRQn
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-#define GPIO_GD_A_nFAULT_HAL_PORT_PIN P7_6
-#define GPIO_GD_A_nFAULT P7_6
-#define GPIO_GD_A_nFAULT_HAL_IRQ CYHAL_GPIO_IRQ_FALL
-#define GPIO_GD_A_nFAULT_HAL_DIR CYHAL_GPIO_DIR_INPUT 
-#define GPIO_GD_A_nFAULT_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_NONE
+#define ioss_0_port_7_pin_6_HAL_PORT_PIN P7_6
+#define ioss_0_port_7_pin_6 P7_6
+#define ioss_0_port_7_pin_6_HAL_IRQ CYHAL_GPIO_IRQ_FALL
+#define ioss_0_port_7_pin_6_HAL_DIR CYHAL_GPIO_DIR_INPUT 
+#define ioss_0_port_7_pin_6_HAL_DRIVEMODE CYHAL_GPIO_DRIVE_NONE
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 #define GPIO_GD_A_PULLUP_ENABLED 1U
@@ -1125,30 +1044,6 @@ extern const cy_stc_gpio_pin_config_t GPIO_GD_B_ENABLE_config;
 extern const cyhal_resource_inst_t GPIO_GD_B_ENABLE_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-extern const cy_stc_gpio_pin_config_t ioss_0_port_4_pin_2_config;
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t ioss_0_port_4_pin_2_obj;
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
-extern const cy_stc_gpio_pin_config_t ioss_0_port_4_pin_3_config;
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t ioss_0_port_4_pin_3_obj;
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
-extern const cy_stc_gpio_pin_config_t ioss_0_port_4_pin_4_config;
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t ioss_0_port_4_pin_4_obj;
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
-extern const cy_stc_gpio_pin_config_t ioss_0_port_4_pin_5_config;
-
-#if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t ioss_0_port_4_pin_5_obj;
-#endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
-
 extern const cy_stc_gpio_pin_config_t ioss_0_port_4_pin_6_config;
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
@@ -1185,16 +1080,16 @@ extern const cy_stc_gpio_pin_config_t ioss_0_port_5_pin_3_config;
 extern const cyhal_resource_inst_t ioss_0_port_5_pin_3_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-extern const cy_stc_gpio_pin_config_t GPIO_TEST_config;
+extern const cy_stc_gpio_pin_config_t GPIO_GD_A_ENABLE_config;
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t GPIO_TEST_obj;
+extern const cyhal_resource_inst_t GPIO_GD_A_ENABLE_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-extern const cy_stc_gpio_pin_config_t ioss_0_port_6_pin_1_config;
+extern const cy_stc_gpio_pin_config_t GPIO_GD_A_nFAULT_config;
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t ioss_0_port_6_pin_1_obj;
+extern const cyhal_resource_inst_t GPIO_GD_A_nFAULT_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 extern const cy_stc_gpio_pin_config_t ioss_0_port_6_pin_2_config;
@@ -1239,16 +1134,16 @@ extern const cy_stc_gpio_pin_config_t ioss_0_port_7_pin_4_config;
 extern const cyhal_resource_inst_t ioss_0_port_7_pin_4_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-extern const cy_stc_gpio_pin_config_t GPIO_GD_A_ENABLE_config;
+extern const cy_stc_gpio_pin_config_t ioss_0_port_7_pin_5_config;
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t GPIO_GD_A_ENABLE_obj;
+extern const cyhal_resource_inst_t ioss_0_port_7_pin_5_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
-extern const cy_stc_gpio_pin_config_t GPIO_GD_A_nFAULT_config;
+extern const cy_stc_gpio_pin_config_t ioss_0_port_7_pin_6_config;
 
 #if defined (CY_USING_HAL) || (CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t GPIO_GD_A_nFAULT_obj;
+extern const cyhal_resource_inst_t ioss_0_port_7_pin_6_obj;
 #endif /* defined (CY_USING_HAL) || (CY_USING_HAL_LITE) */
 
 extern const cy_stc_gpio_pin_config_t GPIO_GD_A_PULLUP_config;

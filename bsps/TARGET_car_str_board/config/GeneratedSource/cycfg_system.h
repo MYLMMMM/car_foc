@@ -70,7 +70,7 @@ extern "C" {
 #define CY_CFG_PWR_SDR1_VOLT 0
 #define CY_CFG_PWR_SDR1_ENABLE false
 #define srss_0_clock_0_ENABLED 1U
-#define srss_0_clock_0_eco_0_ENABLED 1U
+#define srss_0_clock_0_ext_0_ENABLED 1U
 #define srss_0_clock_0_iho_0_ENABLED 1U
 #define srss_0_clock_0_ilo_0_ENABLED 1U
 #define srss_0_clock_0_imo_0_ENABLED 1U
@@ -116,7 +116,6 @@ extern const cyhal_resource_inst_t srss_0_clock_0_pathmux_6_obj;
 #endif /* defined (CY_USING_HAL) */
 
 void init_cycfg_system(void);
-void reserve_cycfg_system(void);
 
 #if defined(__cplusplus)
 }

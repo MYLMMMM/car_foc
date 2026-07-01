@@ -4,7 +4,6 @@
 #pragma once
 
 #include "drv8304.hpp"
-#include "drv8701.hpp"
 #include "kth7823.hpp"
 #include "cybsp.h"
 #include "foc_soft.hpp"
@@ -12,8 +11,6 @@
 #include "hal.hpp"
 #include "XL2020RGBC.hpp"
 #include "motor.hpp"
-#include "dc_motor_soft.hpp"
-#include "dc_motor_driver.hpp"
 #include "hal_counter_cy.hpp"
 #include "command_doer.hpp"
 
@@ -28,11 +25,11 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
     .adc_zero_a = 2250*1,
     .adc_zero_b = 2250*1,
     .adc_zero_c = 2250*1,
-    .adc_vref = 3.3f,
+    .adc_vref = 3.0f,
     .adc_full_scale = 4095*1,
-    .vbus_divider_ratio = 7.0f,
-    .shunt_resistance = 0.010f,
-    .current_sense_gain = 40.0f,
+    .vbus_divider_ratio = 14.4f,
+    .shunt_resistance = 0.050f,
+    .current_sense_gain = 20.0f,
 
     .encoder_cpr = 65535,
     .pole_pairs = 7,
@@ -67,110 +64,20 @@ foc_motor_datastructure_config foc_motor_datastructure_A_config =
 foc_motor_datastructure foc_motor_datastructure_A(foc_motor_datastructure_A_config);
 foc foc_A_soft(foc_motor_datastructure_A);
 
-// motor B structuer
-foc_motor_datastructure_config foc_motor_datastructure_B_config =
-{
-    .adc_a = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_B_IU_CH_CHAN_IDX),
-    .adc_b = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_B_IV_CH_CHAN_IDX),
-    .adc_c = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_B_IW_CH_CHAN_IDX),
-    .adc_vbus = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_VBUS_CH_CHAN_IDX),
-
-    .adc_zero_a = 2250*1,
-    .adc_zero_b = 2250*1,
-    .adc_zero_c = 2250*1,
-    .adc_vref = 3.3f,
-    .adc_full_scale = 4095*1,
-    .vbus_divider_ratio = 7.0f,
-    .shunt_resistance = 0.010f,
-    .current_sense_gain = 40.0f,
-
-    .encoder_cpr = 65535,
-    .pole_pairs = 7,
-    .theta_elec_offset = -4.755532190043f,
-
-    .pid_d_kp = 1.2f,
-    .pid_d_ki = 0.25f,
-    .pid_d_kd = 0.0f,
-    .pid_d_integral_limit = 4.0f,
-    .pid_q_kp = 1.2f,
-    .pid_q_ki = 0.25f,
-    .pid_q_kd = 0.0f,
-    .pid_q_integral_limit = 4.0f,
-    .pid_speed_kp = 0.08f,
-    .pid_speed_ki = 0.001f,
-    .pid_speed_kd = 0.0f,
-    .pid_speed_integral_limit = 3.0f,
-    .speed_lpf_fc = 50.0f,
-    .speed_reverse = false,
-    .speed_target_max = 300.0f,
-    .speed_target_slope = 2.0f,
-
-    .control_period_s = 0.0001f,
-
-    .Ld = 0.0f,              
-    .Lq = 0.0f,              
-    .flux_linkage = 0.0f,    
-
-    .pwm_period = 7000,
-};
-
-foc_motor_datastructure foc_motor_datastructure_B(foc_motor_datastructure_B_config);
-foc foc_B_soft(foc_motor_datastructure_B);
-
-// motor C structure (DC motor, voltage mode with DRV8701 PH/EN)
-dc_motor_datastructure_config motor_c_config =
-{
-    .adc_vbus = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_VBUS_CH_CHAN_IDX),
-
-    .adc_vref = 3.3f,
-    .adc_full_scale = 4095,
-    .vbus_divider_ratio = 7.0f,
-    .voltage_limit = 6.0f,
-    .voltage_slope = 0.0001f,
-
-    .control_period_s = 0.001f,
-    .pwm_period = 9599,
-};
-
-dc_motor_datastructure motor_c_data(motor_c_config);
-dc_motor motor_c_soft(motor_c_data);
-
-
-
 /*--------------------drv8304_A_config------------------*/
 
 cy_stc_sysint_t gpio_iqr_config = {
     .intrSrc = GPIO_GD_A_nFAULT_IRQ,
     .intrPriority = 0x04
 };
-cy_stc_sysint_t gpio_b_iqr_config = {
-    .intrSrc = GPIO_GD_B_nFAULT_IRQ,
-    .intrPriority = 0x04
-};
 hal_spi spi_gd_cfg_a(SPI_GD_CFG_HW,CY_SCB_SPI_SLAVE_SELECT2);
-hal_spi spi_gd_cfg_b(SPI_GD_CFG_HW,CY_SCB_SPI_SLAVE_SELECT0);
 hal_gpio pin_drv8304_a_enable(GPIO_GD_A_ENABLE_PORT,GPIO_GD_A_ENABLE_PIN);
 hal_gpio pin_drv8304_a_nfault(GPIO_GD_A_nFAULT_PORT,GPIO_GD_A_nFAULT_PIN);
-hal_gpio pin_drv8304_b_enable(GPIO_GD_B_ENABLE_PORT,GPIO_GD_B_ENABLE_PIN);
-hal_gpio pin_drv8304_b_nfault(GPIO_GD_B_nFAULT_PORT,GPIO_GD_B_nFAULT_PIN);
 
 drv8304 drv8304_a(spi_gd_cfg_a,pin_drv8304_a_enable,pin_drv8304_a_nfault);
-drv8304 drv8304_b(spi_gd_cfg_b,pin_drv8304_b_enable,pin_drv8304_b_nfault);
 
  void drv8304_a_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
- void drv8304_b_nfault_callback(const drv8304::StateTable &statetable,void* userptr);
 
-/*--------------------drv8701_C_config------------------*/
-cy_stc_sysint_t gpio_c_iqr_config = {
-    .intrSrc = GPIO_GD_C_nFAULT_IRQ,
-    .intrPriority = 0x04
-};
-hal_gpio pin_drv8701_c_nsleep(GPIO_GD_C_ENABLE_PORT,GPIO_GD_C_ENABLE_PIN);
-hal_gpio pin_drv8701_c_nfault(GPIO_GD_C_nFAULT_PORT,GPIO_GD_C_nFAULT_PIN);
-
-drv8701 drv8701_c(pin_drv8701_c_nsleep,pin_drv8701_c_nfault);
-
- void drv8701_c_nfault_callback(const drv8701::FaultState &state,void* userptr);
 
 /*-----------------KTH7823_A_config----------------------*/
 kth7823::regist_map enc_a_init_map =
@@ -190,24 +97,6 @@ kth7823::regist_map enc_a_init_map =
 hal_spi spi_enc_a(SPI_EC_A_HW);
 kth7823 enc_a(enc_a_init_map,spi_enc_a);
 
-/*-----------------KTH7823_B_config----------------------*/
-kth7823::regist_map enc_b_init_map =
-{
-    .ZERO_low = 0,
-    .ZERO_high = 0,
-    .GAINtirm = 0,
-    .trim = 1u ,
-    .ABZ_config = 0b01000000,
-    .PPT = 0,
-    .MGHL = 0b11001000,
-    .NPP_cfg = 0,
-    .ABZ_LIMIT = 0,
-    .RD = 0b00000000,
-};
-
-hal_spi spi_enc_b(SPI_EC_B_HW);
-kth7823 enc_b(enc_b_init_map,spi_enc_b);
-
 cy_stc_sysint_t motor_a_pwm_iqr_config = {
     .intrSrc = tcpwm_0_interrupts_256_IRQn,
     .intrPriority = 0,
@@ -218,16 +107,6 @@ hal_pwm pwm_a_w(PWM_A_W_HW, PWM_A_W_NUM);
 hal_pwm pwm_start_a(PWM_START_A_HW, PWM_START_A_NUM);
 hal_counter speed_loop_a(PWM_SPEED_LOOP_A_HW, PWM_SPEED_LOOP_A_NUM);
 motor_driver motor_a_driver(foc_A_soft, drv8304_a, enc_a, spi_enc_a, pwm_a_u, pwm_a_v, pwm_a_w, pwm_start_a, speed_loop_a, false, CY_HPPASS_INTR_SAR_RESULT_GROUP_0);
-hal_pwm pwm_b_u(PWM_B_U_HW, PWM_B_U_NUM);
-hal_pwm pwm_b_v(PWM_B_V_HW, PWM_B_V_NUM);
-hal_pwm pwm_b_w(PWM_B_W_HW, PWM_B_W_NUM);
-hal_pwm pwm_start_b(PWM_START_B_HW, PWM_START_B_NUM);
-hal_counter speed_loop_b(PWM_SPEED_LOOP_B_HW, PWM_SPEED_LOOP_B_NUM);
-motor_driver motor_b_driver(foc_B_soft, drv8304_b, enc_b, spi_enc_b, pwm_b_u, pwm_b_v, pwm_b_w, pwm_start_b, speed_loop_b, false, CY_HPPASS_INTR_SAR_RESULT_GROUP_1);
-hal_pwm pwm_c_u(PWM_C_U_HW, PWM_C_U_NUM);
-hal_pwm pwm_c_v(PWM_C_V_HW, PWM_C_V_NUM);
-hal_pwm pwm_start_c(PWM_START_C_HW, PWM_START_C_NUM);
-dc_motor_driver motor_c_driver(motor_c_soft, pwm_c_u, pwm_c_v, pwm_start_c, CY_HPPASS_INTR_SAR_RESULT_GROUP_2);
 
 /*-----------------SPI decode config----------------------*/
 hal_spi spi_ctr(SPI_CTR_HW);
@@ -246,28 +125,10 @@ cy_stc_sysint_t int_adc_motor_a_config =
     .intrPriority = 0x00
 };
 
-cy_stc_sysint_t int_adc_motor_b_config = 
-{
-    .intrSrc = pass_interrupt_sar_entry_done_1_IRQn,
-    .intrPriority = 0x00
-};
-
-cy_stc_sysint_t int_adc_motor_c_config = 
-{
-    .intrSrc = pass_interrupt_sar_entry_done_2_IRQn,
-    .intrPriority = 0x01
-};
-
 /*----------------SPEED_LOOP config----------------------*/
 cy_stc_sysint_t int_speed_loop_a_config = 
 {
     .intrSrc = PWM_SPEED_LOOP_A_IRQ,
-    .intrPriority = 0x01
-};
-
-cy_stc_sysint_t int_speed_loop_b_config = 
-{
-    .intrSrc = PWM_SPEED_LOOP_B_IRQ,
     .intrPriority = 0x01
 };
 
@@ -293,7 +154,3 @@ XL202RGBC ws2812(spi_ws2812);
 /*----------------CommandDoer----------------------------*/
 CommandDoer::CommandDoerState command_doer_state;
 CommandDoer command_doer(command_doer_state, ws2812);
-
-//test
-
-hal_gpio gpio_for_test(GPIO_TEST_PORT,GPIO_TEST_PIN);

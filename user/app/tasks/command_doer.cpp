@@ -26,25 +26,19 @@ void CommandDoer::task_manager()
             state_.mech_command = Command::Default;  // 已在运行，忽略
             break;
         }
-        motor_a_driver.start();  // A 触发 PWM start，硬件链自动启动 B
-        motor_b_driver.start();  // B 先初始化（不触发 PWM start）
-        motor_c_driver.start();
+        motor_a_driver.start();
         state_.mech_command = Command::Default;
         state_.mech_state   = State::Running;
         state_.light_color  = StateColor::ColorStart;
         break;
     case Command::Stop:
         motor_a_driver.stop();
-        motor_b_driver.stop();
-        motor_c_driver.stop();
         state_.mech_command = Command::Default;
         state_.mech_state   = State::Stop;
         state_.light_color  = StateColor::ColorStop;
         break;
     case Command::InternalError:
         motor_a_driver.stop();
-        motor_b_driver.stop();
-        motor_c_driver.stop();
         state_.mech_command = Command::Default;
         state_.mech_state   = State::FaultHalt;
         state_.light_color  = StateColor::ColorFault;
