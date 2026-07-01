@@ -20,9 +20,9 @@ public:
     };
 
     enum class StateColor : uint32_t {
-        ColorStart = 0x0000FF00,
-        ColorStop  = 0x000000FF,
-        ColorFault = 0x00FF0000,
+        ColorStart = 0x0000AA00,
+        ColorStop  = 0x000000AA,
+        ColorFault = 0x00AA0000,
     };
 
     struct CommandDoerState {
@@ -52,6 +52,6 @@ private:
     XL202RGBC&       led_;
 
     static constexpr float kLowVoltageThreshold = 3.0f * 3.4f;  // 3S LiPo 最低 10.2V
-    static constexpr uint32_t kLowVoltageDebounce = 5;           // 连续 5 次确认
+    static constexpr uint32_t kLowVoltageDebounce = 300;           // 连续 5 次确认
     uint32_t low_voltage_count_ = 0;
 };
