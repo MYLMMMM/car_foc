@@ -118,15 +118,15 @@ extern "C" {
 #define SPI_GD_CFG_ENABLED 1U
 #define SPI_GD_CFG_HW SCB0
 #define SPI_GD_CFG_IRQ scb_0_interrupt_IRQn
-#define SPI_EC_B_ENABLED 1U
-#define SPI_EC_B_HW SCB1
-#define SPI_EC_B_IRQ scb_1_interrupt_IRQn
+#define SPI_EC_A_ENABLED 1U
+#define SPI_EC_A_HW SCB1
+#define SPI_EC_A_IRQ scb_1_interrupt_IRQn
 #define SPI_LED_ENABLED 1U
 #define SPI_LED_HW SCB2
 #define SPI_LED_IRQ scb_2_interrupt_IRQn
-#define SPI_EC_A_ENABLED 1U
-#define SPI_EC_A_HW SCB3
-#define SPI_EC_A_IRQ scb_3_interrupt_IRQn
+#define SPI_EC_B_ENABLED 1U
+#define SPI_EC_B_HW SCB3
+#define SPI_EC_B_IRQ scb_3_interrupt_IRQn
 #define SPI_CTR_ENABLED 1U
 #define SPI_CTR_HW SCB5
 #define SPI_CTR_IRQ scb_5_interrupt_IRQn
@@ -197,27 +197,27 @@ extern const mtb_hal_clock_t SPI_GD_CFG_hal_clock;
 extern const mtb_hal_spi_configurator_t SPI_GD_CFG_hal_config;
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
-extern const cy_stc_scb_spi_config_t SPI_EC_B_config;
+extern const cy_stc_scb_spi_config_t SPI_EC_A_config;
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t SPI_EC_B_obj;
+extern const cyhal_resource_inst_t SPI_EC_A_obj;
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
-extern const cyhal_clock_t SPI_EC_B_clock;
+extern const cyhal_clock_t SPI_EC_A_clock;
 #endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-extern const cyhal_spi_configurator_t SPI_EC_B_hal_config;
+extern const cyhal_spi_configurator_t SPI_EC_A_hal_config;
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined (COMPONENT_MTB_HAL)
-extern const mtb_hal_peri_div_t SPI_EC_B_clock_ref;
-extern const mtb_hal_clock_t SPI_EC_B_hal_clock;
+extern const mtb_hal_peri_div_t SPI_EC_A_clock_ref;
+extern const mtb_hal_clock_t SPI_EC_A_hal_clock;
 #endif /* defined (COMPONENT_MTB_HAL) */
 
 #if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI)
-extern const mtb_hal_spi_configurator_t SPI_EC_B_hal_config;
+extern const mtb_hal_spi_configurator_t SPI_EC_A_hal_config;
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
 extern const cy_stc_scb_spi_config_t SPI_LED_config;
@@ -243,27 +243,27 @@ extern const mtb_hal_clock_t SPI_LED_hal_clock;
 extern const mtb_hal_spi_configurator_t SPI_LED_hal_config;
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
-extern const cy_stc_scb_spi_config_t SPI_EC_A_config;
+extern const cy_stc_scb_spi_config_t SPI_EC_B_config;
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-extern const cyhal_resource_inst_t SPI_EC_A_obj;
+extern const cyhal_resource_inst_t SPI_EC_B_obj;
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
-extern const cyhal_clock_t SPI_EC_A_clock;
+extern const cyhal_clock_t SPI_EC_B_clock;
 #endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-extern const cyhal_spi_configurator_t SPI_EC_A_hal_config;
+extern const cyhal_spi_configurator_t SPI_EC_B_hal_config;
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined (COMPONENT_MTB_HAL)
-extern const mtb_hal_peri_div_t SPI_EC_A_clock_ref;
-extern const mtb_hal_clock_t SPI_EC_A_hal_clock;
+extern const mtb_hal_peri_div_t SPI_EC_B_clock_ref;
+extern const mtb_hal_clock_t SPI_EC_B_hal_clock;
 #endif /* defined (COMPONENT_MTB_HAL) */
 
 #if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI)
-extern const mtb_hal_spi_configurator_t SPI_EC_A_hal_config;
+extern const mtb_hal_spi_configurator_t SPI_EC_B_hal_config;
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
 extern const cy_stc_scb_spi_config_t SPI_CTR_config;

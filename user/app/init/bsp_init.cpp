@@ -378,7 +378,9 @@ __WEAK void drv8304_a_nfault_callback(const drv8304::StateTable &statetable,void
 
 __WEAK void motor_a_foc_isr()
 {
+    Cy_GPIO_Set(GPIO_PRT6, 3);
     motor_a_driver.foc_trig_isr();
+    Cy_GPIO_Clr(GPIO_PRT6, 3);
 }
 
 __WEAK void motor_a_speed_isr()

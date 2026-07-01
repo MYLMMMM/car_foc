@@ -1385,10 +1385,10 @@
                         <Param id="dirSampEn11r" value="false"/>
                         <Param id="dirSampEn1r" value="true"/>
                         <Param id="dirSampEn2r" value="true"/>
-                        <Param id="dirSampEn3r" value="true"/>
+                        <Param id="dirSampEn3r" value="false"/>
                         <Param id="dirSampEn4r" value="false"/>
                         <Param id="dirSampEn5r" value="false"/>
-                        <Param id="dirSampEn6r" value="false"/>
+                        <Param id="dirSampEn6r" value="true"/>
                         <Param id="dirSampEn7r" value="false"/>
                         <Param id="dirSampEn8r" value="false"/>
                         <Param id="dirSampEn9r" value="false"/>
@@ -1519,7 +1519,7 @@
                 <Personality template="spi" version="3.0" instance="FTnG01A-yD0">
                     <Block location="scb[1]" locked="true">
                         <Aliases>
-                            <Alias value="SPI_EC_B"/>
+                            <Alias value="SPI_EC_A"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -1615,7 +1615,7 @@
                 <Personality template="spi" version="3.0" instance="_nEFJ-BrJR8">
                     <Block location="scb[3]" locked="true">
                         <Aliases>
-                            <Alias value="SPI_EC_A"/>
+                            <Alias value="SPI_EC_B"/>
                         </Aliases>
                     </Block>
                     <Parameters>
@@ -1930,7 +1930,7 @@
                     </Block>
                     <Parameters>
                         <Param id="ClockPrescaler" value="CY_TCPWM_PWM_PRESCALER_DIVBY_1"/>
-                        <Param id="Compare0" value="1000"/>
+                        <Param id="Compare0" value="0"/>
                         <Param id="Compare0MatchDown" value="false"/>
                         <Param id="Compare0MatchUp" value="false"/>
                         <Param id="Compare1" value="16384"/>
@@ -2233,7 +2233,7 @@
             <Netlist>
                 <Net>
                     <Port name="cpuss[0].dw0[0].chan[14].tr_in[0]"/>
-                    <Port name="scb[3].tr_rx_req[0]"/>
+                    <Port name="scb[1].tr_rx_req[0]"/>
                 </Net>
                 <Net>
                     <Port name="debug600[0].clk_swj_swclk_tclk[0]"/>
@@ -2352,10 +2352,6 @@
                     <Port name="scb[0].spi_select2[0]"/>
                 </Net>
                 <Net>
-                    <Port name="pass[0].input_trigger[0].tr_a_in[0]"/>
-                    <Port name="tcpwm[0].group[1].cnt[0].tr_out1[0]"/>
-                </Net>
-                <Net>
                     <Port name="peri[0].group[4].div_16_5[0].clk[0]"/>
                     <Port name="scb[0].clock_scb_en[0]"/>
                 </Net>
@@ -2370,6 +2366,11 @@
                 <Net>
                     <Port name="peri[0].group[6].div_16_5[0].clk[0]"/>
                     <Port name="scb[5].clock_scb_en[0]"/>
+                </Net>
+                <Net>
+                    <Port name="ioss[0].port[6].pin[2].digital_out[0]"/>
+                    <Port name="pass[0].input_trigger[0].tr_a_in[0]"/>
+                    <Port name="tcpwm[0].group[1].cnt[0].tr_out1[0]"/>
                 </Net>
                 <Net>
                     <Port name="peri[0].group[4].div_16_5[2].clk[0]"/>

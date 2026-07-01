@@ -396,7 +396,7 @@ const cy_stc_hppass_sar_chan_t ADC_C_I_CH_config =
 };
 const cy_stc_hppass_sar_grp_t motor_a_group_config =
 {
-    .dirSampMsk = 0xFU,
+    .dirSampMsk = 0x47U,
     .muxSampMsk = 0x0U,
     .muxChanIdx =
     {
@@ -494,7 +494,7 @@ const mtb_hal_spi_configurator_t SPI_GD_CFG_hal_config =
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
-const cy_stc_scb_spi_config_t SPI_EC_B_config =
+const cy_stc_scb_spi_config_t SPI_EC_A_config =
 {
     .spiMode = CY_SCB_SPI_MASTER,
     .subMode = CY_SCB_SPI_MOTOROLA,
@@ -525,7 +525,7 @@ const cy_stc_scb_spi_config_t SPI_EC_B_config =
 };
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-const cyhal_resource_inst_t SPI_EC_B_obj =
+const cyhal_resource_inst_t SPI_EC_A_obj =
 {
     .type = CYHAL_RSC_SCB,
     .block_num = 1U,
@@ -534,7 +534,7 @@ const cyhal_resource_inst_t SPI_EC_B_obj =
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
-const cyhal_clock_t SPI_EC_B_clock =
+const cyhal_clock_t SPI_EC_A_clock =
 {
     .block = CYHAL_CLOCK_BLOCK_PERIPHERAL4_16_5BIT,
     .channel = 2,
@@ -546,35 +546,35 @@ const cyhal_clock_t SPI_EC_B_clock =
 #endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-const cyhal_spi_configurator_t SPI_EC_B_hal_config =
+const cyhal_spi_configurator_t SPI_EC_A_hal_config =
 {
-    .resource = &SPI_EC_B_obj,
-    .config = &SPI_EC_B_config,
-    .clock = &SPI_EC_B_clock,
+    .resource = &SPI_EC_A_obj,
+    .config = &SPI_EC_A_config,
+    .clock = &SPI_EC_A_clock,
     .gpios = {.sclk = P2_1, .ssel = {P2_0, NC, NC, NC}, .mosi = P2_2, .miso = P2_3},
 };
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined (COMPONENT_MTB_HAL)
-const mtb_hal_peri_div_t SPI_EC_B_clock_ref =
+const mtb_hal_peri_div_t SPI_EC_A_clock_ref =
 {
     .clk_dst = (en_clk_dst_t)PCLK_SCB1_CLOCK_SCB_EN,
     .div_type = CY_SYSCLK_DIV_16_5_BIT,
     .div_num = 2,
 };
-const mtb_hal_clock_t SPI_EC_B_hal_clock =
+const mtb_hal_clock_t SPI_EC_A_hal_clock =
 {
-    .clock_ref = &SPI_EC_B_clock_ref,
+    .clock_ref = &SPI_EC_A_clock_ref,
     .interface = &mtb_hal_clock_peri_interface,
 };
 #endif /* defined (COMPONENT_MTB_HAL) */
 
 #if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI)
-const mtb_hal_spi_configurator_t SPI_EC_B_hal_config =
+const mtb_hal_spi_configurator_t SPI_EC_A_hal_config =
 {
-    .base = SPI_EC_B_HW,
-    .clock = &SPI_EC_B_hal_clock,
-    .config = &SPI_EC_B_config,
+    .base = SPI_EC_A_HW,
+    .clock = &SPI_EC_A_hal_clock,
+    .config = &SPI_EC_A_config,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
@@ -662,7 +662,7 @@ const mtb_hal_spi_configurator_t SPI_LED_hal_config =
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
-const cy_stc_scb_spi_config_t SPI_EC_A_config =
+const cy_stc_scb_spi_config_t SPI_EC_B_config =
 {
     .spiMode = CY_SCB_SPI_MASTER,
     .subMode = CY_SCB_SPI_MOTOROLA,
@@ -693,7 +693,7 @@ const cy_stc_scb_spi_config_t SPI_EC_A_config =
 };
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-const cyhal_resource_inst_t SPI_EC_A_obj =
+const cyhal_resource_inst_t SPI_EC_B_obj =
 {
     .type = CYHAL_RSC_SCB,
     .block_num = 3U,
@@ -702,7 +702,7 @@ const cyhal_resource_inst_t SPI_EC_A_obj =
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL)
-const cyhal_clock_t SPI_EC_A_clock =
+const cyhal_clock_t SPI_EC_B_clock =
 {
     .block = CYHAL_CLOCK_BLOCK_PERIPHERAL4_16_5BIT,
     .channel = 2,
@@ -714,35 +714,35 @@ const cyhal_clock_t SPI_EC_A_clock =
 #endif /* defined(CY_USING_HAL_LITE) || defined (CY_USING_HAL) */
 
 #if defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE)
-const cyhal_spi_configurator_t SPI_EC_A_hal_config =
+const cyhal_spi_configurator_t SPI_EC_B_hal_config =
 {
-    .resource = &SPI_EC_A_obj,
-    .config = &SPI_EC_A_config,
-    .clock = &SPI_EC_A_clock,
+    .resource = &SPI_EC_B_obj,
+    .config = &SPI_EC_B_config,
+    .clock = &SPI_EC_B_clock,
     .gpios = {.sclk = P5_2, .ssel = {P5_3, NC, NC, NC}, .mosi = P5_0, .miso = P5_1},
 };
 #endif /* defined (CY_USING_HAL) || defined(CY_USING_HAL_LITE) */
 
 #if defined (COMPONENT_MTB_HAL)
-const mtb_hal_peri_div_t SPI_EC_A_clock_ref =
+const mtb_hal_peri_div_t SPI_EC_B_clock_ref =
 {
     .clk_dst = (en_clk_dst_t)PCLK_SCB3_CLOCK_SCB_EN,
     .div_type = CY_SYSCLK_DIV_16_5_BIT,
     .div_num = 2,
 };
-const mtb_hal_clock_t SPI_EC_A_hal_clock =
+const mtb_hal_clock_t SPI_EC_B_hal_clock =
 {
-    .clock_ref = &SPI_EC_A_clock_ref,
+    .clock_ref = &SPI_EC_B_clock_ref,
     .interface = &mtb_hal_clock_peri_interface,
 };
 #endif /* defined (COMPONENT_MTB_HAL) */
 
 #if defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI)
-const mtb_hal_spi_configurator_t SPI_EC_A_hal_config =
+const mtb_hal_spi_configurator_t SPI_EC_B_hal_config =
 {
-    .base = SPI_EC_A_HW,
-    .clock = &SPI_EC_A_hal_clock,
-    .config = &SPI_EC_A_config,
+    .base = SPI_EC_B_HW,
+    .clock = &SPI_EC_B_hal_clock,
+    .config = &SPI_EC_B_config,
 };
 #endif /* defined (COMPONENT_MTB_HAL) && (MTB_HAL_DRIVER_AVAILABLE_SPI) */
 
@@ -929,7 +929,7 @@ const cy_stc_tcpwm_pwm_config_t PWM_A_U_config =
     .period0 = 7000,
     .period1 = 32768,
     .enablePeriodSwap = false,
-    .compare0 = 1000,
+    .compare0 = 0,
     .compare1 = 16384,
     .enableCompareSwap = false,
     .interruptSources = (CY_TCPWM_INT_ON_TC & 0U) | (CY_TCPWM_INT_ON_CC0 & 0U) | (CY_TCPWM_INT_ON_CC1 & 0U),
@@ -1584,9 +1584,9 @@ void reserve_cycfg_peripherals(void)
 {
 #if defined (CY_USING_HAL)
     cyhal_hwmgr_reserve(&SPI_GD_CFG_obj);
-    cyhal_hwmgr_reserve(&SPI_EC_B_obj);
-    cyhal_hwmgr_reserve(&SPI_LED_obj);
     cyhal_hwmgr_reserve(&SPI_EC_A_obj);
+    cyhal_hwmgr_reserve(&SPI_LED_obj);
+    cyhal_hwmgr_reserve(&SPI_EC_B_obj);
     cyhal_hwmgr_reserve(&SPI_CTR_obj);
     cyhal_hwmgr_reserve(&TIMER_TASK_obj);
     cyhal_hwmgr_reserve(&PWM_A_U_obj);

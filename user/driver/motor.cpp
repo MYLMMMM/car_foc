@@ -1,4 +1,5 @@
 #include "motor.hpp"
+#include "cy_gpio.h"
 
 motor_driver::motor_driver(foc& foc_soft,
                            drv8304& drv,
@@ -85,6 +86,8 @@ void motor_driver::foc_trig_isr() noexcept
     }
     Cy_HPPASS_SAR_Result_ClearInterrupt(sar_result_group_mask_);
 
+    //Cy_GPIO_Inv(GPIO_PRT6, 3);  // DEBUG: toggle P6.3 for ISR rate measurement
+
     // encoder_mean_filter_.trig();
 
     foc_soft_.trg();
@@ -97,7 +100,7 @@ void motor_driver::foc_trig_isr() noexcept
     ec_spi_.send(0);
     ec_spi_.send(0);
     ec_spi_.send(0);
-    
+
 }
 
 void motor_driver::speed_isr() noexcept
