@@ -7,7 +7,6 @@ void main_entry()
 
     while (1)
     {
-        
         // drv8304_a.refresh_fault_status();
         // drv8304_b.refresh_fault_status();
     }

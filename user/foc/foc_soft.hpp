@@ -63,6 +63,12 @@ struct foc_motor_datastructure_config
     float speed_target_max;    // 速度目标上限(rad/s, <=0 不限幅)
     float speed_target_slope;  // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
+    bool  position_mode;               // 位置环模式开关(true=位置模式)
+    float pid_position_kp;
+    float pid_position_ki;
+    float pid_position_kd;
+    float pid_position_integral_limit; // 位置环积分限幅(rad/s)
+
     float control_period_s;
     float Ld;              // d 轴电感 (H), 用于交叉解耦前馈
     float Lq;              // q 轴电感 (H), 用于交叉解耦前馈
@@ -116,6 +122,12 @@ struct foc_motor_datastructure
     float speed_target_max = 0.0f;   // 速度目标上限(rad/s, <=0 不限幅)
     float speed_target_slope = 0.0f; // 速度目标斜率限制(rad/s per step, <=0 不限斜率)
 
+    bool  position_mode = false;         // 位置环模式开关
+    float pid_position_kp = 0.0f;        // 位置环 PID Kp (rad/s per rad)
+    float pid_position_ki = 0.0f;        // 位置环 PID Ki
+    float pid_position_kd = 0.0f;        // 位置环 PID Kd
+    float pid_position_integral_limit = 0.0f;  // 位置环积分限幅(rad/s)
+
     float control_period_s = 0.0f;   // 控制周期(s)
     float Ld = 0.0f;             // d 轴电感 (H)
     float Lq = 0.0f;             // q 轴电感 (H)
@@ -154,6 +166,7 @@ struct foc_motor_datastructure
     float i_q_target = 0.0f;         // q 轴目标电流(A)
     float speed_target = 0.0f;       // 目标机械角速度(rad/s)
     float speed_target_limited = 0.0f; // 限幅后的目标速度(rad/s)
+    float position_target = 0.0f;    // 位置环目标机械角(rad), 累计圈数
     float inv_vbus = 0.0f;           // 1/v_bus 缓存 (由 SVPWM 更新)
 
     explicit foc_motor_datastructure(const foc_motor_datastructure_config& cfg)
@@ -188,6 +201,11 @@ struct foc_motor_datastructure
         , speed_reverse(cfg.speed_reverse)
         , speed_target_max(cfg.speed_target_max)
         , speed_target_slope(cfg.speed_target_slope)
+        , position_mode(cfg.position_mode)
+        , pid_position_kp(cfg.pid_position_kp)
+        , pid_position_ki(cfg.pid_position_ki)
+        , pid_position_kd(cfg.pid_position_kd)
+        , pid_position_integral_limit(cfg.pid_position_integral_limit)
         , control_period_s(cfg.control_period_s)
         , Ld(cfg.Ld)
         , Lq(cfg.Lq)
@@ -227,6 +245,7 @@ struct foc_motor_datastructure
         i_q_target = 0.0f;
         speed_target = 0.0f;
         speed_target_limited = 0.0f;
+        position_target = 0.0f;
         inv_vbus = 0.0f;
     }
 };
@@ -245,6 +264,7 @@ private:
     ADC2Voltage<float, adc_reg> adc2voltage_vbus;
     Clark<float> clark;
     Park<float> park;
+    PID<float> pid_position;
     PID<float> pid_speed;
     PID<float> pid_d;
     PID<float> pid_q;
@@ -284,6 +304,9 @@ public:
                            motor.vbus_divider_ratio, motor.v_bus),
           clark(motor.i_a, motor.i_b, motor.i_c, motor.i_alpha, motor.i_beta),
           park(motor.i_alpha, motor.i_beta, motor.sin_theta_elec, motor.cos_theta_elec, motor.i_d, motor.i_q),
+          pid_position(motor.pid_position_kp, motor.pid_position_ki, motor.pid_position_kd,
+                       motor.pid_position_integral_limit, motor.position_target, motor.theta_mech, motor.speed_target,
+                       static_cast<float>(6.2831853071795864769)),
           pid_speed(motor.pid_speed_kp, motor.pid_speed_ki, motor.pid_speed_kd,
                     motor.pid_speed_integral_limit, motor.speed_target_limited, motor.speed_mech, motor.i_q_target),
           pid_d(motor.pid_d_kp, motor.pid_d_ki, motor.pid_d_kd, motor.pid_d_integral_limit,
@@ -328,6 +351,7 @@ public:
     void reset_pid() {
         mech2speed.reset();
         speed.reset();
+        pid_position.reset();
         pid_speed.reset();
         pid_d.reset();
         pid_q.reset();
@@ -347,19 +371,15 @@ public:
      *          速度反馈 speed_mech 由电流环 trg() 每快周期更新
      */
     void trg_speed() {
+        // 位置环: 输出速度参考到 speed_target
+        if (motor.position_mode)
+        {
+            pid_position.trg();
+        }
+
         upper_limit_speed.trg();
         slope_limit_speed.trg();
-        if (motor.speed_target == 0.0f)
-        {
-            pid_speed.reset();
-            motor.speed_target_limited = 0;
-            motor.i_d_target = 0;
-            motor.i_q_target = 0;
-        }
-        else
-        {
-            pid_speed.trg();
-        }
+        pid_speed.trg();
     }
 
     /**

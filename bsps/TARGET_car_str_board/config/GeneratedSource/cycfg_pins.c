@@ -355,7 +355,7 @@ const cyhal_resource_inst_t GPIO_GD_C_ENABLE_obj =
 const cy_stc_gpio_pin_config_t GPIO_GD_C_nFAULT_config =
 {
     .outVal = 1,
-    .driveMode = CY_GPIO_DM_PULLUP,
+    .driveMode = CY_GPIO_DM_STRONG_IN_OFF,
     .hsiom = GPIO_GD_C_nFAULT_HSIOM,
     .intEdge = CY_GPIO_INTR_DISABLE,
     .intMask = 0UL,
@@ -409,7 +409,7 @@ const cyhal_resource_inst_t GPIO_GD_B_nFAULT_obj =
 const cy_stc_gpio_pin_config_t GPIO_GD_B_ENABLE_config =
 {
     .outVal = 1,
-    .driveMode = CY_GPIO_DM_HIGHZ,
+    .driveMode = CY_GPIO_DM_STRONG_IN_OFF,
     .hsiom = GPIO_GD_B_ENABLE_HSIOM,
     .intEdge = CY_GPIO_INTR_DISABLE,
     .intMask = 0UL,

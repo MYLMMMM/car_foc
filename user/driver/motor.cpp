@@ -27,21 +27,21 @@ motor_driver::motor_driver(foc& foc_soft,
 {
 }
 
-void motor_driver::set_cc(uint32_t cc_u, uint32_t cc_v, uint32_t cc_w) noexcept
-{
-    pwm_u_.set_compare(cc_u);
-    pwm_v_.set_compare(cc_v);
-    pwm_w_.set_compare(cc_w);
-}
+
 
 void motor_driver::start() noexcept
 {
     foc_soft_.clear_running_values();
     ec.start_yaw_data_transfer();
-    for(size_t i = 0;i < encoder_filter_deep;i++)
+    for(size_t i = 0;i < 12;i++)
     {
         ec_spi_.send(0);
     }
+    for (size_t i = 0; i < 100; i++)
+    {
+        foc_soft_.trg_speed();
+    }
+    
     if (!auto_start_)
     {
         pwm_start_.start();
@@ -65,17 +65,7 @@ void motor_driver::stop() noexcept
     foc_soft_.clear_running_values();
 }
 
-void motor_driver::pwm_chage_trig()
-{
-    hal_pwm::hal_pwm_interrupt_type int_type = pwm_u_.get_interrupt_type();
-    pwm_u_.clear_interrupt(int_type);
-    if(pwm_u_.get_count() < 1000)
-    {
-    pwm_u_.set_compare(foc_soft_.motor.ccr_a);
-    pwm_v_.set_compare(foc_soft_.motor.ccr_b);
-    pwm_w_.set_compare(foc_soft_.motor.ccr_c);
-    }
-}
+
 
 void motor_driver::foc_trig_isr() noexcept
 {
@@ -86,21 +76,12 @@ void motor_driver::foc_trig_isr() noexcept
     }
     Cy_HPPASS_SAR_Result_ClearInterrupt(sar_result_group_mask_);
 
-    //Cy_GPIO_Inv(GPIO_PRT6, 3);  // DEBUG: toggle P6.3 for ISR rate measurement
-
-    // encoder_mean_filter_.trig();
-
     foc_soft_.trg();
 
-    // pwm_u_.set_compare(foc_soft_.motor.ccr_a);
-    // pwm_v_.set_compare(foc_soft_.motor.ccr_b);
-    // pwm_w_.set_compare(foc_soft_.motor.ccr_c);
-
     ec_spi_.send(0);
     ec_spi_.send(0);
     ec_spi_.send(0);
     ec_spi_.send(0);
-
 }
 
 void motor_driver::speed_isr() noexcept
@@ -110,18 +91,4 @@ void motor_driver::speed_isr() noexcept
     foc_soft_.trg_speed();
 }
 
-//之后将它更新为DMA直接传输
-void motor_driver::ec_isr() noexcept
-{
-    hal_spi::hal_spi_interrupt_type int_type = ec_spi_.get_rx_interrupt_type();
-    ec_spi_.clear_rx_interrupt(int_type);
 
-    while (ec_spi_.isnew() != 0u) {
-        const uint16_t raw = static_cast<uint16_t>(ec_spi_.recive() & 0xFFFFu);
-        encoder_mean_filter_.write(raw);
-        ec_spi_.send(0);
-        ec_spi_.send(0);
-        ec_spi_.send(0);
-    }
-
-}

@@ -593,7 +593,7 @@
                         </Aliases>
                     </Block>
                     <Parameters>
-                        <Param id="DriveModes" value="CY_GPIO_DM_PULLUP"/>
+                        <Param id="DriveModes" value="CY_GPIO_DM_STRONG_IN_OFF"/>
                         <Param id="driveStrength" value="CY_GPIO_DRIVE_1_2"/>
                         <Param id="driveStrengthTrim" value="CY_GPIO_DRIVE_STRENGTH_DEFAULT"/>
                         <Param id="inFlash" value="true"/>
@@ -633,7 +633,7 @@
                         </Aliases>
                     </Block>
                     <Parameters>
-                        <Param id="DriveModes" value="CY_GPIO_DM_HIGHZ"/>
+                        <Param id="DriveModes" value="CY_GPIO_DM_STRONG_IN_OFF"/>
                         <Param id="driveStrength" value="CY_GPIO_DRIVE_1_2"/>
                         <Param id="driveStrengthTrim" value="CY_GPIO_DRIVE_STRENGTH_DEFAULT"/>
                         <Param id="inFlash" value="true"/>
@@ -1986,8 +1986,8 @@
                         <Param id="pwmtcsynckilldt" value="false"/>
                         <Param id="reload_line_sel" value="false"/>
                         <Param id="swap_enable" value="false"/>
-                        <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_UNDEFLOW"/>
-                        <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_OVERFLOW"/>
+                        <Param id="trigger0Event" value="CY_TCPWM_CNT_TRIGGER_ON_OVERFLOW"/>
+                        <Param id="trigger1Event" value="CY_TCPWM_CNT_TRIGGER_ON_UNDEFLOW"/>
                     </Parameters>
                 </Personality>
                 <Personality template="mxs40pwm_ver2" version="1.0" instance="kTSdKD-_9Co">

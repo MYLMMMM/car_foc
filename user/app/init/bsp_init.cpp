@@ -72,7 +72,7 @@ void motor_a_init()
     CyDelay(20);
     drv8304_a.set_csa_gain(2);
     // drv8304_a.set_ocp_mode(3);
-    drv8304_a.set_dis_gdf(1);
+    // drv8304_a.set_dis_gdf(1);
     // drv8304_a.set_lock(3);
     // drv8304_a.set_pwm_mode(0);
     // drv8304_a.set_vref_div(0);
@@ -97,7 +97,7 @@ void motor_a_init()
     NVIC_ClearPendingIRQ(int_spi_ec_a_config.intrSrc);
     NVIC_EnableIRQ(int_spi_ec_a_config.intrSrc);
     
-    enc_a.set_direction(true);
+    enc_a.set_direction(false);
 
         //init DMA
     cy_en_dma_status_t dma_init_status;

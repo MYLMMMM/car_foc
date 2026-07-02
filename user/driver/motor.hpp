@@ -32,17 +32,11 @@ public:
     motor_driver(motor_driver&&) = delete;
     motor_driver& operator=(motor_driver&&) = delete;
 
-    void set_cc(uint32_t cc_u, uint32_t cc_v, uint32_t cc_w) noexcept;
     void start() noexcept;
     void stop() noexcept;
 
-    // 放在 ADC 完成中断中，用于触发一次 FOC 计算。
     void foc_trig_isr() noexcept;
 
-    void pwm_chage_trig() noexcept;
-    // 预留给编码器 SPI 中断，后续可在这里加滤波等逻辑。
-    void ec_isr() noexcept;
-    // 速度环独立中断，调用 foc_soft_.trg_speed()
     void speed_isr() noexcept;
 
 // private:

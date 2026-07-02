@@ -18,6 +18,7 @@ public:
 
     data_type integral;    // 内部状态: 积分累加
     data_type last_error;  // 内部状态: 上次误差
+    data_type two_pi;      // 角度周期, >0 时误差取最短弧长(rad)
 
     /**
      * @brief 构造 PID 模块
@@ -28,13 +29,15 @@ public:
      * @param target 目标值引用
      * @param input 反馈值引用
      * @param output 控制输出引用
+     * @param two_pi 角度周期(rad), >0 误差取最短弧长, 0=线性误差
      */
     explicit PID(data_type &P, data_type &I, data_type &D,
                  data_type &integral_limit,
-                 data_type &target, data_type &input, data_type &output) 
+                 data_type &target, data_type &input, data_type &output,
+                 data_type two_pi = static_cast<data_type>(0)) 
         : p(P), i(I), d(D), integral_limit(integral_limit),
           target(target), input(input), output(output), 
-          integral(0), last_error(0) {}
+          integral(0), last_error(0), two_pi(two_pi) {}
 
     PID(const PID&) = delete;
     PID& operator=(const PID&) = delete;
@@ -60,8 +63,13 @@ public:
      *          当输出超出 integral_limit 时，反算积分值使输出恰好等于限幅值
      */
     void trg() {
-        // 当前误差
+        // 当前误差 (two_pi>0 时环形取最短弧长)
         data_type error = target - input;
+        if (two_pi > static_cast<data_type>(0)) {
+            const data_type half = two_pi * static_cast<data_type>(0.5f);
+            while (error > half) { error -= two_pi; }
+            while (error < -half) { error += two_pi; }
+        }
         // 比例项和微分项
         data_type p_term = p * error;
         data_type d_term = d * (error - last_error);
