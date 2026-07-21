@@ -7,6 +7,7 @@ void main_entry()
 
     while (1)
     {
+        command_doer.set_command(CommandDoer::Command::Start);
         // drv8304_a.refresh_fault_status();
         // drv8304_b.refresh_fault_status();
     }

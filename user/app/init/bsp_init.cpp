@@ -407,6 +407,5 @@ __WEAK void timer_task_isr()
 
 __WEAK void motor_a_pwm_isr()
 {
-    motor_a_driver.pwm_chage_trig();
 }
 
