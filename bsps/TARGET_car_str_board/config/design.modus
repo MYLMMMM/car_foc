@@ -2106,9 +2106,9 @@
                         <Param id="ClkHfCsv" value="false"/>
                         <Param id="accuracyCsv" value="99"/>
                         <Param id="actionCsv" value="FAULT"/>
-                        <Param id="divider" value="1"/>
+                        <Param id="divider" value="3"/>
                         <Param id="sourceClockCsv" value="IMO"/>
-                        <Param id="sourceClockNumber" value="0"/>
+                        <Param id="sourceClockNumber" value="2"/>
                     </Parameters>
                 </Personality>
                 <Personality template="hfclk" version="4.0" instance="xMHPFXbAnOU">

@@ -44,18 +44,7 @@ void CommandDoer::task_manager()
         state_.mech_state   = State::FaultHalt;
         state_.light_color  = StateColor::ColorFault;
         break;
-    case Command::DirectionCalibration:
-        task_direction_calibration();
-        state_.mech_command = Command::Default;
-        state_.mech_state   = State::DirectionCalib;
-        state_.light_color  = StateColor::ColorDirectionCalib;
-        break;
-    case Command::ElecAngleCalibration:
-        task_elec_angle_calibration();
-        state_.mech_command = Command::Default;
-        state_.mech_state   = State::ElecAngleCalib;
-        state_.light_color  = StateColor::ColorElecAngleCalib;
-        break;
+
     default:
         break;
     }

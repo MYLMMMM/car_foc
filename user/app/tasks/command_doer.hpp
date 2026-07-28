@@ -9,26 +9,20 @@ public:
     enum class State : uint32_t {
         Stop = 0,
         Running = 1,
-        FaultHalt = 2,
-        DirectionCalib = 3,
-        ElecAngleCalib = 4
+        FaultHalt = 2
     };
 
     enum class Command : uint32_t {
         Default = 0,
         Start = 1,
         Stop = 2,
-        InternalError = 3,
-        DirectionCalibration = 4,
-        ElecAngleCalibration = 5,
+        InternalError = 3
     };
 
     enum class StateColor : uint32_t {
-        ColorStart          = 0x00004400,
-        ColorStop           = 0x00000044,
-        ColorFault          = 0x00440000,
-        ColorDirectionCalib = 0x00222200,
-        ColorElecAngleCalib = 0x00002222,
+        ColorStart = 0x00004400,
+        ColorStop  = 0x00000044,
+        ColorFault = 0x00440000
     };
 
     struct CommandDoerState {
