@@ -5,7 +5,7 @@
 #include "endecode.hpp"
 #include "XL2020RGBC.hpp"
 #include "motor.hpp"
-#include "dc_motor_driver.hpp"
+#include "esc_driver.hpp"
 #include "command_doer.hpp"
 
 void bsp_init();
@@ -18,7 +18,7 @@ extern kth7823 enc_a;
 extern kth7823 enc_b;
 extern motor_driver motor_a_driver;
 extern motor_driver motor_b_driver;
-extern dc_motor_driver motor_c_driver;
+extern esc_driver motor_c_driver;
 extern foc_motor_datastructure foc_motor_datastructure_A;
 extern foc_motor_datastructure foc_motor_datastructure_B;
 extern spi_decode spi_ctr_decode;

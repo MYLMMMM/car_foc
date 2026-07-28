@@ -20,9 +20,9 @@ public:
     };
 
     enum class StateColor : uint32_t {
-        ColorStart = 0x0000AA00,
-        ColorStop  = 0x000000AA,
-        ColorFault = 0x00AA0000,
+        ColorStart = 0x00004400,
+        ColorStop  = 0x00000044,
+        ColorFault = 0x00440000,
     };
 
     struct CommandDoerState {

@@ -12,8 +12,8 @@
 #include "hal.hpp"
 #include "XL2020RGBC.hpp"
 #include "motor.hpp"
-#include "dc_motor_soft.hpp"
-#include "dc_motor_driver.hpp"
+#include "esc_soft.hpp"
+#include "esc_driver.hpp"
 #include "hal_counter_cy.hpp"
 #include "command_doer.hpp"
 
@@ -117,23 +117,26 @@ foc_motor_datastructure_config foc_motor_datastructure_B_config =
 foc_motor_datastructure foc_motor_datastructure_B(foc_motor_datastructure_B_config);
 foc foc_B_soft(foc_motor_datastructure_B);
 
-// motor C structure (DC motor, voltage mode with DRV8701 PH/EN)
-dc_motor_datastructure_config motor_c_config =
+// motor C structure (ESC 电调, 脉宽控制 1ms-2ms)
+esc_datastructure_config motor_c_config =
 {
-    .adc_vbus = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_VBUS_CH_CHAN_IDX),
+    .adc_current = (volatile int32_t*)CY_HPPASS_SAR_CHAN_RSLT_PTR(ADC_C_I_CH_CHAN_IDX),
 
     .adc_vref = 3.3f,
     .adc_full_scale = 4095,
-    .vbus_divider_ratio = 7.0f,
-    .voltage_limit = 6.0f,
-    .voltage_slope = 0.0001f,
+    .adc_zero_current = 0,
+    .shunt_resistance = 0.008f,
+    .current_sense_gain = 50.0f,
+
+    .throttle_max = 0.9f,
+    .throttle_slope = 0.3f,
 
     .control_period_s = 0.001f,
-    .pwm_period = 9599,
+    .pwm_period = 2399999,
 };
 
-dc_motor_datastructure motor_c_data(motor_c_config);
-dc_motor motor_c_soft(motor_c_data);
+esc_datastructure motor_c_data(motor_c_config);
+esc motor_c_soft(motor_c_data);
 
 
 
@@ -224,10 +227,9 @@ hal_pwm pwm_b_w(PWM_B_W_HW, PWM_B_W_NUM);
 hal_pwm pwm_start_b(PWM_START_B_HW, PWM_START_B_NUM);
 hal_counter speed_loop_b(PWM_SPEED_LOOP_B_HW, PWM_SPEED_LOOP_B_NUM);
 motor_driver motor_b_driver(foc_B_soft, drv8304_b, enc_b, spi_enc_b, pwm_b_u, pwm_b_v, pwm_b_w, pwm_start_b, speed_loop_b, false, CY_HPPASS_INTR_SAR_RESULT_GROUP_1);
-hal_pwm pwm_c_u(PWM_C_U_HW, PWM_C_U_NUM);
-hal_pwm pwm_c_v(PWM_C_V_HW, PWM_C_V_NUM);
+hal_pwm pwm_c(PWM_C_HW, PWM_C_NUM);
 hal_pwm pwm_start_c(PWM_START_C_HW, PWM_START_C_NUM);
-dc_motor_driver motor_c_driver(motor_c_soft, pwm_c_u, pwm_c_v, pwm_start_c, CY_HPPASS_INTR_SAR_RESULT_GROUP_2);
+esc_driver motor_c_driver(motor_c_soft, pwm_c, pwm_start_c, CY_HPPASS_INTR_SAR_RESULT_GROUP_2);
 
 /*-----------------SPI decode config----------------------*/
 hal_spi spi_ctr(SPI_CTR_HW);

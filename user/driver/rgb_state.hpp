@@ -2,7 +2,7 @@
 
 #include <array>
 #include <cstdint>
-#include "chips/XL2020RGBC.hpp"
+#include "XL2020RGBC.hpp"
 
 struct StateColor {
     uint16_t state;

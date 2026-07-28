@@ -592,40 +592,14 @@ void motor_b_init()
 
 void motor_c_init()
 {
-    /*----------------- init drv8701 -----------------------*/
-    // 注册 GPIO 端口中断 ISR
-    Cy_SysInt_Init(&gpio_c_iqr_config, GPIO_3_ISR);
-    NVIC_EnableIRQ(GPIO_GD_C_nFAULT_IRQ);
-
-    // 初始化并注册回调
-    bool drv8701_init_states = drv8701_c.init();
-#ifdef __DEBUG_RTT
-    if (drv8701_init_states == false)
-    {
-        SEGGER_RTT_printf(0, "drv8701_c init fail");
-    }
-#endif
-
-    drv8701_c.register_nfault_callback(drv8701_c_nfault_callback, nullptr);
-    drv8701_c.set_enable(true);
-    CyDelay(2); // tWAKE ≈ 1ms，留 2ms 余量
-
-    /*----------------- init PWM -----------------------*/
+    /*----------------- init ESC PWM (PWM_C) -----------------------*/
     cy_en_tcpwm_status_t tcpwm_status;
 
-    tcpwm_status = Cy_TCPWM_PWM_Init(PWM_C_U_HW, PWM_C_U_NUM, &PWM_C_U_config);
+    tcpwm_status = Cy_TCPWM_PWM_Init(PWM_C_HW, PWM_C_NUM, &PWM_C_config);
 #ifdef __DEBUG_RTT
     if (tcpwm_status != CY_TCPWM_SUCCESS)
     {
-        SEGGER_RTT_printf(0, "motor_c_pwm_u init fail\r\n");
-    }
-#endif
-
-    tcpwm_status = Cy_TCPWM_PWM_Init(PWM_C_V_HW, PWM_C_V_NUM, &PWM_C_V_config);
-#ifdef __DEBUG_RTT
-    if (tcpwm_status != CY_TCPWM_SUCCESS)
-    {
-        SEGGER_RTT_printf(0, "motor_c_pwm_v init fail\r\n");
+        SEGGER_RTT_printf(0, "motor_c_pwm_esc init fail\r\n");
     }
 #endif
 
@@ -637,8 +611,7 @@ void motor_c_init()
     }
 #endif
 
-    Cy_TCPWM_PWM_Enable(PWM_C_U_HW, PWM_C_U_NUM);
-    Cy_TCPWM_PWM_Enable(PWM_C_V_HW, PWM_C_V_NUM);
+    Cy_TCPWM_PWM_Enable(PWM_C_HW, PWM_C_NUM);
     Cy_TCPWM_PWM_Enable(PWM_START_C_HW, PWM_START_C_NUM);
 }
 
@@ -725,7 +698,7 @@ __WEAK void motor_b_foc_isr()
 
 __WEAK void motor_c_dc_isr()
 {
-    motor_c_driver.dc_trig_isr();
+    motor_c_driver.esc_trig_isr();
 }
 
 __WEAK void motor_a_speed_isr()

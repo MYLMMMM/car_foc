@@ -3,11 +3,12 @@
 #include <cstdint>
 
 #include "foc_soft.hpp"
+#include "esc_soft.hpp"
 #include "bsp_init.hpp"
 
 extern foc_motor_datastructure foc_motor_datastructure_A;
 extern foc_motor_datastructure foc_motor_datastructure_B;
-extern dc_motor_datastructure  motor_c_data;
+extern esc_datastructure  motor_c_data;
 namespace
 {
 enum value_addr : uint8_t
@@ -57,6 +58,6 @@ bool valuemap_register(spi_decode& decoder)
     ok &= register_rw(decoder, B_pid_speed_ki, foc_motor_datastructure_B.pid_speed_ki);
     ok &= register_rw(decoder, B_pid_speed_kd, foc_motor_datastructure_B.pid_speed_kd);
     ok &= register_rw(decoder, B_pid_speed_integral_limit, foc_motor_datastructure_B.pid_speed_integral_limit);
-    ok &= register_rw(decoder, C_Vtage_cmd, motor_c_data.voltage_cmd);
+    ok &= register_rw(decoder, C_Vtage_cmd, motor_c_data.throttle_cmd);
     return ok;
 }
