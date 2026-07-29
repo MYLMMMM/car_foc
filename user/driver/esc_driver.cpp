@@ -14,6 +14,10 @@ esc_driver::esc_driver(esc& esc_soft,
 
 void esc_driver::start() noexcept
 {
+    // 清空目标值，从零开始缓启动
+    esc_soft_.data.throttle_cmd = 0.0f;
+    esc_soft_.data.throttle_limited = 0.0f;
+
     pwm_esc_.start();
     pwm_start_.start();
     const uint32_t int_mask = Cy_HPPASS_SAR_Result_GetInterruptMask();

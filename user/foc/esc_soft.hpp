@@ -142,7 +142,12 @@ public:
         // 3. 斜率限制 (缓启动保护, per-step slope 在构造时已算好)
         slope_limit_throttle.trg();
 
-        // 4. 油门 → ESC CCR
+        // 4. 下降不限幅: 直接跟随目标值
+        if (data.throttle_cmd < data.throttle_limited) {
+            data.throttle_limited = data.throttle_cmd;
+        }
+
+        // 5. 油门 → ESC CCR
         throttle2esc.trg();
     }
 };

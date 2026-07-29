@@ -9,7 +9,7 @@ void CommandDoer::task_ctl()
     // 刷新缓冲区
     spi_ctr_decode.stream_update();
     // 低压检测
-    //low_voltage_check();
+    low_voltage_check();
     // 任务状态更新
     task_manager();
 

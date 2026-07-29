@@ -314,7 +314,7 @@ extern "C" {
 #define GPIO_GD_B_ENABLE_PIN 1U
 #define GPIO_GD_B_ENABLE_NUM 1U
 #define GPIO_GD_B_ENABLE_DRIVEMODE CY_GPIO_DM_STRONG
-#define GPIO_GD_B_ENABLE_INIT_DRIVESTATE 1
+#define GPIO_GD_B_ENABLE_INIT_DRIVESTATE 0
 #ifndef ioss_0_port_4_pin_1_HSIOM
     #define ioss_0_port_4_pin_1_HSIOM HSIOM_SEL_GPIO
 #endif
@@ -716,7 +716,7 @@ extern "C" {
 #define GPIO_GD_A_ENABLE_PIN 5U
 #define GPIO_GD_A_ENABLE_NUM 5U
 #define GPIO_GD_A_ENABLE_DRIVEMODE CY_GPIO_DM_STRONG
-#define GPIO_GD_A_ENABLE_INIT_DRIVESTATE 1
+#define GPIO_GD_A_ENABLE_INIT_DRIVESTATE 0
 #ifndef ioss_0_port_7_pin_5_HSIOM
     #define ioss_0_port_7_pin_5_HSIOM HSIOM_SEL_GPIO
 #endif

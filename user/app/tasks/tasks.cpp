@@ -5,7 +5,7 @@ void task_start()
 {
     motor_a_driver.start();
     motor_b_driver.start();
-    // motor_c_driver.start();
+    motor_c_driver.start();
 }
 
 void task_stop()
